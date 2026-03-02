@@ -1,5 +1,15 @@
 <template>
   <div class="list-screen">
+    <!-- ── Botão Voltar ──────────────────────────────────────────────── -->
+    <div class="list-topbar">
+      <button class="back-btn" @click="navigateTo('/')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Voltar
+      </button>
+    </div>
+
     <!-- ── Cabeçalho ─────────────────────────────────────────────────── -->
     <div class="list-header">
       <div class="list-header__left">
@@ -17,6 +27,7 @@
           <tr>
             <th class="col-check"></th>
             <th class="col-study">Estudo Gerado</th>
+            <th class="col-products">Produtos Selecionados</th>
             <th class="col-date">Data de Emissão</th>
             <th class="col-value">Valor Total do Estudo</th>
             <th class="col-actions"></th>
@@ -49,6 +60,13 @@
               </a>
             </td>
 
+            <!-- Produtos Selecionados -->
+            <td class="col-products">
+              <span class="product-badge" :class="productBadgeClass(study.products)">
+                {{ study.products }}
+              </span>
+            </td>
+
             <!-- Data de Emissão -->
             <td class="col-date">
               <span class="cell-value">{{ study.date }}</span>
@@ -74,7 +92,7 @@
                   </svg>
                   <span class="action-btn__label">Duplicar</span>
                 </button>
-                <button class="action-btn" title="Editar" @click="editStudy(study.id)">
+                <button class="action-btn" title="Editar" @click.stop="editStudy(study.id)">
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
@@ -110,13 +128,14 @@
 interface Study {
   id: number
   name: string
+  products: 'Previdência' | 'Seguro de Vida' | 'Previdência + Seguro de Vida'
   date: string
   totalValue: string
 }
 
 const studies = ref<Study[]>([
-  { id: 1, name: 'Estudo Taís Oliveira Costa — v1', date: '02/03/2026', totalValue: 'R$ 4.150,00' },
-  { id: 2, name: 'Estudo Taís Oliveira Costa — v2', date: '02/03/2026', totalValue: 'R$ 3.800,00' },
+  { id: 1, name: 'Estudo Taís Oliveira Costa — v1', products: 'Previdência + Seguro de Vida', date: '02/03/2026', totalValue: 'R$ 4.150,00' },
+  { id: 2, name: 'Estudo Taís Oliveira Costa — v2', products: 'Previdência', date: '02/03/2026', totalValue: 'R$ 1.650,00' },
 ])
 
 const selectedId = ref<number | null>(null)
@@ -126,8 +145,13 @@ function toggleSelect(id: number) {
   selectedId.value = selectedId.value === id ? null : id
 }
 
+function productBadgeClass(products: string) {
+  if (products === 'Previdência + Seguro de Vida') return 'product-badge--both'
+  if (products === 'Seguro de Vida') return 'product-badge--seguro'
+  return 'product-badge--prev'
+}
+
 function downloadPdf(study: Study) {
-  // Placeholder: em produção, gera/baixa o PDF do estudo
   alert(`Download do PDF: ${study.name}`)
 }
 
@@ -144,13 +168,14 @@ function duplicateStudy(study: Study) {
   studies.value.push({
     id: newId,
     name: study.name + ' (cópia)',
+    products: study.products,
     date: today,
     totalValue: study.totalValue,
   })
 }
 
-function editStudy(id: number) {
-  router.push('/estudos')
+function editStudy(_id: number) {
+  window.open('https://aliaplan.zooxsmart.com/', '_blank')
 }
 
 function gerarProposta() {
@@ -163,16 +188,38 @@ function gerarProposta() {
 .list-screen {
   min-height: 100vh;
   background-color: var(--bg-app);
-  padding: 40px 48px 100px;
+  padding: 0 0 100px;
   position: relative;
+}
+
+/* ── Topbar com Voltar ───────────────────────────────────────────────────── */
+.list-topbar {
+  padding: 16px 48px 0;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+  border-radius: 6px;
+  transition: color 0.15s, background-color 0.15s;
+}
+.back-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-tab-active);
 }
 
 /* ── Cabeçalho ───────────────────────────────────────────────────────────── */
 .list-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 28px;
+  padding: 16px 48px 24px;
 }
 
 .list-header__title {
@@ -190,13 +237,11 @@ function gerarProposta() {
   color: var(--text-muted);
   margin: 0;
   line-height: 1.5;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* ── Card da tabela ──────────────────────────────────────────────────────── */
 .list-card {
+  margin: 0 48px;
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -237,13 +282,8 @@ function gerarProposta() {
 
 .study-row:last-child { border-bottom: none; }
 
-.study-row:hover {
-  background-color: #f8fafc;
-}
-
-.study-row--selected {
-  background-color: #f0f4ff;
-}
+.study-row:hover { background-color: #f8fafc; }
+.study-row--selected { background-color: #f0f4ff; }
 
 .study-row td {
   padding: 14px 16px;
@@ -266,7 +306,6 @@ function gerarProposta() {
   transition: border-color 0.12s, background-color 0.12s;
   flex-shrink: 0;
 }
-
 .row-checkbox--checked {
   border-color: var(--btn-primary-bg);
   background-color: var(--btn-primary-bg);
@@ -284,15 +323,29 @@ function gerarProposta() {
   text-decoration: none;
   transition: color 0.12s;
 }
+.study-link:hover { color: #3b82f6; text-decoration: underline; }
+.study-link__icon { color: var(--text-muted); flex-shrink: 0; }
 
-.study-link:hover {
-  color: #3b82f6;
-  text-decoration: underline;
+/* ── Badge de produto ────────────────────────────────────────────────────── */
+.product-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
 }
-
-.study-link__icon {
-  color: var(--text-muted);
-  flex-shrink: 0;
+.product-badge--prev {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+}
+.product-badge--seguro {
+  background-color: #f0fdf4;
+  color: #15803d;
+}
+.product-badge--both {
+  background-color: #faf5ff;
+  color: #7e22ce;
 }
 
 /* ── Valores de célula ───────────────────────────────────────────────────── */
@@ -323,17 +376,14 @@ function gerarProposta() {
   transition: background-color 0.12s, color 0.12s;
   font-family: var(--font-sans);
 }
-
 .action-btn:hover {
   background-color: var(--bg-tab-active);
   color: var(--text-primary);
 }
-
 .action-btn--delete:hover {
   background-color: #fef2f2;
   color: #ef4444;
 }
-
 .action-btn__label {
   font-size: 10px;
   font-weight: 500;
@@ -349,13 +399,8 @@ function gerarProposta() {
   padding: 48px 24px;
   color: var(--text-muted);
 }
-
 .empty-state__icon { opacity: 0.4; }
-
-.empty-state p {
-  font-size: 14px;
-  margin: 0;
-}
+.empty-state p { font-size: 14px; margin: 0; }
 
 /* ── Rodapé flutuante ────────────────────────────────────────────────────── */
 .list-footer {
@@ -385,7 +430,6 @@ function gerarProposta() {
   transition: opacity 0.15s;
   line-height: 1;
 }
-
 .btn-gerar-proposta:hover { opacity: 0.85; }
 
 /* ── Transição do rodapé ─────────────────────────────────────────────────── */
