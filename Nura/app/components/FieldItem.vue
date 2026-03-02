@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col gap-0.5">
-    <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">{{ label }}</span>
-    <span class="text-sm text-slate-800 font-medium">{{ value || '—' }}</span>
+  <div class="field-item">
+    <span class="field-item__label">{{ label }}</span>
+    <span class="field-item__value">{{ value || '—' }}</span>
   </div>
 </template>
 
@@ -11,3 +11,29 @@ defineProps<{
   value?: string
 }>()
 </script>
+
+<style scoped>
+.field-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.field-item__label {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  line-height: 1.4;
+}
+
+.field-item__value {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+</style>
