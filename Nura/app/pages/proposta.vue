@@ -381,15 +381,7 @@
           </div>
         </div>
 
-        <div class="section-card section-card--highlight">
-          <h3 class="section-card__title">Soluções Propostas</h3>
-          <p class="solutions-text">Destinar <strong>R$ 1.650,00/mês</strong> em Previdência e <strong>R$ 2.500,00/mês</strong> em Seguro de Vida garante proteção completa para a família, educação dos filhos e aposentadoria planejada.</p>
-          <div class="field-grid field-grid--3 mt-16">
-            <div class="field-item"><span class="field-label">Investimento Mensal Total</span><span class="field-value field-value--xl">R$ 4.150,00</span></div>
-            <div class="field-item"><span class="field-label">Aporte Inicial</span><span class="field-value field-value--xl">R$ 10.000,00</span></div>
-            <div class="field-item"><span class="field-label">Data de Emissão</span><span class="field-value">{{ emissaoDate }}</span></div>
-          </div>
-        </div>
+
 
         <div class="page-footer">
           <button class="btn-primary">Finalizar Proposta</button>
