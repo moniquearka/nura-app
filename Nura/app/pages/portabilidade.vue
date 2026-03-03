@@ -170,15 +170,6 @@
             </div>
           </div>
 
-          <!-- Alerta de divergência -->
-          <div v-if="hasDivergencia" class="alert-divergencia">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-            <div>
-              <strong>Divergência detectada entre Origem e Destino.</strong>
-              Os campos <strong>Tipo do Plano</strong>, <strong>Regime Tributário</strong> e/ou <strong>Situação do Regime</strong> diferem entre Origem e Destino.
-              A aba <strong>Contratação Adicional</strong> será exibida obrigatoriamente. Os campos divergentes serão pré-preenchidos com os valores da Origem.
-            </div>
-          </div>
         </div>
 
         <!-- Deseja realizar contratação adicional? -->
@@ -212,8 +203,8 @@
         </div>
 
         <!-- Aviso de obrigatoriedade por divergência -->
-        <div v-if="hasDivergencia" class="alert-divergencia mb-16">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+        <div v-if="hasDivergencia" class="info-box-blue mb-16">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           <div>Esta aba é <strong>obrigatória</strong> devido a divergências entre Origem e Destino. Os campos <strong>Tipo do Plano</strong>, <strong>Regime Tributário</strong> e <strong>Situação do Regime</strong> foram pré-preenchidos com os valores da Origem e não podem ser alterados neste bloco.</div>
         </div>
 
@@ -265,31 +256,13 @@
               <div class="selecao-fundos-box">
                 <div class="selecao-fundos-box__header">SELEÇÃO DE FUNDOS</div>
                 <div class="selecao-fundos-box__body">
-                  <!-- Busca -->
+                  <!-- Botão que abre o pop-up de busca -->
                   <div class="form-field">
                     <label class="form-label">Buscar Fundos Disponíveis</label>
-                    <div class="autocomplete-wrapper">
-                      <input
-                        v-model="bloco.fundoBusca"
-                        type="text"
-                        placeholder="Nome ou CNPJ do Fundo"
-                        class="form-input"
-                        @input="() => { bloco.showFundoDropdown = true }"
-                        @blur="() => setTimeout(() => { bloco.showFundoDropdown = false }, 200)"
-                        @focus="() => { bloco.showFundoDropdown = true }"
-                      />
-                      <div v-if="bloco.showFundoDropdown && fundosDisponiveis.filter(f => !bloco.fundoBusca || f.nome.toLowerCase().includes(bloco.fundoBusca.toLowerCase()) || f.cnpj.includes(bloco.fundoBusca)).length > 0" class="autocomplete-dropdown">
-                        <button
-                          v-for="f in fundosDisponiveis.filter(f => !bloco.fundoBusca || f.nome.toLowerCase().includes(bloco.fundoBusca.toLowerCase()) || f.cnpj.includes(bloco.fundoBusca)).slice(0, 8)"
-                          :key="f.cnpj"
-                          class="autocomplete-item"
-                          @mousedown.prevent="adicionarFundo(bloco, f)"
-                        >
-                          <span class="fundo-item-nome">{{ f.nome }}</span>
-                          <span class="fundo-item-cnpj">{{ f.cnpj }}</span>
-                        </button>
-                      </div>
-                    </div>
+                    <button class="btn-buscar-fundos" @click="abrirPopupFundos(bloco)">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                      Nome ou CNPJ do Fundo
+                    </button>
                     <span class="form-hint">{{ fundosDisponiveis.length }} fundos disponíveis</span>
                   </div>
 
@@ -616,6 +589,93 @@
       </template>
 
     </div>
+
+    <!-- ══ MODAL: BUSCA DE FUNDOS ══ -->
+    <teleport to="body">
+      <div v-if="popupFundos.aberto" class="modal-overlay" @click.self="fecharPopupFundos">
+        <div class="modal-fundos">
+          <!-- Header -->
+          <div class="modal-fundos__header">
+            <div>
+              <h3 class="modal-fundos__title">Buscar Fundos Disponíveis</h3>
+              <span class="modal-fundos__count">{{ fundosPopupFiltrados.length }} de {{ fundosDisponiveis.length }} fundos encontrados</span>
+            </div>
+            <div class="modal-fundos__header-right">
+              <!-- Termômetro de Risco -->
+              <div class="termometro-risco">
+                <span class="termometro-label">Muito baixo</span>
+                <div class="termometro-barra">
+                  <div class="termometro-fill"></div>
+                </div>
+                <span class="termometro-label">Média</span>
+                <div class="termometro-barra termometro-barra--mid">
+                  <div class="termometro-fill termometro-fill--mid"></div>
+                </div>
+                <span class="termometro-label">Muito alto</span>
+              </div>
+              <button class="modal-fundos__close" @click="fecharPopupFundos">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Campo de busca -->
+          <div class="modal-fundos__search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <input
+              v-model="popupFundos.busca"
+              type="text"
+              placeholder="Pesquisar por nome ou CNPJ do fundo..."
+              class="modal-fundos__input"
+              autofocus
+            />
+          </div>
+
+          <!-- Tabela de fundos -->
+          <div class="modal-fundos__table-wrapper">
+            <table class="modal-fundos__table">
+              <thead>
+                <tr>
+                  <th class="col-check"></th>
+                  <th class="col-nome">Nome</th>
+                  <th class="col-taxa">Taxa Máx. Adm. ▴▾</th>
+                  <th class="col-rent">Rentabilidade ▴▾</th>
+                  <th class="col-class">Classificação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="f in fundosPopupFiltrados"
+                  :key="f.cnpj"
+                  class="modal-fundos__row"
+                  :class="{ 'modal-fundos__row--selected': popupFundos.selecionados.includes(f.cnpj) }"
+                  @click="toggleFundoPopup(f)"
+                >
+                  <td class="col-check">
+                    <div class="modal-checkbox" :class="{ 'modal-checkbox--checked': popupFundos.selecionados.includes(f.cnpj) }">
+                      <svg v-if="popupFundos.selecionados.includes(f.cnpj)" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    </div>
+                  </td>
+                  <td class="col-nome">
+                    <div class="modal-fundo-nome">{{ f.nome }}</div>
+                    <div class="modal-fundo-cnpj">{{ f.cnpj }}</div>
+                  </td>
+                  <td class="col-taxa">{{ f.taxaAdm }}</td>
+                  <td class="col-rent">{{ f.rentabilidade }}</td>
+                  <td class="col-class">{{ f.classificacao }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Footer -->
+          <div class="modal-fundos__footer">
+            <span class="modal-fundos__footer-info">{{ popupFundos.selecionados.length }} fundo(s) selecionado(s)</span>
+            <button class="btn-confirmar-fundos" @click="confirmarFundosPopup">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </teleport>
   </AppShell>
 </template>
 
@@ -729,6 +789,62 @@ function adicionarFundo(bloco: BlocoAdicional, f: typeof fundosDisponiveis[0]) {
   bloco.showFundoDropdown = false
 }
 function removerFundo(bloco: BlocoAdicional, i: number) { bloco.fundosSelecionados.splice(i, 1) }
+
+// Pop-up de busca de fundos
+const popupFundos = reactive({
+  aberto: false,
+  busca: '',
+  selecionados: [] as string[], // CNPJs dos fundos selecionados no popup
+  blocoAtual: null as BlocoAdicional | null,
+})
+
+const fundosPopupFiltrados = computed(() => {
+  if (!popupFundos.busca) return fundosDisponiveis
+  const q = popupFundos.busca.toLowerCase()
+  return fundosDisponiveis.filter(f =>
+    f.nome.toLowerCase().includes(q) || f.cnpj.includes(q)
+  )
+})
+
+function abrirPopupFundos(bloco: BlocoAdicional) {
+  popupFundos.blocoAtual = bloco
+  popupFundos.busca = ''
+  // Pré-marcar os fundos já selecionados no bloco
+  popupFundos.selecionados = bloco.fundosSelecionados.map(f => f.cnpj)
+  popupFundos.aberto = true
+}
+
+function fecharPopupFundos() {
+  popupFundos.aberto = false
+  popupFundos.blocoAtual = null
+  popupFundos.busca = ''
+}
+
+function toggleFundoPopup(f: typeof fundosDisponiveis[0]) {
+  const idx = popupFundos.selecionados.indexOf(f.cnpj)
+  if (idx === -1) {
+    popupFundos.selecionados.push(f.cnpj)
+  } else {
+    popupFundos.selecionados.splice(idx, 1)
+  }
+}
+
+function confirmarFundosPopup() {
+  if (!popupFundos.blocoAtual) return
+  const bloco = popupFundos.blocoAtual
+  // Manter fundos já existentes que ainda estão selecionados
+  bloco.fundosSelecionados = bloco.fundosSelecionados.filter(fs =>
+    popupFundos.selecionados.includes(fs.cnpj)
+  )
+  // Adicionar novos fundos selecionados que ainda não existem no bloco
+  for (const cnpj of popupFundos.selecionados) {
+    if (!bloco.fundosSelecionados.find(fs => fs.cnpj === cnpj)) {
+      const f = fundosDisponiveis.find(fd => fd.cnpj === cnpj)
+      if (f) bloco.fundosSelecionados.push({ ...f, valorContrib: '', percContrib: '', valorAporte: '', percAporte: '' })
+    }
+  }
+  fecharPopupFundos()
+}
 
 // Pagamento Adicional
 const pagamentoAdicional = reactive<PagamentoAdicional>({
@@ -930,6 +1046,64 @@ watch(showContratacaoTab, (val) => {
 .mb-8 { margin-bottom: 8px; }
 .mb-16 { margin-bottom: 16px; }
 .mt-16 { margin-top: 16px; }
+
+/* Botão de abrir busca de fundos */
+.btn-buscar-fundos { display: flex; align-items: center; gap: 8px; width: 100%; padding: 9px 12px; background: white; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; font-family: var(--font-sans); font-size: 14px; color: #94a3b8; text-align: left; transition: border-color 0.15s; }
+.btn-buscar-fundos:hover { border-color: #94a3b8; }
+
+/* Modal overlay */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+
+/* Modal de fundos */
+.modal-fundos { background: white; border-radius: 12px; width: 680px; max-width: 95vw; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; }
+
+.modal-fundos__header { display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 24px 12px; border-bottom: 1px solid var(--border-color); gap: 16px; }
+.modal-fundos__title { font-family: var(--font-sans); font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0 0 4px; }
+.modal-fundos__count { font-size: 12px; color: var(--text-muted); }
+.modal-fundos__header-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.modal-fundos__close { background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; border-radius: 4px; display: flex; align-items: center; transition: color 0.12s; }
+.modal-fundos__close:hover { color: var(--text-primary); }
+
+/* Termômetro de Risco */
+.termometro-risco { display: flex; align-items: center; gap: 6px; }
+.termometro-label { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
+.termometro-barra { width: 48px; height: 8px; border-radius: 4px; background: linear-gradient(to right, #22c55e, #86efac); overflow: hidden; }
+.termometro-barra--mid { background: linear-gradient(to right, #fbbf24, #ef4444); }
+.termometro-fill { width: 100%; height: 100%; }
+
+/* Campo de busca do modal */
+.modal-fundos__search { display: flex; align-items: center; gap: 10px; padding: 12px 24px; border-bottom: 1px solid var(--border-color); }
+.modal-fundos__search svg { flex-shrink: 0; color: var(--text-muted); }
+.modal-fundos__input { flex: 1; border: none; outline: none; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); }
+.modal-fundos__input::placeholder { color: #94a3b8; }
+
+/* Tabela de fundos */
+.modal-fundos__table-wrapper { flex: 1; overflow-y: auto; }
+.modal-fundos__table { width: 100%; border-collapse: collapse; }
+.modal-fundos__table thead tr { border-bottom: 1px solid var(--border-color); background: #f8fafc; }
+.modal-fundos__table th { padding: 10px 12px; font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.5px; text-align: left; white-space: nowrap; }
+.modal-fundos__row { border-bottom: 1px solid #f1f5f9; cursor: pointer; transition: background-color 0.1s; }
+.modal-fundos__row:hover { background-color: #f8fafc; }
+.modal-fundos__row--selected { background-color: #eff6ff; }
+.modal-fundos__row--selected:hover { background-color: #dbeafe; }
+.modal-fundos__table td { padding: 10px 12px; font-family: var(--font-sans); font-size: 13px; color: var(--text-primary); vertical-align: middle; }
+.col-check { width: 40px; text-align: center; }
+.col-nome { min-width: 200px; }
+.col-taxa { width: 130px; }
+.col-rent { width: 120px; }
+.col-class { width: 110px; }
+.modal-fundo-nome { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+.modal-fundo-cnpj { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* Checkbox do modal */
+.modal-checkbox { width: 16px; height: 16px; border: 1.5px solid var(--border-color); border-radius: 3px; display: flex; align-items: center; justify-content: center; margin: 0 auto; transition: background-color 0.12s, border-color 0.12s; }
+.modal-checkbox--checked { background-color: var(--btn-primary-bg); border-color: var(--btn-primary-bg); }
+
+/* Footer do modal */
+.modal-fundos__footer { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; border-top: 1px solid var(--border-color); background: #f8fafc; }
+.modal-fundos__footer-info { font-size: 13px; color: var(--text-muted); }
+.btn-confirmar-fundos { font-family: var(--font-sans); font-size: 14px; font-weight: 500; padding: 9px 24px; border-radius: 8px; border: none; cursor: pointer; background-color: var(--btn-primary-bg); color: var(--btn-primary-color); transition: opacity 0.15s; }
+.btn-confirmar-fundos:hover { opacity: 0.85; }
 
 .page-footer { display: flex; justify-content: flex-end; padding-top: 24px; }
 .btn-primary { font-family: var(--font-sans); font-size: 14px; font-weight: 500; padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; background-color: var(--btn-primary-bg); color: var(--btn-primary-color); transition: opacity 0.15s; line-height: 1; }
