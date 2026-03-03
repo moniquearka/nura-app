@@ -37,6 +37,77 @@
             <div class="field-item"><span class="field-label">Renda Mensal</span><span class="field-value">R$ 18.000,00</span></div>
             <div class="field-item"><span class="field-label">Ocupação</span><span class="field-value">Gerente de Marketing</span></div>
             <div class="field-item"><span class="field-label">Empresa</span><span class="field-value">Tech Solutions Brasil</span></div>
+            <div class="field-item"><span class="field-label">Origem da Renda</span><span class="field-value">Salário CLT</span></div>
+            <div class="field-item"><span class="field-label">Patrimônio</span><span class="field-value">R$ 350.000,00</span></div>
+            <div class="field-item"><span class="field-label">Nacionalidade</span><span class="field-value">Brasileira</span></div>
+          </div>
+
+          <!-- Pessoa Politicamente Exposta e US Person -->
+          <div class="proponente-flags">
+            <div class="proponente-flag-row">
+              <span class="field-label">Pessoa Politicamente Exposta?</span>
+              <div class="flag-radio-group">
+                <label class="flag-radio-label">
+                  <input type="radio" v-model="proponente.pessoaPolitica" value="sim" class="radio-input" />
+                  <span>Sim</span>
+                </label>
+                <label class="flag-radio-label">
+                  <input type="radio" v-model="proponente.pessoaPolitica" value="nao" class="radio-input" />
+                  <span>Não</span>
+                </label>
+              </div>
+            </div>
+            <div class="proponente-flag-row">
+              <span class="field-label">É US Person?</span>
+              <div class="flag-radio-group">
+                <label class="flag-radio-label">
+                  <input type="radio" v-model="proponente.usPerson" value="sim" class="radio-input" />
+                  <span>Sim</span>
+                </label>
+                <label class="flag-radio-label">
+                  <input type="radio" v-model="proponente.usPerson" value="nao" class="radio-input" />
+                  <span>Não</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dados Residenciais -->
+          <div class="proponente-residencial">
+            <h4 class="subsection-divider-title">Dados Residenciais</h4>
+            <div class="field-grid field-grid--3">
+              <div class="form-field">
+                <label class="field-label">CEP</label>
+                <input v-model="proponente.cep" type="text" class="form-input" placeholder="00000-000" maxlength="9" @input="onCepInput" />
+              </div>
+              <div class="form-field" style="grid-column: span 2">
+                <label class="field-label">Rua</label>
+                <input v-model="proponente.rua" type="text" class="form-input" placeholder="Nome da rua" />
+              </div>
+              <div class="form-field">
+                <label class="field-label">Número</label>
+                <input v-model="proponente.numero" type="text" class="form-input" placeholder="123" />
+              </div>
+              <div class="form-field">
+                <label class="field-label">Complemento</label>
+                <input v-model="proponente.complemento" type="text" class="form-input" placeholder="Apto, sala, etc." />
+              </div>
+              <div class="form-field">
+                <label class="field-label">Bairro</label>
+                <input v-model="proponente.bairro" type="text" class="form-input" placeholder="Bairro" />
+              </div>
+              <div class="form-field" style="grid-column: span 2">
+                <label class="field-label">Município</label>
+                <input v-model="proponente.municipio" type="text" class="form-input" placeholder="Cidade" />
+              </div>
+              <div class="form-field">
+                <label class="field-label">Estado</label>
+                <select v-model="proponente.estado" class="form-select">
+                  <option value="">Selecione</option>
+                  <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -644,6 +715,37 @@ interface PagamentoData {
   rfNome?: string; rfCpf?: string; rfDataNasc?: string; rfTelefone?: string; rfEmail?: string
 }
 
+// Estado do Proponente (campos adicionais)
+const proponente = reactive({
+  pessoaPolitica: 'nao',
+  usPerson: 'nao',
+  cep: '',
+  rua: '',
+  numero: '',
+  complemento: '',
+  bairro: '',
+  municipio: '',
+  estado: '',
+})
+
+const ufs = ['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO']
+
+async function onCepInput() {
+  const raw = proponente.cep.replace(/\D/g, '')
+  if (raw.length === 8) {
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${raw}/json/`)
+      const data = await res.json()
+      if (!data.erro) {
+        proponente.rua = data.logradouro || ''
+        proponente.bairro = data.bairro || ''
+        proponente.municipio = data.localidade || ''
+        proponente.estado = data.uf || ''
+      }
+    } catch {}
+  }
+}
+
 const tabs = [
   { label: 'Detalhamento da Proposta' },
   { label: 'Beneficiários', subTabs: ['Previdência', 'Seguro de Vida'] },
@@ -778,4 +880,12 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .radio-group-inline { display: flex; flex-direction: row; gap: 20px; flex-shrink: 0; }
 .opcoes-divider { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0 16px; }
 .opcoes-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin: 0 0 12px; }
+/* Proponente — flags e dados residenciais */
+.proponente-flags { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
+.proponente-flag-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.proponente-flag-row .field-label { font-size: 13px; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--text-primary); min-width: 220px; }
+.flag-radio-group { display: flex; flex-direction: row; gap: 20px; }
+.flag-radio-label { display: flex; align-items: center; gap: 7px; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); cursor: pointer; }
+.proponente-residencial { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
+.subsection-divider-title { font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: var(--text-primary); margin: 0 0 16px; text-transform: uppercase; letter-spacing: 0.5px; font-size: 11px; color: var(--text-label); }
 </style>
