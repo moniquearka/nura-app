@@ -448,11 +448,22 @@
           <!-- Previdência -->
           <div class="review-subtab-header">Previdência</div>
           <div class="field-grid field-grid--3 mb-16">
-            <div class="field-item"><span class="field-label">Tipo de Plano</span><span class="field-value">PGBL</span></div>
+            <div class="field-item"><span class="field-label">Tipo de Investimento</span><span class="field-value">Previdência</span></div>
+            <div class="field-item"><span class="field-label">Idade que Deseja se Aposentar</span><span class="field-value">60 anos</span></div>
+            <div class="field-item"><span class="field-label">Tipo de Plano</span><span class="field-value"><span class="badge badge--neutral">PGBL</span></span></div>
             <div class="field-item"><span class="field-label">Contribuição Mensal</span><span class="field-value">R$ 1.650,00</span></div>
-            <div class="field-item"><span class="field-label">Aporte Inicial</span><span class="field-value">R$ 10.000,00</span></div>
-            <div class="field-item"><span class="field-label">Idade de Aposentadoria</span><span class="field-value">60 anos</span></div>
-            <div class="field-item"><span class="field-label">Fundo</span><span class="field-value">Absolute Atenas Icatu Prev FIC FIRF CP</span></div>
+            <div class="field-item"><span class="field-label">Valor do Aporte Inicial</span><span class="field-value">R$ 10.000,00</span></div>
+          </div>
+          <div class="fund-card mb-16">
+            <div class="fund-card__header">
+              <span class="fund-card__name">Absolute Atenas Icatu Prev FIC FIRF CP</span>
+              <span class="fund-card__cnpj">47.612.701/0001-45</span>
+            </div>
+            <div class="fund-card__body">
+              <div class="fund-card__row"><span class="fund-card__label">CONTRIBUIÇÃO MENSAL:</span><span class="fund-card__text">Valor Atribuído <strong>R$ 1.650,00</strong></span><span class="fund-card__text">Percentual Atribuído <strong>100%</strong></span></div>
+              <div class="fund-card__row"><span class="fund-card__label">APORTE INICIAL:</span><span class="fund-card__text">Valor Atribuído <strong>R$ 10.000,00</strong></span><span class="fund-card__text">Percentual Atribuído <strong>100%</strong></span></div>
+              <div class="fund-card__meta"><span>Taxa Máx. Adm.: <strong>0,98% a.a.</strong></span><span>Rentabilidade: <strong>—</strong></span><span>Classificação: <strong>Renda Fixa</strong></span></div>
+            </div>
           </div>
 
           <!-- Separador -->
@@ -460,11 +471,34 @@
 
           <!-- Seguro de Vida -->
           <div class="review-subtab-header">Seguro de Vida</div>
-          <div class="field-grid field-grid--3">
+          <div class="field-grid field-grid--3 mb-16">
+            <div class="field-item"><span class="field-label">Tipo de Investimento</span><span class="field-value">Seguro de Vida</span></div>
             <div class="field-item"><span class="field-label">Produto</span><span class="field-value">Horizonte</span></div>
-            <div class="field-item"><span class="field-label">Contribuição Mensal</span><span class="field-value">R$ 2.500,00</span></div>
-            <div class="field-item"><span class="field-label">Data de Emissão</span><span class="field-value">{{ emissaoDate }}</span></div>
           </div>
+          <div class="product-card mb-12">
+            <span class="product-card__name">Horizonte</span>
+            <p class="product-card__desc">O Horizonte é o seguro de vida que oferece a combinação perfeita entre proteção e a possibilidade de formação de reserva, de forma temporária ou durante toda a vida.</p>
+          </div>
+          <table class="coverage-table">
+            <thead><tr><th>Cobertura</th><th>Vigência</th><th>Prazo de Pagamento</th><th>Capital Segurado</th><th>Contribuição Mensal</th></tr></thead>
+            <tbody>
+              <tr><td>Morte Natural ou Acidental + Adiantamento por Doença Terminal (obrigatório)</td><td>Vitalícia</td><td>—</td><td>R$ 2.961.000,00</td><td><strong>R$ 1.184,40</strong></td></tr>
+              <tr><td>Indenização Especial de Morte por Acidente (IEA)</td><td>Vitalícia</td><td>—</td><td>R$ 1.484.000,00</td><td><strong>R$ 593,60</strong></td></tr>
+              <tr><td>Invalidez Permanente por Acidente - Total ou Parcial (IPA)</td><td>Vitalícia</td><td>—</td><td>R$ 1.484.000,00</td><td><strong>R$ 593,60</strong></td></tr>
+              <tr><td>Indenização Especial de Invalidez por Doença (IED)</td><td>Vitalícia</td><td>—</td><td>R$ 155.000,00</td><td><strong>R$ 62,00</strong></td></tr>
+              <tr><td>Doenças Graves (DG)</td><td>Vitalícia</td><td>—</td><td>R$ 155.000,00</td><td><strong>R$ 62,00</strong></td></tr>
+              <tr><td>Diária por Incapacidade Temporária (DIT)</td><td>Vitalícia</td><td>—</td><td>R$ 4.000,00</td><td><strong>R$ 1,60</strong></td></tr>
+              <tr><td>Diária por Internação Hospitalar (DIH)</td><td>Vitalícia</td><td>—</td><td>R$ 2.000,00</td><td><strong>R$ 0,80</strong></td></tr>
+              <tr><td>Serviço de Assistência Funeral (SAF)</td><td>Vitalícia</td><td>—</td><td>R$ 5.000,00</td><td><strong>R$ 2,00</strong></td></tr>
+            </tbody>
+            <tfoot>
+              <tr class="coverage-table__total">
+                <td colspan="3"><strong>Total</strong></td>
+                <td>—</td>
+                <td>R$ 2.500,00/mês</td>
+              </tr>
+            </tfoot>
+          </table>
         </div>
 
         <!-- Beneficiários — separado por sub-aba -->
