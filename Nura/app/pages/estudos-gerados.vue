@@ -50,14 +50,14 @@
               </span>
             </td>
 
-            <!-- Estudo Gerado (clique no nome → aliaplan) -->
+            <!-- Estudo Gerado (clique no nome → download PDF) -->
             <td class="col-study">
-              <a href="https://aliaplan.zooxsmart.com/" target="_blank" class="study-link" @click.stop>
+              <span class="study-link" @click.stop="downloadPdf(study)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" class="study-link__icon">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 {{ study.name }}
-              </a>
+              </span>
             </td>
 
             <!-- Produtos Selecionados -->
@@ -172,12 +172,45 @@ function duplicateStudy(study: Study) {
 }
 
 function downloadPdf(study: Study) {
-  // Simula download do PDF gerado no aliaplan
+  // Gera nome dinâmico do arquivo baseado no nome do estudo
+  // Ex: "Estudo Taís Oliveira Costa — v1" → "Revisão do Estudo_Taís Oliveira Costa_030326_v1.pdf"
+  // Ex: "Estudo Taís Oliveira Costa — v2 (cópia)" → "Revisão do Estudo_Taís Oliveira Costa_030326_v2-cópia.pdf"
+  const today = new Date()
+  const dd = String(today.getDate()).padStart(2, '0')
+  const mm = String(today.getMonth() + 1).padStart(2, '0')
+  const yy = String(today.getFullYear()).slice(-2)
+  const dateStr = `${dd}${mm}${yy}`
+
+  // Extrai versão e sufixo do nome do estudo
+  // Formato esperado: "Estudo {Nome} — v{N}" ou "Estudo {Nome} — v{N} (cópia)"
+  const versionMatch = study.name.match(/—\s*v(\d+)(.*)$/)
+  let versionSuffix = ''
+  if (versionMatch) {
+    const vNum = versionMatch[1]
+    const extra = versionMatch[2].trim()
+    if (extra) {
+      // Remove parênteses e substitui espaços por hífen
+      const extraClean = extra.replace(/[()]/g, '').trim().replace(/\s+/g, '-')
+      versionSuffix = `_v${vNum}-${extraClean}`
+    } else {
+      versionSuffix = `_v${vNum}`
+    }
+  }
+
+  // Extrai o nome do cliente do estudo (entre "Estudo " e " —")
+  const clientMatch = study.name.match(/^Estudo\s+(.+?)\s+—/)
+  const clientName = clientMatch ? clientMatch[1] : 'Cliente'
+
+  const fileName = `Revisão do Estudo_${clientName}_${dateStr}${versionSuffix}.pdf`
+
+  // Faz download real do PDF armazenado na pasta public/assets
   const link = document.createElement('a')
-  link.href = 'https://aliaplan.zooxsmart.com/'
-  link.target = '_blank'
-  link.rel = 'noopener noreferrer'
+  // Usa URL encoded para garantir compatibilidade cross-browser com caracteres especiais
+  link.href = '/assets/Revis%C3%A3o%20do%20Estudo_Ta%C3%ADs%20Oliveira%20Costa_030326.pdf'
+  link.download = fileName
+  document.body.appendChild(link)
   link.click()
+  document.body.removeChild(link)
 }
 
 function gerarProposta() {
