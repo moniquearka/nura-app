@@ -1,0 +1,353 @@
+import React, { createContext, useContext, useState } from "react";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+export interface FundoSelecionado {
+  nome: string;
+  cnpj: string;
+  tipo: string;
+  taxaAdm: string;
+  taxaAdmMax?: string;       // Taxa Máxima de Administração
+  taxaPerformance?: string | null; // null = "Não há" / undefined = não carregado
+  rentabilidade?: string;    // Rentabilidade do fundo
+  classificacao?: string;    // Classificação do fundo
+  // Campos de Contribuição Mensal
+  percentual: string;        // percentual da contribuição mensal
+  valorAtribuido: string;    // valor da contribuição mensal
+  // Campos de Aporte Inicial
+  percentualAporte: string;  // percentual do aporte inicial
+  valorAporte: string;       // valor do aporte inicial
+  processoSusep: string;
+}
+
+export interface Cobertura {
+  nome: string;
+  valorMin: string;   // Capital Segurado mínimo (referência)
+  valorMax: string;   // Capital Segurado máximo (referência)
+  vigencia: string;   // Vitalícia | Temporária 5/10/15/20/25 anos
+  prazoPagamento: string;  // Prazo de Pagamento (texto livre)
+  capitalSegurado: string; // Capital Segurado calculado (média min/max)
+  contribuicaoMensal: string; // Contribuição Mensal calculada
+}
+
+// SubPlano: bloco de Contribuição Mensal + Aporte + Fundos dentro de um Plano de Previdência
+export interface SubPlano {
+  id: string;
+  contribuicaoMensal: string;
+  aporteInicial: string;
+  fundos: FundoSelecionado[];
+  tipoPlano: string;
+  riskValue: number;
+}
+
+export interface Plano {
+  id: string;
+  tipo: "previdencia" | "seguro";
+  idadeAposentadoria: string;
+  // For previdencia: sub-planos (contribuição + fundos)
+  subPlanos: SubPlano[];
+  // For seguro
+  capitalSegurado: string;
+  premioMensal: string;
+  produtoRecomendado: string;
+  vigencia: string;
+  tempoContribuicao: string;
+  coberturas: Cobertura[];
+}
+
+export interface Proponente {
+  nomeCompleto: string;
+  nomeSocial: string;
+  cpf: string;
+  dataNascimento: string;
+  telefone: string;
+  email: string;
+  rendaMensal: string;
+  ocupacao: string;
+  empresa: string;
+}
+
+export interface DetalhamentoData {
+  proponente: Proponente;
+  planos: Plano[];
+}
+
+export interface Vulnerabilidade {
+  iconKey: string;
+  titulo: string;
+  descricao: string;
+  solucao: string;
+}
+
+export interface TimelineItem {
+  periodo: string;
+  titulo: string;
+  descricao: string;
+  riscoLabel: string;
+  riscos: string[];
+}
+
+export interface ProtegeItem {
+  titulo: string;
+  subtitulo: string;
+  valor: string;
+}
+
+export interface ResumoData {
+  perfil: { tipo: string; descricao: string };
+  cenario: { titulo: string; itens: string[] };
+  vulnerabilidades: Vulnerabilidade[];
+  timeline: TimelineItem[];
+  protege: ProtegeItem[];
+  garante: { comProtecao: string[] };
+  solucoes: {
+    protecao: { valor: string; percentual: string; itens: string[] };
+    previdencia: { valor: string; percentual: string; itens: string[]; citacao: string };
+  };
+  visaoLongoPrazo?: string;
+}
+
+// ─── Initial Data ─────────────────────────────────────────────────────────────
+
+const initialResumoData: ResumoData = {
+  perfil: {
+    tipo: "EXECUTORA - ANALÍTICA - CONSERVADORA",
+    descricao:
+      "Orientada a resultados, toma decisões financeiras com cautela e conservadorismo, priorizando a segurança familiar e a previsibilidade do futuro.",
+  },
+  cenario: {
+    titulo: "Impacto da perda de uma renda:",
+    itens: [
+      "Perda imediata de 42% a 58% da renda familiar",
+      "Patrimônio consumido em ~27 meses",
+      "Futuro dos filhos comprometido",
+    ],
+  },
+  vulnerabilidades: [
+    {
+      iconKey: "Users",
+      titulo: "Ausência Prematura",
+      descricao:
+        "Impacto severo no padrão de vida dos filhos e dependentes devido à perda da renda principal.",
+      solucao: "Seguro de Vida Vitalício",
+    },
+    {
+      iconKey: "Briefcase",
+      titulo: "Invalidez Laborativa",
+      descricao:
+        "Interrupção da capacidade de gerar receita por doença ou acidente, comprometendo o fluxo de caixa.",
+      solucao: "Seguro de Invalidez + DIT",
+    },
+    {
+      iconKey: "Heart",
+      titulo: "Doenças Graves",
+      descricao:
+        "Custos elevados de tratamento que podem consumir rapidamente a reserva de liquidez e investimentos.",
+      solucao: "Cobertura para Doenças Graves",
+    },
+    {
+      iconKey: "Shield",
+      titulo: "Sucessão Patrimonial",
+      descricao:
+        "Custos de inventário e impostos (ITCMD) podem bloquear até 20% do patrimônio familiar.",
+      solucao: "Seguro para Custeio de Inventário",
+    },
+    {
+      iconKey: "TrendingUp",
+      titulo: "Longevidade Financeira",
+      descricao:
+        "Risco de sobreviver à capacidade da reserva financeira acumulada (viver mais que o dinheiro).",
+      solucao: "Aporte em Previdência Privada",
+    },
+  ],
+  timeline: [
+    {
+      periodo: "HOJE (40 ANOS)",
+      titulo: "Momento Atual",
+      descricao: "Estabilidade na carreira, renda sólida, patrimônio em formação (R$ 800k).",
+      riscoLabel: "RISCO ATUAL",
+      riscos: [
+        "ZERO Proteção",
+        "Perda de renda = Déficit",
+        "Patrimônio acaba em 27 meses",
+        "Família exposta",
+      ],
+    },
+    {
+      periodo: "PRÓXIMOS 3-5 ANOS",
+      titulo: "Crescimento Profissional",
+      descricao: "Ambição de ascender ao cargo de Diretoria. Potencial aumento de renda.",
+      riscoLabel: "RISCO PROFISSIONAL",
+      riscos: [
+        "Renda concentrada em CLT",
+        "Pretensão não alcançada",
+        "Estresse/Burnout",
+      ],
+    },
+    {
+      periodo: "PRÓXIMOS 5-10 ANOS",
+      titulo: "Educação dos Filhos",
+      descricao: "Custos elevados com escola e faculdade (R$ 300-500k). Possível intercâmbio.",
+      riscoLabel: "RISCO EDUCACIONAL",
+      riscos: [
+        "Inflação Educacional",
+        "Interrupção dos estudos",
+        "Perda do padrão escolar",
+      ],
+    },
+    {
+      periodo: "PRÓXIMOS 10-20 ANOS",
+      titulo: "Transição de Carreira",
+      descricao: "Decisão de empreender em negócio próprio.",
+      riscoLabel: "RISCO FINANCEIRO",
+      riscos: [
+        "Baixa reserva financeira devido a altos custos ao longo dos anos",
+        "Falta de backup familiar",
+        "Fracasso do negócio",
+      ],
+    },
+    {
+      periodo: "EM 20 ANOS (60 ANOS)",
+      titulo: "Aposentadoria Planejada",
+      descricao: "Objetivo: Renda mensal de R$ 29k. Necessidade de patrimônio de R$ 4,2M.",
+      riscoLabel: "RISCO LONGEVIDADE",
+      riscos: [
+        "Custos médicos altos",
+        "Depender dos filhos",
+        "Patrimônio insuficiente",
+      ],
+    },
+  ],
+  protege: [
+    { titulo: "Educação dos Filhos", subtitulo: "Faculdade + Intercâmbio", valor: "R$ 1,1 Milhão" },
+    { titulo: "Empreendedorismo", subtitulo: "Capital Inicial + Reserva", valor: "R$ 700 Mil" },
+    { titulo: "Aposentadoria", subtitulo: "Patrimônio Necessário", valor: "R$ 4 Milhões" },
+    { titulo: "Patrimônio Atual", subtitulo: "Investimentos", valor: "R$ 800 Mil" },
+  ],
+  garante: {
+    comProtecao: [
+      "Patrimônio Intacto",
+      "Faculdade Garantida",
+      "Renda Vitalícia Mantida",
+    ],
+  },
+  solucoes: {
+    protecao: {
+      valor: "R$ 2.500,00",
+      percentual: "18",
+      itens: [
+        "Tranquilidade total para a família",
+        "Educação garantida até a faculdade",
+        "Proteção do patrimônio de R$ 800.000",
+        "Segurança para empreender",
+      ],
+    },
+    previdencia: {
+      valor: "R$ 1.650,00",
+      percentual: "12",
+      itens: ["Aposentadoria com alta renda"],
+      citacao: "A estabilidade financeira não é apenas sobre quanto você ganha ou tem, mas sobre quanto você está protegido contra imprevistos.",
+    },
+  },
+};
+
+const initialDetalhamentoData: DetalhamentoData = {
+  proponente: {
+    nomeCompleto: "Taís Oliveira Costa",
+    nomeSocial: "",
+    cpf: "123.456.789-00",
+    dataNascimento: "1984-05-15",
+    telefone: "(21) 99999-0000",
+    email: "tais.oliveira@email.com",
+    rendaMensal: "R$ 18.000,00",
+    ocupacao: "Gerente de Marketing",
+    empresa: "Medley Farmacêutica Ltda.",
+  },
+  planos: [
+    {
+      id: "prev-1",
+      tipo: "previdencia",
+      idadeAposentadoria: "60 anos",
+      subPlanos: [
+        {
+          id: "sub-1",
+          contribuicaoMensal: "R$ 1.650,00",
+          aporteInicial: "R$ 10.000,00",
+          tipoPlano: "PGBL",
+          riskValue: 30,
+          fundos: [
+            {
+              nome: "Absolute Atenas Icatu Prev FIC FIRF CP",
+              cnpj: "47.612.701/0001-45",
+              tipo: "PGBL",
+              taxaAdm: "0.98% a.a.",
+              taxaAdmMax: "0,98% a.a.",
+              classificacao: "Renda Fixa",
+              rentabilidade: "-",
+              percentual: "100",
+              valorAtribuido: "R$ 1.650,00",
+              percentualAporte: "100",
+              valorAporte: "R$ 10.000,00",
+              processoSusep: "15414.634898/2022-43",
+            },
+          ],
+        },
+      ],
+      capitalSegurado: "",
+      premioMensal: "",
+      produtoRecomendado: "",
+      vigencia: "",
+      tempoContribuicao: "",
+      coberturas: [],
+    },
+    {
+      id: "seg-1",
+      tipo: "seguro",
+      idadeAposentadoria: "",
+      subPlanos: [],
+      capitalSegurado: "R$ 2.000.000,00",
+      premioMensal: "R$ 2.500,00",
+      produtoRecomendado: "Horizonte",
+      vigencia: "Vitalícia",
+      tempoContribuicao: "20 anos",
+      coberturas: [
+        { nome: "Morte Natural ou Acidental + Adiantamento por Doença Terminal (obrigatório)", valorMin: "R$ 50.000,00", valorMax: "R$ 20.000.000,00", vigencia: "Vitalícia", prazoPagamento: "", capitalSegurado: "R$ 2.961.000,00", contribuicaoMensal: "R$ 1.184,40" },
+        { nome: "Indenização Especial de Morte por Acidente (IEA)", valorMin: "R$ 50.000,00", valorMax: "R$ 10.000.000,00", vigencia: "Vitalícia", prazoPagamento: "", capitalSegurado: "R$ 1.484.000,00", contribuicaoMensal: "R$ 593,60" },
+        { nome: "Invalidez Permanente por Acidente - Total ou Parcial (IPA)", valorMin: "R$ 50.000,00", valorMax: "R$ 10.000.000,00", vigencia: "Vitalícia", prazoPagamento: "", capitalSegurado: "R$ 1.484.000,00", contribuicaoMensal: "R$ 593,60" },
+        { nome: "Indenização Especial de Invalidez por Doença (IED)", valorMin: "R$ 50.000,00", valorMax: "R$ 1.000.000,00", vigencia: "Vitalícia", prazoPagamento: "", capitalSegurado: "R$ 155.000,00", contribuicaoMensal: "R$ 62,00" },
+        { nome: "Doenças Graves (DG)", valorMin: "R$ 50.000,00", valorMax: "R$ 1.000.000,00", vigencia: "Vitalícia", prazoPagamento: "", capitalSegurado: "R$ 155.000,00", contribuicaoMensal: "R$ 62,00" },
+        { nome: "Diária por Incapacidade Temporária (DIT)", valorMin: "R$ 1,00", valorMax: "R$ 30.000,00", vigencia: "Vitalícia", prazoPagamento: "", capitalSegurado: "R$ 4.000,00", contribuicaoMensal: "R$ 1,60" },
+        { nome: "Diária por Internação Hospitalar (DIH)", valorMin: "R$ 100,00", valorMax: "R$ 1.000,00", vigencia: "Vitalícia", prazoPagamento: "", capitalSegurado: "R$ 2.000,00", contribuicaoMensal: "R$ 0,80" },
+        { nome: "Serviço de Assistência Funeral (SAF)", valorMin: "R$ 21.000,00", valorMax: "R$ 12.000,00", vigencia: "Vitalícia", prazoPagamento: "", capitalSegurado: "R$ 5.000,00", contribuicaoMensal: "R$ 2,00" },
+      ],
+    },
+  ],
+};
+
+// ─── Context ──────────────────────────────────────────────────────────────────
+
+interface JornadaContextType {
+  resumoData: ResumoData;
+  saveResumoData: (data: ResumoData) => void;
+  detalhamentoData: DetalhamentoData;
+  saveDetalhamentoData: (data: DetalhamentoData) => void;
+}
+
+const JornadaContext = createContext<JornadaContextType | null>(null);
+
+export function JornadaProvider({ children }: { children: React.ReactNode }) {
+  const [resumoData, saveResumoData] = useState<ResumoData>(initialResumoData);
+  const [detalhamentoData, saveDetalhamentoData] = useState<DetalhamentoData>(initialDetalhamentoData);
+
+  return (
+    <JornadaContext.Provider value={{ resumoData, saveResumoData, detalhamentoData, saveDetalhamentoData }}>
+      {children}
+    </JornadaContext.Provider>
+  );
+}
+
+export function useJornada() {
+  const ctx = useContext(JornadaContext);
+  if (!ctx) throw new Error("useJornada must be used within JornadaProvider");
+  return ctx;
+}
