@@ -50,8 +50,8 @@
               <span class="field-value">60 anos</span>
             </div>
             <div class="field-item"><span class="field-label">Tipo de Plano</span><span class="field-value"><span class="badge badge--neutral">PGBL</span></span></div>
-            <div class="field-item"><span class="field-label">Contribuição Mensal</span><span class="field-value field-value--lg">R$ 1.650,00</span></div>
-            <div class="field-item"><span class="field-label">Valor do Aporte Inicial</span><span class="field-value field-value--lg">R$ 10.000,00</span></div>
+            <div class="field-item"><span class="field-label">Contribuição Mensal</span><span class="field-value">R$ 1.650,00</span></div>
+            <div class="field-item"><span class="field-label">Valor do Aporte Inicial</span><span class="field-value">R$ 10.000,00</span></div>
           </div>
           <div class="fund-card mt-16">
             <div class="fund-card__header">
@@ -89,6 +89,13 @@
               <tr><td>Diária por Internação Hospitalar (DIH)</td><td>Vitalícia</td><td>—</td><td>R$ 2.000,00</td><td><strong>R$ 0,80</strong></td></tr>
               <tr><td>Serviço de Assistência Funeral (SAF)</td><td>Vitalícia</td><td>—</td><td>R$ 5.000,00</td><td><strong>R$ 2,00</strong></td></tr>
             </tbody>
+            <tfoot>
+              <tr class="coverage-table__total">
+                <td colspan="3"><strong>Total</strong></td>
+                <td>—</td>
+                <td>R$ 2.500,00/mês</td>
+              </tr>
+            </tfoot>
           </table>
         </div>
 
@@ -218,12 +225,9 @@
         <template v-if="activeSubTab === 0">
           <div class="section-card">
             <h3 class="section-card__title">Forma de Pagamento — Previdência</h3>
-            <div class="field-block">
-              <span class="field-label">Forma de Pagamento</span>
-              <div class="radio-group">
-                <label class="radio-item"><input v-model="pagamentoPrev.forma" type="radio" value="debito" class="radio-input" /><span class="radio-label">Débito em Conta Corrente</span></label>
-                <label class="radio-item"><input v-model="pagamentoPrev.forma" type="radio" value="boleto" class="radio-input" /><span class="radio-label">Boleto Bancário</span></label>
-              </div>
+            <div class="radio-group mb-16">
+              <label class="radio-item"><input v-model="pagamentoPrev.forma" type="radio" value="debito" class="radio-input" /><span class="radio-label">Débito em Conta Corrente</span></label>
+              <label class="radio-item"><input v-model="pagamentoPrev.forma" type="radio" value="boleto" class="radio-input" /><span class="radio-label">Boleto Bancário</span></label>
             </div>
 
             <!-- Débito em Conta Corrente -->
@@ -251,14 +255,13 @@
               </div>
               <div class="info-box-blue mt-12">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <span>O débito será realizado automaticamente no {{ pagamentoPrev.diaVencimento || 'dia selecionado' }} de cada mês. Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento.<br>Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.</span>
+                <span>O débito será realizado automaticamente no {{ pagamentoPrev.diaVencimento || 'dia selecionado' }} de cada mês.<br>Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento.<br>Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.</span>
               </div>
             </template>
 
             <!-- Boleto Bancário -->
             <template v-if="pagamentoPrev.forma === 'boleto'">
               <div class="field-grid field-grid--2 mt-16">
-                <div class="form-field"><label class="field-label">Titular da Conta</label><input v-model="pagamentoPrev.titular" type="text" class="form-input" placeholder="Digite o nome completo" /></div>
                 <div class="form-field">
                   <label class="field-label">Dia de Vencimento</label>
                   <select v-model="pagamentoPrev.diaVencimento" class="form-select">
@@ -266,12 +269,33 @@
                     <option v-for="d in [5,10,15,20,25]" :key="d" :value="`Dia ${d}`">Dia {{ d }}</option>
                   </select>
                 </div>
-                <div class="form-field"><label class="field-label">CPF do Titular</label><input v-model="pagamentoPrev.cpfTitular" type="text" class="form-input" placeholder="000.000.000-00" /></div>
               </div>
-              <p class="prazo-cotizacao mt-12"><strong>Prazo de cotização — Boleto:</strong> Até 5 dias úteis para compensação do pagamento + 2 dias úteis para atualização de saldo.</p>
-              <div class="info-box-yellow mt-8">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                <span><strong>Atenção:</strong> Após a emissão do certificado, a seguradora enviará o boleto em até 5 dias úteis para o e-mail cadastrado. Fique atento à caixa de Spam. Caso tenha selecionado a opção de um aporte único e contribuições mensais, esta primeira boleto será a soma destes valores.</span>
+              <div class="info-box-blue mt-12">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span><strong>Atenção:</strong> Após a emissão do certificado, a seguradora enviará o boleto em até 5 dias úteis para o e-mail cadastrado. Fique atento à caixa de Spam.<br>Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro boleto será a soma destes valores. Este será emitido somente após a conclusão da contratação da proposta.</span>
+              </div>
+            </template>
+
+            <!-- Pergunta Responsável Financeiro -->
+            <div class="field-block mt-20">
+              <span class="field-label">Dados do Responsável Financeiro serão os mesmos aos Dados do Proponente?</span>
+              <div class="radio-group mt-8">
+                <label class="radio-item"><input v-model="pagamentoPrev.respFinanceiro" type="radio" value="sim" class="radio-input" @change="preencherRespFinanceiroPrev" /><span class="radio-label">Sim</span></label>
+                <label class="radio-item"><input v-model="pagamentoPrev.respFinanceiro" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
+              </div>
+            </div>
+
+            <!-- Dados do Responsável Financeiro (quando Não) -->
+            <template v-if="pagamentoPrev.respFinanceiro === 'nao'">
+              <div class="section-card mt-16" style="background:#f8fafc;">
+                <h4 class="subsection-title" style="margin-top:0">Dados do Responsável Financeiro</h4>
+                <div class="field-grid field-grid--3">
+                  <div class="form-field"><label class="field-label">Nome Completo</label><input v-model="pagamentoPrev.rfNome" type="text" class="form-input" /></div>
+                  <div class="form-field"><label class="field-label">CPF</label><input v-model="pagamentoPrev.rfCpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
+                  <div class="form-field"><label class="field-label">Data de Nascimento</label><input v-model="pagamentoPrev.rfDataNasc" type="date" class="form-input" /></div>
+                  <div class="form-field"><label class="field-label">Telefone</label><input v-model="pagamentoPrev.rfTelefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
+                  <div class="form-field"><label class="field-label">E-mail</label><input v-model="pagamentoPrev.rfEmail" type="email" class="form-input" /></div>
+                </div>
               </div>
             </template>
 
@@ -287,13 +311,10 @@
         <template v-if="activeSubTab === 1">
           <div class="section-card">
             <h3 class="section-card__title">Forma de Pagamento — Seguro de Vida</h3>
-            <div class="field-block">
-              <span class="field-label">Forma de Pagamento</span>
-              <div class="radio-group">
-                <label class="radio-item"><input v-model="pagamentoSeguro.forma" type="radio" value="debito" class="radio-input" /><span class="radio-label">Débito em Conta Corrente</span></label>
-                <label class="radio-item"><input v-model="pagamentoSeguro.forma" type="radio" value="boleto" class="radio-input" /><span class="radio-label">Boleto Bancário</span></label>
-                <label class="radio-item"><input v-model="pagamentoSeguro.forma" type="radio" value="cartao" class="radio-input" /><span class="radio-label">Cartão de Crédito</span></label>
-              </div>
+            <div class="radio-group mb-16">
+              <label class="radio-item"><input v-model="pagamentoSeguro.forma" type="radio" value="debito" class="radio-input" /><span class="radio-label">Débito em Conta Corrente</span></label>
+              <label class="radio-item"><input v-model="pagamentoSeguro.forma" type="radio" value="boleto" class="radio-input" /><span class="radio-label">Boleto Bancário</span></label>
+              <label class="radio-item"><input v-model="pagamentoSeguro.forma" type="radio" value="cartao" class="radio-input" /><span class="radio-label">Cartão de Crédito</span></label>
             </div>
 
             <!-- Débito em Conta Corrente -->
@@ -321,14 +342,13 @@
               </div>
               <div class="info-box-blue mt-12">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <span>O débito será realizado automaticamente no {{ pagamentoSeguro.diaVencimento || 'dia selecionado' }} de cada mês. Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento.<br>Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.</span>
+                <span>O débito será realizado automaticamente no {{ pagamentoSeguro.diaVencimento || 'dia selecionado' }} de cada mês.<br>Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento.<br>Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.</span>
               </div>
             </template>
 
             <!-- Boleto Bancário -->
             <template v-if="pagamentoSeguro.forma === 'boleto'">
               <div class="field-grid field-grid--2 mt-16">
-                <div class="form-field"><label class="field-label">Titular da Conta</label><input v-model="pagamentoSeguro.titular" type="text" class="form-input" placeholder="Digite o nome completo" /></div>
                 <div class="form-field">
                   <label class="field-label">Dia de Vencimento</label>
                   <select v-model="pagamentoSeguro.diaVencimento" class="form-select">
@@ -336,12 +356,10 @@
                     <option v-for="d in [5,10,15,20,25]" :key="d" :value="`Dia ${d}`">Dia {{ d }}</option>
                   </select>
                 </div>
-                <div class="form-field"><label class="field-label">CPF do Titular</label><input v-model="pagamentoSeguro.cpfTitular" type="text" class="form-input" placeholder="000.000.000-00" /></div>
               </div>
-              <p class="prazo-cotizacao mt-12"><strong>Prazo de cotização — Boleto:</strong> Até 5 dias úteis para compensação do pagamento + 2 dias úteis para atualização de saldo.</p>
-              <div class="info-box-yellow mt-8">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                <span><strong>Atenção:</strong> Após a emissão do certificado, a seguradora enviará o boleto em até 5 dias úteis para o e-mail cadastrado. Fique atento à caixa de Spam. Caso tenha selecionado a opção de um aporte único e contribuições mensais, esta primeira boleto será a soma destes valores.</span>
+              <div class="info-box-blue mt-12">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span><strong>Atenção:</strong> Após a emissão do certificado, a seguradora enviará o boleto em até 5 dias úteis para o e-mail cadastrado. Fique atento à caixa de Spam.<br>Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro boleto será a soma destes valores. Este será emitido somente após a conclusão da contratação da proposta.</span>
               </div>
             </template>
 
@@ -357,7 +375,30 @@
               </div>
               <div class="info-box-blue mt-12">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <span>Será realizada apenas uma <strong>reserva do valor</strong> junto à operadora e ao banco do cartão de crédito. A cobrança só será finalizada após a conclusão do processo de contratação da proposta.</span>
+                <span>Será realizada apenas uma <strong>reserva do valor</strong> junto à operadora e ao banco do cartão de crédito.<br>A cobrança só será finalizada após a conclusão do processo de contratação da proposta.</span>
+              </div>
+            </template>
+
+            <!-- Pergunta Responsável Financeiro -->
+            <div class="field-block mt-20">
+              <span class="field-label">Dados do Responsável Financeiro serão os mesmos aos Dados do Proponente?</span>
+              <div class="radio-group mt-8">
+                <label class="radio-item"><input v-model="pagamentoSeguro.respFinanceiro" type="radio" value="sim" class="radio-input" @change="preencherRespFinanceiroSeguro" /><span class="radio-label">Sim</span></label>
+                <label class="radio-item"><input v-model="pagamentoSeguro.respFinanceiro" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
+              </div>
+            </div>
+
+            <!-- Dados do Responsável Financeiro (quando Não) -->
+            <template v-if="pagamentoSeguro.respFinanceiro === 'nao'">
+              <div class="section-card mt-16" style="background:#f8fafc;">
+                <h4 class="subsection-title" style="margin-top:0">Dados do Responsável Financeiro</h4>
+                <div class="field-grid field-grid--3">
+                  <div class="form-field"><label class="field-label">Nome Completo</label><input v-model="pagamentoSeguro.rfNome" type="text" class="form-input" /></div>
+                  <div class="form-field"><label class="field-label">CPF</label><input v-model="pagamentoSeguro.rfCpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
+                  <div class="form-field"><label class="field-label">Data de Nascimento</label><input v-model="pagamentoSeguro.rfDataNasc" type="date" class="form-input" /></div>
+                  <div class="form-field"><label class="field-label">Telefone</label><input v-model="pagamentoSeguro.rfTelefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
+                  <div class="form-field"><label class="field-label">E-mail</label><input v-model="pagamentoSeguro.rfEmail" type="email" class="form-input" /></div>
+                </div>
               </div>
             </template>
 
@@ -474,14 +515,17 @@
               <div class="field-item"><span class="field-label">Banco</span><span class="field-value">{{ pagamentoPrev.banco || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Agência</span><span class="field-value">{{ pagamentoPrev.agencia || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Conta Corrente</span><span class="field-value">{{ pagamentoPrev.conta || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Titular</span><span class="field-value">{{ pagamentoPrev.titular || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Titular da Conta</span><span class="field-value">{{ pagamentoPrev.titular || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">CPF do Titular</span><span class="field-value">{{ pagamentoPrev.cpfTitular || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoPrev.diaVencimento || '—' }}</span></div>
             </template>
             <template v-if="pagamentoPrev.forma === 'boleto'">
-              <div class="field-item"><span class="field-label">Titular</span><span class="field-value">{{ pagamentoPrev.titular || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoPrev.diaVencimento || '—' }}</span></div>
             </template>
-            <div class="field-item"><span class="field-label">Valor Total</span><span class="valor-total-value">R$ 10.000 de Aporte Inicial + R$ 1.650/mês de Contribuição Mensal</span></div>
+            <div class="field-item" style="grid-column:1/-1"><span class="field-label">Valor Total</span><span class="valor-total-value">R$ 10.000 de Aporte Inicial + R$ 1.650/mês de Contribuição Mensal</span></div>
+            <template v-if="pagamentoPrev.respFinanceiro">
+              <div class="field-item"><span class="field-label">Responsável Financeiro</span><span class="field-value">{{ pagamentoPrev.respFinanceiro === 'sim' ? 'Mesmo que o Proponente' : pagamentoPrev.rfNome || '—' }}</span></div>
+            </template>
           </div>
 
           <!-- Separador -->
@@ -495,19 +539,23 @@
               <div class="field-item"><span class="field-label">Banco</span><span class="field-value">{{ pagamentoSeguro.banco || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Agência</span><span class="field-value">{{ pagamentoSeguro.agencia || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Conta Corrente</span><span class="field-value">{{ pagamentoSeguro.conta || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Titular</span><span class="field-value">{{ pagamentoSeguro.titular || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Titular da Conta</span><span class="field-value">{{ pagamentoSeguro.titular || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">CPF do Titular</span><span class="field-value">{{ pagamentoSeguro.cpfTitular || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoSeguro.diaVencimento || '—' }}</span></div>
             </template>
             <template v-if="pagamentoSeguro.forma === 'boleto'">
-              <div class="field-item"><span class="field-label">Titular</span><span class="field-value">{{ pagamentoSeguro.titular || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoSeguro.diaVencimento || '—' }}</span></div>
             </template>
             <template v-if="pagamentoSeguro.forma === 'cartao'">
               <div class="field-item"><span class="field-label">Nome no Cartão</span><span class="field-value">{{ pagamentoSeguro.nomeCartao || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Número do Cartão</span><span class="field-value">{{ pagamentoSeguro.numeroCartao ? '•••• •••• •••• ' + pagamentoSeguro.numeroCartao.slice(-4) : '—' }}</span></div>
               <div class="field-item"><span class="field-label">Validade</span><span class="field-value">{{ pagamentoSeguro.validade || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">CPF do Titular</span><span class="field-value">{{ pagamentoSeguro.cpfTitular || '—' }}</span></div>
             </template>
-            <div class="field-item"><span class="field-label">Valor Total</span><span class="valor-total-value">R$ 2.500,00/mês</span></div>
+            <div class="field-item" style="grid-column:1/-1"><span class="field-label">Valor Total</span><span class="valor-total-value">R$ 2.500,00/mês</span></div>
+            <template v-if="pagamentoSeguro.respFinanceiro">
+              <div class="field-item"><span class="field-label">Responsável Financeiro</span><span class="field-value">{{ pagamentoSeguro.respFinanceiro === 'sim' ? 'Mesmo que o Proponente' : pagamentoSeguro.rfNome || '—' }}</span></div>
+            </template>
           </div>
         </div>
 
@@ -526,6 +574,8 @@ interface Beneficiary {
 interface PagamentoData {
   forma: string; banco: string; agencia: string; conta: string; titular: string; cpfTitular: string; diaVencimento: string
   nomeCartao?: string; numeroCartao?: string; validade?: string; cvv?: string
+  respFinanceiro?: string
+  rfNome?: string; rfCpf?: string; rfDataNasc?: string; rfTelefone?: string; rfEmail?: string
 }
 
 const tabs = [
@@ -555,6 +605,20 @@ const newPag = (): PagamentoData => ({ forma: 'debito', banco: '', agencia: '', 
 const pagamentoPrev = reactive(newPag())
 const pagamentoSeguro = reactive({ ...newPag(), nomeCartao: '', numeroCartao: '', validade: '', cvv: '' })
 
+function preencherRespFinanceiroPrev() {
+  pagamentoPrev.rfNome = 'Taís Oliveira Costa'
+  pagamentoPrev.rfCpf = '123.456.789-00'
+  pagamentoPrev.rfDataNasc = '1990-05-15'
+  pagamentoPrev.rfTelefone = '(11) 99999-9999'
+  pagamentoPrev.rfEmail = 'tais@email.com'
+}
+function preencherRespFinanceiroSeguro() {
+  pagamentoSeguro.rfNome = 'Taís Oliveira Costa'
+  pagamentoSeguro.rfCpf = '123.456.789-00'
+  pagamentoSeguro.rfDataNasc = '1990-05-15'
+  pagamentoSeguro.rfTelefone = '(11) 99999-9999'
+  pagamentoSeguro.rfEmail = 'tais@email.com'
+}
 function formaLabel(forma: string) {
   const m: Record<string, string> = { debito: 'Débito em Conta Corrente', boleto: 'Boleto Bancário', cartao: 'Cartão de Crédito' }
   return m[forma] || '—'
@@ -600,6 +664,7 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .coverage-table th { padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.5px; background-color: #f8fafc; border-bottom: 1px solid var(--border-color); }
 .coverage-table td { padding: 10px 12px; color: var(--text-primary); border-bottom: 1px solid var(--border-color); }
 .coverage-table tr:last-child td { border-bottom: none; }
+.coverage-table__total td { background-color: #f8fafc; font-size: 13px; font-weight: 600; color: var(--text-primary); border-top: 2px solid var(--border-color); padding: 10px 12px; }
 .badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-top: 4px; }
 .badge--neutral { background-color: #f1f5f9; color: var(--text-primary); border: 1px solid var(--border-color); }
 .form-field { display: flex; flex-direction: column; gap: 6px; }
