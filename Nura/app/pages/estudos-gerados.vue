@@ -50,11 +50,11 @@
               </span>
             </td>
 
-            <!-- Estudo Gerado (link PDF) -->
+            <!-- Estudo Gerado (clique no nome → aliaplan) -->
             <td class="col-study">
-              <a href="#" class="study-link" @click.stop="downloadPdf(study)">
+              <a href="https://aliaplan.zooxsmart.com/" target="_blank" class="study-link" @click.stop>
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" class="study-link__icon">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 {{ study.name }}
               </a>
@@ -92,11 +92,11 @@
                   </svg>
                   <span class="action-btn__label">Duplicar</span>
                 </button>
-                <button class="action-btn" title="Editar" @click.stop="editStudy(study.id)">
+                <button class="action-btn" title="Baixar PDF" @click.stop="downloadPdf(study)">
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
-                  <span class="action-btn__label">Editar</span>
+                  <span class="action-btn__label">Baixar</span>
                 </button>
               </div>
             </td>
@@ -151,10 +151,6 @@ function productBadgeClass(products: string) {
   return 'product-badge--prev'
 }
 
-function downloadPdf(study: Study) {
-  alert(`Download do PDF: ${study.name}`)
-}
-
 function deleteStudy(id: number) {
   if (confirm('Deseja excluir este estudo?')) {
     studies.value = studies.value.filter(s => s.id !== id)
@@ -165,7 +161,8 @@ function deleteStudy(id: number) {
 function duplicateStudy(study: Study) {
   const newId = Math.max(...studies.value.map(s => s.id)) + 1
   const today = new Date().toLocaleDateString('pt-BR')
-  studies.value.push({
+  // Inserir no início do array (mais recente no topo)
+  studies.value.unshift({
     id: newId,
     name: study.name + ' (cópia)',
     products: study.products,
@@ -174,8 +171,13 @@ function duplicateStudy(study: Study) {
   })
 }
 
-function editStudy(_id: number) {
-  window.open('https://aliaplan.zooxsmart.com/', '_blank')
+function downloadPdf(study: Study) {
+  // Simula download do PDF gerado no aliaplan
+  const link = document.createElement('a')
+  link.href = 'https://aliaplan.zooxsmart.com/'
+  link.target = '_blank'
+  link.rel = 'noopener noreferrer'
+  link.click()
 }
 
 function gerarProposta() {

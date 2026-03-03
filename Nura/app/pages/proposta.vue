@@ -19,7 +19,7 @@
           <h2 class="page-header__title">Detalhamento da Proposta</h2>
         </div>
 
-        <!-- Dados do Proponente -->
+        <!-- Dados do Proponente (somente leitura) -->
         <div class="section-card">
           <h3 class="section-card__title">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
@@ -32,81 +32,58 @@
             <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">Taís Oliveira Costa</span></div>
             <div class="field-item"><span class="field-label">Nome Social</span><span class="field-value">—</span></div>
             <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">15/05/1984</span></div>
-            <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">(21) 99999-0000</span></div>
+            <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">(11) 98765-4321</span></div>
             <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">tais.oliveira@email.com</span></div>
             <div class="field-item"><span class="field-label">Renda Mensal</span><span class="field-value">R$ 18.000,00</span></div>
             <div class="field-item"><span class="field-label">Ocupação</span><span class="field-value">Gerente de Marketing</span></div>
-            <div class="field-item"><span class="field-label">Empresa</span><span class="field-value">Medley Farmacêutica Ltda.</span></div>
+            <div class="field-item"><span class="field-label">Empresa</span><span class="field-value">Tech Solutions Brasil</span></div>
           </div>
         </div>
 
-        <!-- Dados do Plano 1 -->
+        <!-- Dados do Plano 1 — Previdência (somente leitura) -->
         <div class="section-card">
-          <h3 class="section-card__title">Dados do Plano 1</h3>
-          <div class="field-block">
-            <span class="field-label">Tipo de Investimento</span>
-            <div class="toggle-group">
-              <button class="toggle-btn" :class="{ 'toggle-btn--active': plano1.tipo === 'previdencia' }" @click="plano1.tipo = 'previdencia'">Previdência</button>
-              <button class="toggle-btn" :class="{ 'toggle-btn--active': plano1.tipo === 'seguro' }" @click="plano1.tipo = 'seguro'">Seguro de Vida</button>
+          <h3 class="section-card__title">Dados do Plano 1 — Previdência</h3>
+          <div class="field-grid field-grid--3">
+            <div class="field-item"><span class="field-label">Tipo de Investimento</span><span class="field-value">Previdência</span></div>
+            <div class="field-item">
+              <span class="field-label">Idade que Deseja se Aposentar</span>
+              <span class="field-value">60 anos</span>
+            </div>
+            <div class="field-item"><span class="field-label">Tipo de Plano</span><span class="field-value"><span class="badge badge--neutral">PGBL</span></span></div>
+            <div class="field-item"><span class="field-label">Contribuição Mensal</span><span class="field-value field-value--lg">R$ 1.650,00</span></div>
+            <div class="field-item"><span class="field-label">Valor do Aporte Inicial</span><span class="field-value field-value--lg">R$ 10.000,00</span></div>
+          </div>
+          <div class="fund-card mt-16">
+            <div class="fund-card__header">
+              <span class="fund-card__name">Absolute Atenas Icatu Prev FIC FIRF CP</span>
+              <span class="fund-card__cnpj">47.612.701/0001-45</span>
+            </div>
+            <div class="fund-card__body">
+              <div class="fund-card__row"><span class="fund-card__label">CONTRIBUIÇÃO MENSAL:</span><span class="fund-card__text">Valor Atribuído <strong>R$ 1.650,00</strong></span><span class="fund-card__text">Percentual Atribuído <strong>100%</strong></span></div>
+              <div class="fund-card__row"><span class="fund-card__label">APORTE INICIAL:</span><span class="fund-card__text">Valor Atribuído <strong>R$ 10.000,00</strong></span><span class="fund-card__text">Percentual Atribuído <strong>100%</strong></span></div>
+              <div class="fund-card__meta"><span>Taxa Máx. Adm.: <strong>0,98% a.a.</strong></span><span>Rentabilidade: <strong>—</strong></span><span>Classificação: <strong>Renda Fixa</strong></span></div>
             </div>
           </div>
-          <template v-if="plano1.tipo === 'previdencia'">
-            <div class="field-block"><span class="field-label">Idade que Deseja se Aposentar</span><span class="field-value">60 anos</span></div>
-            <div class="field-grid field-grid--2">
-              <div class="inner-card"><span class="field-label">Contribuição Mensal</span><span class="field-value field-value--lg">R$ 1.650,00</span></div>
-              <div class="inner-card"><span class="field-label">Valor do Aporte Inicial</span><span class="field-value field-value--lg">R$ 10.000,00</span></div>
-            </div>
-            <div class="field-block mt-16"><span class="field-label">Tipo de Plano</span><span class="badge badge--neutral">PGBL</span></div>
-            <div class="fund-card">
-              <div class="fund-card__header">
-                <span class="fund-card__name">Absolute Atenas Icatu Prev FIC FIRF CP</span>
-                <span class="fund-card__cnpj">47.612.701/0001-45</span>
-              </div>
-              <div class="fund-card__body">
-                <div class="fund-card__row"><span class="fund-card__label">CONTRIBUIÇÃO MENSAL:</span><span class="fund-card__text">Valor Atribuído <strong>R$ 1.650,00</strong></span><span class="fund-card__text">Percentual Atribuído <strong>100%</strong></span></div>
-                <div class="fund-card__row"><span class="fund-card__label">APORTE INICIAL:</span><span class="fund-card__text">Valor Atribuído <strong>R$ 10.000,00</strong></span><span class="fund-card__text">Percentual Atribuído <strong>100%</strong></span></div>
-                <div class="fund-card__meta"><span>Taxa Máx. Adm.: <strong>0,98% a.a.</strong></span><span>Rentabilidade: <strong>—</strong></span><span>Classificação: <strong>Renda Fixa</strong></span></div>
-              </div>
-            </div>
-          </template>
-          <template v-if="plano1.tipo === 'seguro'">
-            <div class="product-card"><span class="product-card__name">Horizonte</span><p class="product-card__desc">O Horizonte é o seguro de vida que oferece a combinação perfeita entre proteção e a possibilidade de formação de reserva, de forma temporária ou durante toda a vida.</p></div>
-            <table class="coverage-table">
-              <thead><tr><th>Cobertura</th><th>Vigência</th><th>Prazo de Pagamento</th><th>Capital Segurado</th><th>Contribuição Mensal</th></tr></thead>
-              <tbody>
-                <tr><td>Morte por Qualquer Causa</td><td>Vitalício</td><td>20 anos</td><td>R$ 500.000,00</td><td>R$ 850,00</td></tr>
-                <tr><td>Invalidez por Acidente</td><td>Vitalício</td><td>20 anos</td><td>R$ 500.000,00</td><td>R$ 300,00</td></tr>
-              </tbody>
-            </table>
-          </template>
         </div>
 
-        <!-- Dados do Plano 2 -->
+        <!-- Dados do Plano 2 — Seguro de Vida (somente leitura) -->
         <div class="section-card">
-          <h3 class="section-card__title">Dados do Plano 2</h3>
-          <div class="field-block">
-            <span class="field-label">Tipo de Investimento</span>
-            <div class="toggle-group">
-              <button class="toggle-btn" :class="{ 'toggle-btn--active': plano2.tipo === 'previdencia' }" @click="plano2.tipo = 'previdencia'">Previdência</button>
-              <button class="toggle-btn" :class="{ 'toggle-btn--active': plano2.tipo === 'seguro' }" @click="plano2.tipo = 'seguro'">Seguro de Vida</button>
-            </div>
+          <h3 class="section-card__title">Dados do Plano 2 — Seguro de Vida</h3>
+          <div class="field-grid field-grid--3">
+            <div class="field-item"><span class="field-label">Tipo de Investimento</span><span class="field-value">Seguro de Vida</span></div>
+            <div class="field-item"><span class="field-label">Produto</span><span class="field-value">Horizonte</span></div>
           </div>
-          <template v-if="plano2.tipo === 'seguro'">
-            <div class="product-card"><span class="product-card__name">Horizonte</span><p class="product-card__desc">O Horizonte é o seguro de vida que oferece a combinação perfeita entre proteção e a possibilidade de formação de reserva, de forma temporária ou durante toda a vida.</p></div>
-            <table class="coverage-table">
-              <thead><tr><th>Cobertura</th><th>Vigência</th><th>Prazo de Pagamento</th><th>Capital Segurado</th><th>Contribuição Mensal</th></tr></thead>
-              <tbody>
-                <tr><td>Morte por Qualquer Causa</td><td>Vitalício</td><td>20 anos</td><td>R$ 500.000,00</td><td>R$ 850,00</td></tr>
-                <tr><td>Invalidez por Acidente</td><td>Vitalício</td><td>20 anos</td><td>R$ 500.000,00</td><td>R$ 300,00</td></tr>
-              </tbody>
-            </table>
-          </template>
-          <template v-if="plano2.tipo === 'previdencia'">
-            <div class="field-grid field-grid--2">
-              <div class="inner-card"><span class="field-label">Contribuição Mensal</span><span class="field-value field-value--lg">R$ 1.650,00</span></div>
-              <div class="inner-card"><span class="field-label">Valor do Aporte Inicial</span><span class="field-value field-value--lg">R$ 10.000,00</span></div>
-            </div>
-          </template>
+          <div class="product-card mt-16">
+            <span class="product-card__name">Horizonte</span>
+            <p class="product-card__desc">O Horizonte é o seguro de vida que oferece a combinação perfeita entre proteção e a possibilidade de formação de reserva, de forma temporária ou durante toda a vida.</p>
+          </div>
+          <table class="coverage-table mt-12">
+            <thead><tr><th>Cobertura</th><th>Vigência</th><th>Prazo de Pagamento</th><th>Capital Segurado</th><th>Contribuição Mensal</th></tr></thead>
+            <tbody>
+              <tr><td>Morte por Qualquer Causa</td><td>Vitalício</td><td>20 anos</td><td>R$ 500.000,00</td><td>R$ 850,00</td></tr>
+              <tr><td>Invalidez por Acidente</td><td>Vitalício</td><td>20 anos</td><td>R$ 500.000,00</td><td>R$ 300,00</td></tr>
+            </tbody>
+          </table>
         </div>
 
         <div class="page-footer">
@@ -231,7 +208,7 @@
           <button class="inner-tab" :class="{ 'inner-tab--active': activeSubTab === 1 }" @click="onSubTabChange(1)">Seguro de Vida</button>
         </div>
 
-        <!-- Pagamento Previdência -->
+        <!-- ── Pagamento Previdência (sem Cartão de Crédito) ── -->
         <template v-if="activeSubTab === 0">
           <div class="section-card">
             <h3 class="section-card__title">Forma de Pagamento — Previdência</h3>
@@ -240,9 +217,10 @@
               <div class="radio-group">
                 <label class="radio-item"><input v-model="pagamentoPrev.forma" type="radio" value="debito" class="radio-input" /><span class="radio-label">Débito em Conta Corrente</span></label>
                 <label class="radio-item"><input v-model="pagamentoPrev.forma" type="radio" value="boleto" class="radio-input" /><span class="radio-label">Boleto Bancário</span></label>
-                <label class="radio-item"><input v-model="pagamentoPrev.forma" type="radio" value="cartao" class="radio-input" /><span class="radio-label">Cartão de Crédito</span></label>
               </div>
             </div>
+
+            <!-- Débito em Conta Corrente -->
             <template v-if="pagamentoPrev.forma === 'debito'">
               <h4 class="subsection-title">Dados Bancários</h4>
               <div class="field-grid field-grid--3">
@@ -250,30 +228,56 @@
                   <label class="field-label">Banco</label>
                   <select v-model="pagamentoPrev.banco" class="form-select">
                     <option value="">Selecione</option>
-                    <option>001 - Banco do Brasil</option><option>033 - Santander</option><option>104 - Caixa Econômica</option><option>237 - Bradesco</option><option>341 - Itaú</option>
+                    <option>001 - Banco do Brasil</option><option>033 - Santander</option><option>104 - Caixa Econômica Federal</option><option>237 - Bradesco</option><option>341 - Itaú</option><option>756 - Sicoob</option><option>748 - Sicredi</option><option>260 - Nubank</option>
                   </select>
                 </div>
                 <div class="form-field"><label class="field-label">Agência</label><input v-model="pagamentoPrev.agencia" type="text" class="form-input" placeholder="0123" /></div>
                 <div class="form-field"><label class="field-label">Conta Corrente</label><input v-model="pagamentoPrev.conta" type="text" class="form-input" placeholder="12345-6" /></div>
-                <div class="form-field"><label class="field-label">Titular da Conta</label><input v-model="pagamentoPrev.titular" type="text" class="form-input" /></div>
-                <div class="form-field"><label class="field-label">CPF do Titular</label><input v-model="pagamentoPrev.cpfTitular" type="text" class="form-input" /></div>
+                <div class="form-field"><label class="field-label">Titular da Conta</label><input v-model="pagamentoPrev.titular" type="text" class="form-input" placeholder="Nome do titular" /></div>
+                <div class="form-field"><label class="field-label">CPF do Titular</label><input v-model="pagamentoPrev.cpfTitular" type="text" class="form-input" placeholder="000.000.000-00" /></div>
                 <div class="form-field">
                   <label class="field-label">Dia de Vencimento</label>
                   <select v-model="pagamentoPrev.diaVencimento" class="form-select">
-                    <option v-for="d in [5,10,15,20,25]" :key="d">Dia {{ d }}</option>
+                    <option value="">Selecione o dia</option>
+                    <option v-for="d in [5,10,15,20,25]" :key="d" :value="`Dia ${d}`">Dia {{ d }}</option>
                   </select>
                 </div>
               </div>
-              <div class="info-box-blue">
+              <div class="info-box-blue mt-12">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                O débito será realizado automaticamente no dia {{ pagamentoPrev.diaVencimento || 'Dia 5' }} de cada mês.
+                <span>O débito será realizado automaticamente no {{ pagamentoPrev.diaVencimento || 'dia selecionado' }} de cada mês. Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento. Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.</span>
               </div>
             </template>
-            <div class="field-block mt-16"><span class="field-label">Valor Mensal Total</span><span class="field-value field-value--lg">R$ 1.650,00</span></div>
+
+            <!-- Boleto Bancário -->
+            <template v-if="pagamentoPrev.forma === 'boleto'">
+              <div class="field-grid field-grid--2 mt-16">
+                <div class="form-field"><label class="field-label">Titular da Conta</label><input v-model="pagamentoPrev.titular" type="text" class="form-input" placeholder="Digite o nome completo" /></div>
+                <div class="form-field">
+                  <label class="field-label">Dia de Vencimento</label>
+                  <select v-model="pagamentoPrev.diaVencimento" class="form-select">
+                    <option value="">Selecione o dia</option>
+                    <option v-for="d in [5,10,15,20,25]" :key="d" :value="`Dia ${d}`">Dia {{ d }}</option>
+                  </select>
+                </div>
+                <div class="form-field"><label class="field-label">CPF do Titular</label><input v-model="pagamentoPrev.cpfTitular" type="text" class="form-input" placeholder="000.000.000-00" /></div>
+              </div>
+              <p class="prazo-cotizacao mt-12"><strong>Prazo de cotização — Boleto:</strong> Até 5 dias úteis para compensação do pagamento + 2 dias úteis para atualização de saldo.</p>
+              <div class="info-box-yellow mt-8">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                <span><strong>Atenção:</strong> Após a emissão do certificado, a seguradora enviará o boleto em até 5 dias úteis para o e-mail cadastrado. Fique atento à caixa de Spam. Caso tenha selecionado a opção de um aporte único e contribuições mensais, esta primeira boleto será a soma destes valores.</span>
+              </div>
+            </template>
+
+            <!-- Valor Total -->
+            <div class="valor-total-row mt-16">
+              <span class="field-label">Valor Total</span>
+              <span class="field-value field-value--lg">R$ 10.000 de Aporte Inicial + R$ 1.650/mês de Contribuição Mensal</span>
+            </div>
           </div>
         </template>
 
-        <!-- Pagamento Seguro de Vida -->
+        <!-- ── Pagamento Seguro de Vida (com Cartão de Crédito) ── -->
         <template v-if="activeSubTab === 1">
           <div class="section-card">
             <h3 class="section-card__title">Forma de Pagamento — Seguro de Vida</h3>
@@ -285,6 +289,8 @@
                 <label class="radio-item"><input v-model="pagamentoSeguro.forma" type="radio" value="cartao" class="radio-input" /><span class="radio-label">Cartão de Crédito</span></label>
               </div>
             </div>
+
+            <!-- Débito em Conta Corrente -->
             <template v-if="pagamentoSeguro.forma === 'debito'">
               <h4 class="subsection-title">Dados Bancários</h4>
               <div class="field-grid field-grid--3">
@@ -292,26 +298,68 @@
                   <label class="field-label">Banco</label>
                   <select v-model="pagamentoSeguro.banco" class="form-select">
                     <option value="">Selecione</option>
-                    <option>001 - Banco do Brasil</option><option>033 - Santander</option><option>104 - Caixa Econômica</option><option>237 - Bradesco</option><option>341 - Itaú</option>
+                    <option>001 - Banco do Brasil</option><option>033 - Santander</option><option>104 - Caixa Econômica Federal</option><option>237 - Bradesco</option><option>341 - Itaú</option><option>756 - Sicoob</option><option>748 - Sicredi</option><option>260 - Nubank</option>
                   </select>
                 </div>
                 <div class="form-field"><label class="field-label">Agência</label><input v-model="pagamentoSeguro.agencia" type="text" class="form-input" placeholder="0123" /></div>
                 <div class="form-field"><label class="field-label">Conta Corrente</label><input v-model="pagamentoSeguro.conta" type="text" class="form-input" placeholder="12345-6" /></div>
-                <div class="form-field"><label class="field-label">Titular da Conta</label><input v-model="pagamentoSeguro.titular" type="text" class="form-input" /></div>
-                <div class="form-field"><label class="field-label">CPF do Titular</label><input v-model="pagamentoSeguro.cpfTitular" type="text" class="form-input" /></div>
+                <div class="form-field"><label class="field-label">Titular da Conta</label><input v-model="pagamentoSeguro.titular" type="text" class="form-input" placeholder="Nome do titular" /></div>
+                <div class="form-field"><label class="field-label">CPF do Titular</label><input v-model="pagamentoSeguro.cpfTitular" type="text" class="form-input" placeholder="000.000.000-00" /></div>
                 <div class="form-field">
                   <label class="field-label">Dia de Vencimento</label>
                   <select v-model="pagamentoSeguro.diaVencimento" class="form-select">
-                    <option v-for="d in [5,10,15,20,25]" :key="d">Dia {{ d }}</option>
+                    <option value="">Selecione o dia</option>
+                    <option v-for="d in [5,10,15,20,25]" :key="d" :value="`Dia ${d}`">Dia {{ d }}</option>
                   </select>
                 </div>
               </div>
-              <div class="info-box-blue">
+              <div class="info-box-blue mt-12">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                O débito será realizado automaticamente no dia {{ pagamentoSeguro.diaVencimento || 'Dia 5' }} de cada mês.
+                <span>O débito será realizado automaticamente no {{ pagamentoSeguro.diaVencimento || 'dia selecionado' }} de cada mês. Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento. Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.</span>
               </div>
             </template>
-            <div class="field-block mt-16"><span class="field-label">Valor Mensal Total</span><span class="field-value field-value--lg">R$ 2.500,00</span></div>
+
+            <!-- Boleto Bancário -->
+            <template v-if="pagamentoSeguro.forma === 'boleto'">
+              <div class="field-grid field-grid--2 mt-16">
+                <div class="form-field"><label class="field-label">Titular da Conta</label><input v-model="pagamentoSeguro.titular" type="text" class="form-input" placeholder="Digite o nome completo" /></div>
+                <div class="form-field">
+                  <label class="field-label">Dia de Vencimento</label>
+                  <select v-model="pagamentoSeguro.diaVencimento" class="form-select">
+                    <option value="">Selecione o dia</option>
+                    <option v-for="d in [5,10,15,20,25]" :key="d" :value="`Dia ${d}`">Dia {{ d }}</option>
+                  </select>
+                </div>
+                <div class="form-field"><label class="field-label">CPF do Titular</label><input v-model="pagamentoSeguro.cpfTitular" type="text" class="form-input" placeholder="000.000.000-00" /></div>
+              </div>
+              <p class="prazo-cotizacao mt-12"><strong>Prazo de cotização — Boleto:</strong> Até 5 dias úteis para compensação do pagamento + 2 dias úteis para atualização de saldo.</p>
+              <div class="info-box-yellow mt-8">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                <span><strong>Atenção:</strong> Após a emissão do certificado, a seguradora enviará o boleto em até 5 dias úteis para o e-mail cadastrado. Fique atento à caixa de Spam. Caso tenha selecionado a opção de um aporte único e contribuições mensais, esta primeira boleto será a soma destes valores.</span>
+              </div>
+            </template>
+
+            <!-- Cartão de Crédito (apenas Seguro de Vida) -->
+            <template v-if="pagamentoSeguro.forma === 'cartao'">
+              <h4 class="subsection-title">Dados do Cartão</h4>
+              <div class="field-grid field-grid--2">
+                <div class="form-field"><label class="field-label">Nome no Cartão</label><input v-model="pagamentoSeguro.nomeCartao" type="text" class="form-input" placeholder="Nome como está no cartão" /></div>
+                <div class="form-field"><label class="field-label">Número do Cartão</label><input v-model="pagamentoSeguro.numeroCartao" type="text" class="form-input" placeholder="0000 0000 0000 0000" /></div>
+                <div class="form-field"><label class="field-label">Validade</label><input v-model="pagamentoSeguro.validade" type="text" class="form-input" placeholder="MM/AA" /></div>
+                <div class="form-field"><label class="field-label">CVV</label><input v-model="pagamentoSeguro.cvv" type="text" class="form-input" placeholder="000" /></div>
+                <div class="form-field"><label class="field-label">CPF do Titular</label><input v-model="pagamentoSeguro.cpfTitular" type="text" class="form-input" placeholder="000.000.000-00" /></div>
+              </div>
+              <div class="info-box-blue mt-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>Será realizada apenas uma <strong>reserva do valor</strong> junto à operadora e ao banco do cartão de crédito. A cobrança só será finalizada após a conclusão do processo de contratação da proposta.</span>
+              </div>
+            </template>
+
+            <!-- Valor Total -->
+            <div class="valor-total-row mt-16">
+              <span class="field-label">Valor Total</span>
+              <span class="field-value field-value--lg">R$ 2.500,00/mês</span>
+            </div>
           </div>
         </template>
 
@@ -333,55 +381,129 @@
           <h2 class="page-header__title">Revisão da Proposta</h2>
         </div>
 
+        <!-- Dados do Proponente -->
         <div class="section-card">
           <h3 class="section-card__title">Dados do Proponente</h3>
           <div class="field-grid field-grid--3">
             <div class="field-item"><span class="field-label">CPF</span><span class="field-value">123.456.789-00</span></div>
             <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">Taís Oliveira Costa</span></div>
             <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">15/05/1984</span></div>
-            <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">(21) 99999-0000</span></div>
+            <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">(11) 98765-4321</span></div>
             <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">tais.oliveira@email.com</span></div>
             <div class="field-item"><span class="field-label">Renda Mensal</span><span class="field-value">R$ 18.000,00</span></div>
           </div>
         </div>
 
+        <!-- Resumo do Plano — separado por sub-aba -->
         <div class="section-card">
           <h3 class="section-card__title">Resumo do Plano</h3>
-          <div class="field-grid field-grid--3">
-            <div class="field-item"><span class="field-label">Tipo de Investimento</span><span class="field-value">Previdência + Seguro de Vida</span></div>
-            <div class="field-item"><span class="field-label">Tipo de Plano (Previdência)</span><span class="field-value">PGBL</span></div>
-            <div class="field-item"><span class="field-label">Contribuição Mensal (Previdência)</span><span class="field-value">R$ 1.650,00</span></div>
+
+          <!-- Previdência -->
+          <div class="review-subtab-header">Previdência</div>
+          <div class="field-grid field-grid--3 mb-16">
+            <div class="field-item"><span class="field-label">Tipo de Plano</span><span class="field-value">PGBL</span></div>
+            <div class="field-item"><span class="field-label">Contribuição Mensal</span><span class="field-value">R$ 1.650,00</span></div>
             <div class="field-item"><span class="field-label">Aporte Inicial</span><span class="field-value">R$ 10.000,00</span></div>
-            <div class="field-item"><span class="field-label">Contribuição Mensal (Seguro)</span><span class="field-value">R$ 2.500,00</span></div>
+            <div class="field-item"><span class="field-label">Idade de Aposentadoria</span><span class="field-value">60 anos</span></div>
+            <div class="field-item"><span class="field-label">Fundo</span><span class="field-value">Absolute Atenas Icatu Prev FIC FIRF CP</span></div>
+          </div>
+
+          <!-- Separador -->
+          <div class="review-subtab-divider"></div>
+
+          <!-- Seguro de Vida -->
+          <div class="review-subtab-header">Seguro de Vida</div>
+          <div class="field-grid field-grid--3">
+            <div class="field-item"><span class="field-label">Produto</span><span class="field-value">Horizonte</span></div>
+            <div class="field-item"><span class="field-label">Contribuição Mensal</span><span class="field-value">R$ 2.500,00</span></div>
             <div class="field-item"><span class="field-label">Data de Emissão</span><span class="field-value">{{ emissaoDate }}</span></div>
           </div>
         </div>
 
+        <!-- Beneficiários — separado por sub-aba -->
         <div class="section-card">
           <h3 class="section-card__title">Beneficiários</h3>
-          <p class="subsection-label">Previdência</p>
-          <div v-for="(ben, i) in beneficiariosPrev" :key="i" class="field-grid field-grid--3 mb-8">
-            <div class="field-item"><span class="field-label">Nome</span><span class="field-value">{{ ben.nome || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ ben.cpf || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Percentual</span><span class="field-value">{{ ben.percentual || 0 }}%</span></div>
+
+          <!-- Previdência -->
+          <div class="review-subtab-header">Previdência</div>
+          <div v-for="(ben, i) in beneficiariosPrev" :key="`prev-${i}`" class="beneficiary-review mb-8">
+            <div class="field-grid field-grid--3">
+              <div class="field-item"><span class="field-label">Nome</span><span class="field-value">{{ ben.nome || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ ben.cpf || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Percentual</span><span class="field-value">{{ ben.percentual || 0 }}%</span></div>
+              <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ ben.dataNasc || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Grau de Parentesco</span><span class="field-value">{{ ben.parentesco || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">{{ ben.telefone || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">{{ ben.email || '—' }}</span></div>
+            </div>
           </div>
-          <p class="subsection-label mt-12">Seguro de Vida</p>
-          <div v-for="(ben, i) in beneficiariosSeguro" :key="i" class="field-grid field-grid--3 mb-8">
-            <div class="field-item"><span class="field-label">Nome</span><span class="field-value">{{ ben.nome || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ ben.cpf || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Percentual</span><span class="field-value">{{ ben.percentual || 0 }}%</span></div>
+
+          <!-- Separador -->
+          <div class="review-subtab-divider"></div>
+
+          <!-- Seguro de Vida -->
+          <div class="review-subtab-header">Seguro de Vida</div>
+          <div v-for="(ben, i) in beneficiariosSeguro" :key="`seg-${i}`" class="beneficiary-review mb-8">
+            <div class="field-grid field-grid--3">
+              <div class="field-item"><span class="field-label">Nome</span><span class="field-value">{{ ben.nome || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ ben.cpf || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Percentual</span><span class="field-value">{{ ben.percentual || 0 }}%</span></div>
+              <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ ben.dataNasc || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Grau de Parentesco</span><span class="field-value">{{ ben.parentesco || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">{{ ben.telefone || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">{{ ben.email || '—' }}</span></div>
+            </div>
           </div>
         </div>
 
+        <!-- Forma de Pagamento — separado por sub-aba -->
         <div class="section-card">
           <h3 class="section-card__title">Forma de Pagamento</h3>
-          <div class="field-grid field-grid--2">
-            <div class="field-item"><span class="field-label">Previdência</span><span class="field-value">{{ formaLabel(pagamentoPrev.forma) }}</span></div>
-            <div class="field-item"><span class="field-label">Seguro de Vida</span><span class="field-value">{{ formaLabel(pagamentoSeguro.forma) }}</span></div>
+
+          <!-- Previdência -->
+          <div class="review-subtab-header">Previdência</div>
+          <div class="field-grid field-grid--3 mb-16">
+            <div class="field-item"><span class="field-label">Forma</span><span class="field-value">{{ formaLabel(pagamentoPrev.forma) }}</span></div>
+            <template v-if="pagamentoPrev.forma === 'debito'">
+              <div class="field-item"><span class="field-label">Banco</span><span class="field-value">{{ pagamentoPrev.banco || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Agência</span><span class="field-value">{{ pagamentoPrev.agencia || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Conta Corrente</span><span class="field-value">{{ pagamentoPrev.conta || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Titular</span><span class="field-value">{{ pagamentoPrev.titular || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoPrev.diaVencimento || '—' }}</span></div>
+            </template>
+            <template v-if="pagamentoPrev.forma === 'boleto'">
+              <div class="field-item"><span class="field-label">Titular</span><span class="field-value">{{ pagamentoPrev.titular || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoPrev.diaVencimento || '—' }}</span></div>
+            </template>
+            <div class="field-item"><span class="field-label">Valor Total</span><span class="field-value field-value--lg">R$ 10.000 de Aporte Inicial + R$ 1.650/mês de Contribuição Mensal</span></div>
+          </div>
+
+          <!-- Separador -->
+          <div class="review-subtab-divider"></div>
+
+          <!-- Seguro de Vida -->
+          <div class="review-subtab-header">Seguro de Vida</div>
+          <div class="field-grid field-grid--3">
+            <div class="field-item"><span class="field-label">Forma</span><span class="field-value">{{ formaLabel(pagamentoSeguro.forma) }}</span></div>
+            <template v-if="pagamentoSeguro.forma === 'debito'">
+              <div class="field-item"><span class="field-label">Banco</span><span class="field-value">{{ pagamentoSeguro.banco || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Agência</span><span class="field-value">{{ pagamentoSeguro.agencia || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Conta Corrente</span><span class="field-value">{{ pagamentoSeguro.conta || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Titular</span><span class="field-value">{{ pagamentoSeguro.titular || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoSeguro.diaVencimento || '—' }}</span></div>
+            </template>
+            <template v-if="pagamentoSeguro.forma === 'boleto'">
+              <div class="field-item"><span class="field-label">Titular</span><span class="field-value">{{ pagamentoSeguro.titular || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoSeguro.diaVencimento || '—' }}</span></div>
+            </template>
+            <template v-if="pagamentoSeguro.forma === 'cartao'">
+              <div class="field-item"><span class="field-label">Nome no Cartão</span><span class="field-value">{{ pagamentoSeguro.nomeCartao || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Número do Cartão</span><span class="field-value">{{ pagamentoSeguro.numeroCartao ? '•••• •••• •••• ' + pagamentoSeguro.numeroCartao.slice(-4) : '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Validade</span><span class="field-value">{{ pagamentoSeguro.validade || '—' }}</span></div>
+            </template>
+            <div class="field-item"><span class="field-label">Valor Total</span><span class="field-value field-value--lg">R$ 2.500,00/mês</span></div>
           </div>
         </div>
-
-
 
         <div class="page-footer">
           <button class="btn-primary">Finalizar Proposta</button>
@@ -397,6 +519,7 @@ interface Beneficiary {
 }
 interface PagamentoData {
   forma: string; banco: string; agencia: string; conta: string; titular: string; cpfTitular: string; diaVencimento: string
+  nomeCartao?: string; numeroCartao?: string; validade?: string; cvv?: string
 }
 
 const tabs = [
@@ -408,8 +531,6 @@ const tabs = [
 
 const activeTab = ref(0)
 const activeSubTab = ref(0)
-const plano1 = reactive({ tipo: 'previdencia' })
-const plano2 = reactive({ tipo: 'seguro' })
 const emissaoDate = new Date().toLocaleDateString('pt-BR')
 
 const newBen = (): Beneficiary => ({ cpf: '', nome: '', dataNasc: '', parentesco: '', percentual: 0, telefone: '', email: '' })
@@ -424,9 +545,9 @@ function removeBenPrev(i: number) { beneficiariosPrev.value.splice(i, 1) }
 function addBenSeguro() { beneficiariosSeguro.value.push(newBen()) }
 function removeBenSeguro(i: number) { beneficiariosSeguro.value.splice(i, 1) }
 
-const newPag = (): PagamentoData => ({ forma: 'debito', banco: '341 - Itaú', agencia: '', conta: '', titular: 'Taís Oliveira Costa', cpfTitular: '123.456.789-00', diaVencimento: 'Dia 5' })
+const newPag = (): PagamentoData => ({ forma: 'debito', banco: '', agencia: '', conta: '', titular: '', cpfTitular: '', diaVencimento: '' })
 const pagamentoPrev = reactive(newPag())
-const pagamentoSeguro = reactive(newPag())
+const pagamentoSeguro = reactive({ ...newPag(), nomeCartao: '', numeroCartao: '', validade: '', cvv: '' })
 
 function formaLabel(forma: string) {
   const m: Record<string, string> = { debito: 'Débito em Conta Corrente', boleto: 'Boleto Bancário', cartao: 'Cartão de Crédito' }
@@ -446,7 +567,6 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .inner-tab:hover { color: var(--text-primary); }
 .inner-tab--active { color: var(--text-primary); border-bottom-color: var(--btn-primary-bg); font-weight: 600; }
 .section-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; margin-bottom: 16px; }
-.section-card--highlight { background-color: #f8fafc; }
 .section-card__title { display: flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: var(--text-primary); margin: 0 0 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); }
 .field-grid { display: grid; gap: 16px 24px; }
 .field-grid--2 { grid-template-columns: 1fr 1fr; }
@@ -455,14 +575,9 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .field-label { font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.6px; }
 .field-value { font-family: var(--font-sans); font-size: 15px; font-weight: 400; color: var(--text-primary); }
 .field-value--lg { font-size: 16px; font-weight: 600; }
-.field-value--xl { font-size: 18px; font-weight: 700; }
 .field-block { margin-bottom: 16px; }
-.toggle-group { display: flex; gap: 0; margin-top: 8px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
-.toggle-btn { flex: 1; padding: 10px 16px; background: white; border: none; cursor: pointer; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--text-muted); transition: background-color 0.15s, color 0.15s; }
-.toggle-btn + .toggle-btn { border-left: 1px solid var(--border-color); }
-.toggle-btn--active { background-color: var(--btn-primary-bg); color: var(--btn-primary-color); }
 .inner-card { background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 6px; }
-.fund-card { border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; margin-top: 8px; }
+.fund-card { border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; }
 .fund-card__header { padding: 12px 16px; background-color: #f8fafc; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; }
 .fund-card__name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
 .fund-card__cnpj { font-size: 12px; color: var(--text-muted); }
@@ -472,10 +587,10 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .fund-card__text { font-size: 12px; color: var(--text-primary); }
 .fund-card__meta { display: flex; gap: 20px; margin-top: 4px; flex-wrap: wrap; }
 .fund-card__meta span { font-size: 12px; color: var(--text-muted); }
-.product-card { border: 1px solid var(--border-color); border-radius: 6px; padding: 14px 16px; margin-top: 8px; }
+.product-card { border: 1px solid var(--border-color); border-radius: 6px; padding: 14px 16px; }
 .product-card__name { font-size: 14px; font-weight: 600; color: var(--text-primary); display: block; margin-bottom: 6px; }
 .product-card__desc { font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.5; }
-.coverage-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-family: var(--font-sans); font-size: 13px; }
+.coverage-table { width: 100%; border-collapse: collapse; font-family: var(--font-sans); font-size: 13px; }
 .coverage-table th { padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.5px; background-color: #f8fafc; border-bottom: 1px solid var(--border-color); }
 .coverage-table td { padding: 10px 12px; color: var(--text-primary); border-bottom: 1px solid var(--border-color); }
 .coverage-table tr:last-child td { border-bottom: none; }
@@ -491,21 +606,28 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .beneficiary-card__title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
 .btn-remove { background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; border-radius: 4px; display: flex; align-items: center; transition: color 0.12s, background-color 0.12s; }
 .btn-remove:hover { color: #ef4444; background-color: #fef2f2; }
-.btn-add-beneficiary { display: flex; align-items: center; gap: 6px; padding: 9px 16px; background: none; border: 1.5px dashed var(--border-color); border-radius: 6px; cursor: pointer; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--text-muted); width: 100%; justify-content: center; transition: border-color 0.15s, color 0.15s; margin-top: 4px; }
+.btn-add-beneficiary { display: flex; align-items: center; gap: 6px; padding: 9px 16px; background: none; border: 1.5px dashed var(--border-color); border-radius: 6px; cursor: pointer; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--text-muted); transition: border-color 0.12s, color 0.12s; margin-top: 4px; }
 .btn-add-beneficiary:hover { border-color: #94a3b8; color: var(--text-primary); }
 .alert-warning { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background-color: #fefce8; border: 1px solid #fde047; border-radius: 6px; font-size: 13px; color: #854d0e; margin: 8px 0; }
 .radio-group { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
 .radio-item { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .radio-input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--btn-primary-bg); }
 .radio-label { font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); }
-.info-box-blue { display: flex; align-items: flex-start; gap: 8px; padding: 12px 14px; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; font-size: 13px; color: #1e40af; margin-top: 12px; line-height: 1.5; }
+.info-box-blue { display: flex; align-items: flex-start; gap: 8px; padding: 12px 14px; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; font-size: 13px; color: #1e40af; line-height: 1.5; }
+.info-box-yellow { display: flex; align-items: flex-start; gap: 8px; padding: 12px 14px; background-color: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; font-size: 13px; color: #92400e; line-height: 1.5; }
+.prazo-cotizacao { font-family: var(--font-sans); font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.5; }
+.valor-total-row { display: flex; align-items: baseline; gap: 12px; padding-top: 16px; border-top: 1px solid var(--border-color); margin-top: 8px; }
 .subsection-title { font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: var(--text-primary); margin: 16px 0 12px; }
-.subsection-label { font-family: var(--font-sans); font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px; }
-.solutions-text { font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); line-height: 1.6; margin: 0 0 4px; }
+/* ── Separação visual entre sub-abas na Revisão ── */
+.review-subtab-header { font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; margin: 0 0 14px; padding: 8px 12px; background-color: #f8fafc; border-radius: 6px; border-left: 3px solid var(--btn-primary-bg); }
+.review-subtab-divider { border: none; border-top: 1px solid var(--border-color); margin: 20px 0; }
+.beneficiary-review { padding: 12px; background-color: #fafafa; border-radius: 6px; border: 1px solid var(--border-color); }
 .page-footer { display: flex; justify-content: flex-end; padding-top: 24px; }
 .btn-primary { font-family: var(--font-sans); font-size: 14px; font-weight: 500; padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; background-color: var(--btn-primary-bg); color: var(--btn-primary-color); transition: opacity 0.15s; line-height: 1; }
 .btn-primary:hover { opacity: 0.85; }
-.mt-16 { margin-top: 16px; }
+.mt-8 { margin-top: 8px; }
 .mt-12 { margin-top: 12px; }
+.mt-16 { margin-top: 16px; }
 .mb-8 { margin-bottom: 8px; }
+.mb-16 { margin-bottom: 16px; }
 </style>
