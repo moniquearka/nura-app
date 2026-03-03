@@ -80,8 +80,14 @@
           <table class="coverage-table mt-12">
             <thead><tr><th>Cobertura</th><th>Vigência</th><th>Prazo de Pagamento</th><th>Capital Segurado</th><th>Contribuição Mensal</th></tr></thead>
             <tbody>
-              <tr><td>Morte por Qualquer Causa</td><td>Vitalício</td><td>20 anos</td><td>R$ 500.000,00</td><td>R$ 850,00</td></tr>
-              <tr><td>Invalidez por Acidente</td><td>Vitalício</td><td>20 anos</td><td>R$ 500.000,00</td><td>R$ 300,00</td></tr>
+              <tr><td>Morte Natural ou Acidental + Adiantamento por Doença Terminal (obrigatório)</td><td>Vitalícia</td><td>—</td><td>R$ 2.961.000,00</td><td><strong>R$ 1.184,40</strong></td></tr>
+              <tr><td>Indenização Especial de Morte por Acidente (IEA)</td><td>Vitalícia</td><td>—</td><td>R$ 1.484.000,00</td><td><strong>R$ 593,60</strong></td></tr>
+              <tr><td>Invalidez Permanente por Acidente - Total ou Parcial (IPA)</td><td>Vitalícia</td><td>—</td><td>R$ 1.484.000,00</td><td><strong>R$ 593,60</strong></td></tr>
+              <tr><td>Indenização Especial de Invalidez por Doença (IED)</td><td>Vitalícia</td><td>—</td><td>R$ 155.000,00</td><td><strong>R$ 62,00</strong></td></tr>
+              <tr><td>Doenças Graves (DG)</td><td>Vitalícia</td><td>—</td><td>R$ 155.000,00</td><td><strong>R$ 62,00</strong></td></tr>
+              <tr><td>Diária por Incapacidade Temporária (DIT)</td><td>Vitalícia</td><td>—</td><td>R$ 4.000,00</td><td><strong>R$ 1,60</strong></td></tr>
+              <tr><td>Diária por Internação Hospitalar (DIH)</td><td>Vitalícia</td><td>—</td><td>R$ 2.000,00</td><td><strong>R$ 0,80</strong></td></tr>
+              <tr><td>Serviço de Assistência Funeral (SAF)</td><td>Vitalícia</td><td>—</td><td>R$ 5.000,00</td><td><strong>R$ 2,00</strong></td></tr>
             </tbody>
           </table>
         </div>
@@ -244,8 +250,8 @@
                 </div>
               </div>
               <div class="info-box-blue mt-12">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <span>O débito será realizado automaticamente no {{ pagamentoPrev.diaVencimento || 'dia selecionado' }} de cada mês. Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento. Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>O débito será realizado automaticamente no {{ pagamentoPrev.diaVencimento || 'dia selecionado' }} de cada mês. Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento.<br>Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.</span>
               </div>
             </template>
 
@@ -264,7 +270,7 @@
               </div>
               <p class="prazo-cotizacao mt-12"><strong>Prazo de cotização — Boleto:</strong> Até 5 dias úteis para compensação do pagamento + 2 dias úteis para atualização de saldo.</p>
               <div class="info-box-yellow mt-8">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                 <span><strong>Atenção:</strong> Após a emissão do certificado, a seguradora enviará o boleto em até 5 dias úteis para o e-mail cadastrado. Fique atento à caixa de Spam. Caso tenha selecionado a opção de um aporte único e contribuições mensais, esta primeira boleto será a soma destes valores.</span>
               </div>
             </template>
@@ -272,7 +278,7 @@
             <!-- Valor Total -->
             <div class="valor-total-row mt-16">
               <span class="field-label">Valor Total</span>
-              <span class="field-value field-value--lg">R$ 10.000 de Aporte Inicial + R$ 1.650/mês de Contribuição Mensal</span>
+              <span class="valor-total-value">R$ 10.000 de Aporte Inicial + R$ 1.650/mês de Contribuição Mensal</span>
             </div>
           </div>
         </template>
@@ -314,8 +320,8 @@
                 </div>
               </div>
               <div class="info-box-blue mt-12">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <span>O débito será realizado automaticamente no {{ pagamentoSeguro.diaVencimento || 'dia selecionado' }} de cada mês. Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento. Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>O débito será realizado automaticamente no {{ pagamentoSeguro.diaVencimento || 'dia selecionado' }} de cada mês. Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento.<br>Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.</span>
               </div>
             </template>
 
@@ -334,7 +340,7 @@
               </div>
               <p class="prazo-cotizacao mt-12"><strong>Prazo de cotização — Boleto:</strong> Até 5 dias úteis para compensação do pagamento + 2 dias úteis para atualização de saldo.</p>
               <div class="info-box-yellow mt-8">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                 <span><strong>Atenção:</strong> Após a emissão do certificado, a seguradora enviará o boleto em até 5 dias úteis para o e-mail cadastrado. Fique atento à caixa de Spam. Caso tenha selecionado a opção de um aporte único e contribuições mensais, esta primeira boleto será a soma destes valores.</span>
               </div>
             </template>
@@ -350,7 +356,7 @@
                 <div class="form-field"><label class="field-label">CPF do Titular</label><input v-model="pagamentoSeguro.cpfTitular" type="text" class="form-input" placeholder="000.000.000-00" /></div>
               </div>
               <div class="info-box-blue mt-12">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span>Será realizada apenas uma <strong>reserva do valor</strong> junto à operadora e ao banco do cartão de crédito. A cobrança só será finalizada após a conclusão do processo de contratação da proposta.</span>
               </div>
             </template>
@@ -358,7 +364,7 @@
             <!-- Valor Total -->
             <div class="valor-total-row mt-16">
               <span class="field-label">Valor Total</span>
-              <span class="field-value field-value--lg">R$ 2.500,00/mês</span>
+              <span class="valor-total-value">R$ 2.500,00/mês</span>
             </div>
           </div>
         </template>
@@ -475,7 +481,7 @@
               <div class="field-item"><span class="field-label">Titular</span><span class="field-value">{{ pagamentoPrev.titular || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoPrev.diaVencimento || '—' }}</span></div>
             </template>
-            <div class="field-item"><span class="field-label">Valor Total</span><span class="field-value field-value--lg">R$ 10.000 de Aporte Inicial + R$ 1.650/mês de Contribuição Mensal</span></div>
+            <div class="field-item"><span class="field-label">Valor Total</span><span class="valor-total-value">R$ 10.000 de Aporte Inicial + R$ 1.650/mês de Contribuição Mensal</span></div>
           </div>
 
           <!-- Separador -->
@@ -501,7 +507,7 @@
               <div class="field-item"><span class="field-label">Número do Cartão</span><span class="field-value">{{ pagamentoSeguro.numeroCartao ? '•••• •••• •••• ' + pagamentoSeguro.numeroCartao.slice(-4) : '—' }}</span></div>
               <div class="field-item"><span class="field-label">Validade</span><span class="field-value">{{ pagamentoSeguro.validade || '—' }}</span></div>
             </template>
-            <div class="field-item"><span class="field-label">Valor Total</span><span class="field-value field-value--lg">R$ 2.500,00/mês</span></div>
+            <div class="field-item"><span class="field-label">Valor Total</span><span class="valor-total-value">R$ 2.500,00/mês</span></div>
           </div>
         </div>
 
@@ -613,10 +619,14 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .radio-item { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .radio-input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--btn-primary-bg); }
 .radio-label { font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); }
-.info-box-blue { display: flex; align-items: flex-start; gap: 8px; padding: 12px 14px; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; font-size: 13px; color: #1e40af; line-height: 1.5; }
-.info-box-yellow { display: flex; align-items: flex-start; gap: 8px; padding: 12px 14px; background-color: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; font-size: 13px; color: #92400e; line-height: 1.5; }
+.info-box-blue { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; font-size: 13px; color: #1e40af; line-height: 1.5; }
+.info-box-blue svg { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; color: #1e40af; }
+.info-box-yellow { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; font-size: 13px; color: #1e40af; line-height: 1.5; }
+.info-box-yellow svg { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; color: #1e40af; }
 .prazo-cotizacao { font-family: var(--font-sans); font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.5; }
 .valor-total-row { display: flex; align-items: baseline; gap: 12px; padding-top: 16px; border-top: 1px solid var(--border-color); margin-top: 8px; }
+.valor-total-row .field-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+.valor-total-value { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
 .subsection-title { font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: var(--text-primary); margin: 16px 0 12px; }
 /* ── Separação visual entre sub-abas na Revisão ── */
 .review-subtab-header { font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; margin: 0 0 14px; padding: 8px 12px; background-color: #f8fafc; border-radius: 6px; border-left: 3px solid var(--btn-primary-bg); }
