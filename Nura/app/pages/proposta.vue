@@ -216,30 +216,6 @@
           <h2 class="page-header__title">Forma de Pagamento</h2>
         </div>
 
-        <!-- Pergunta Responsável Financeiro (topo, antes das sub-abas) -->
-        <div class="section-card mb-0" style="margin-bottom:0;padding-bottom:16px;">
-          <div class="resp-financeiro-row">
-            <span class="field-label" style="flex-shrink:0;">Dados do Responsável Financeiro serão os mesmos aos Dados do Proponente?</span>
-            <div class="radio-group-inline">
-              <label class="radio-item"><input v-model="respFinanceiroGlobal" type="radio" value="sim" class="radio-input" @change="preencherRespFinanceiroGlobal" /><span class="radio-label">Sim</span></label>
-              <label class="radio-item"><input v-model="respFinanceiroGlobal" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
-            </div>
-          </div>
-          <!-- Dados do Responsável Financeiro (quando Não) -->
-          <template v-if="respFinanceiroGlobal === 'nao'">
-            <div class="section-card mt-16" style="background:#f8fafc;">
-              <h4 class="subsection-title" style="margin-top:0">Dados do Responsável Financeiro</h4>
-              <div class="field-grid field-grid--3">
-                <div class="form-field"><label class="field-label">Nome Completo</label><input v-model="respFinanceiroData.nome" type="text" class="form-input" /></div>
-                <div class="form-field"><label class="field-label">CPF</label><input v-model="respFinanceiroData.cpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
-                <div class="form-field"><label class="field-label">Data de Nascimento</label><input v-model="respFinanceiroData.dataNasc" type="date" class="form-input" /></div>
-                <div class="form-field"><label class="field-label">Telefone</label><input v-model="respFinanceiroData.telefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
-                <div class="form-field"><label class="field-label">E-mail</label><input v-model="respFinanceiroData.email" type="email" class="form-input" /></div>
-              </div>
-            </div>
-          </template>
-        </div>
-
         <div class="inner-tabs">
           <button class="inner-tab" :class="{ 'inner-tab--active': activeSubTab === 0 }" @click="onSubTabChange(0)">Previdência</button>
           <button class="inner-tab" :class="{ 'inner-tab--active': activeSubTab === 1 }" @click="onSubTabChange(1)">Seguro de Vida</button>
@@ -249,6 +225,28 @@
         <template v-if="activeSubTab === 0">
           <div class="section-card">
             <h3 class="section-card__title">Forma de Pagamento — Previdência</h3>
+
+            <!-- Responsável Financeiro — Previdência -->
+            <div class="resp-financeiro-row mb-16">
+              <span class="field-label" style="flex-shrink:0;">Dados do Responsável Financeiro serão os mesmos aos Dados do Proponente?</span>
+              <div class="radio-group-inline">
+                <label class="radio-item"><input v-model="pagamentoPrev.respFinanceiro" type="radio" value="sim" class="radio-input" @change="pagamentoPrev.titular = 'Taís Oliveira Costa'; pagamentoPrev.cpfTitular = '123.456.789-00'" /><span class="radio-label">Sim</span></label>
+                <label class="radio-item"><input v-model="pagamentoPrev.respFinanceiro" type="radio" value="nao" class="radio-input" @change="pagamentoPrev.titular = ''; pagamentoPrev.cpfTitular = ''" /><span class="radio-label">Não</span></label>
+              </div>
+            </div>
+            <template v-if="pagamentoPrev.respFinanceiro === 'nao'">
+              <div class="section-card mb-16" style="background:#f8fafc;padding:16px;">
+                <h4 class="subsection-title" style="margin-top:0">Dados do Responsável Financeiro</h4>
+                <div class="field-grid field-grid--3">
+                  <div class="form-field"><label class="field-label">Nome Completo</label><input v-model="pagamentoPrev.rfNome" type="text" class="form-input" /></div>
+                  <div class="form-field"><label class="field-label">CPF</label><input v-model="pagamentoPrev.rfCpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
+                  <div class="form-field"><label class="field-label">Data de Nascimento</label><input v-model="pagamentoPrev.rfDataNasc" type="date" class="form-input" /></div>
+                  <div class="form-field"><label class="field-label">Telefone</label><input v-model="pagamentoPrev.rfTelefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
+                  <div class="form-field"><label class="field-label">E-mail</label><input v-model="pagamentoPrev.rfEmail" type="email" class="form-input" /></div>
+                </div>
+              </div>
+            </template>
+
             <div class="radio-group mb-16">
               <label class="radio-item"><input v-model="pagamentoPrev.forma" type="radio" value="debito" class="radio-input" /><span class="radio-label">Débito em Conta Corrente</span></label>
               <label class="radio-item"><input v-model="pagamentoPrev.forma" type="radio" value="boleto" class="radio-input" /><span class="radio-label">Boleto Bancário</span></label>
@@ -314,6 +312,28 @@
         <template v-if="activeSubTab === 1">
           <div class="section-card">
             <h3 class="section-card__title">Forma de Pagamento — Seguro de Vida</h3>
+
+            <!-- Responsável Financeiro — Seguro de Vida -->
+            <div class="resp-financeiro-row mb-16">
+              <span class="field-label" style="flex-shrink:0;">Dados do Responsável Financeiro serão os mesmos aos Dados do Proponente?</span>
+              <div class="radio-group-inline">
+                <label class="radio-item"><input v-model="pagamentoSeguro.respFinanceiro" type="radio" value="sim" class="radio-input" @change="pagamentoSeguro.titular = 'Taís Oliveira Costa'; pagamentoSeguro.cpfTitular = '123.456.789-00'" /><span class="radio-label">Sim</span></label>
+                <label class="radio-item"><input v-model="pagamentoSeguro.respFinanceiro" type="radio" value="nao" class="radio-input" @change="pagamentoSeguro.titular = ''; pagamentoSeguro.cpfTitular = ''" /><span class="radio-label">Não</span></label>
+              </div>
+            </div>
+            <template v-if="pagamentoSeguro.respFinanceiro === 'nao'">
+              <div class="section-card mb-16" style="background:#f8fafc;padding:16px;">
+                <h4 class="subsection-title" style="margin-top:0">Dados do Responsável Financeiro</h4>
+                <div class="field-grid field-grid--3">
+                  <div class="form-field"><label class="field-label">Nome Completo</label><input v-model="pagamentoSeguro.rfNome" type="text" class="form-input" /></div>
+                  <div class="form-field"><label class="field-label">CPF</label><input v-model="pagamentoSeguro.rfCpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
+                  <div class="form-field"><label class="field-label">Data de Nascimento</label><input v-model="pagamentoSeguro.rfDataNasc" type="date" class="form-input" /></div>
+                  <div class="form-field"><label class="field-label">Telefone</label><input v-model="pagamentoSeguro.rfTelefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
+                  <div class="form-field"><label class="field-label">E-mail</label><input v-model="pagamentoSeguro.rfEmail" type="email" class="form-input" /></div>
+                </div>
+              </div>
+            </template>
+
             <div class="radio-group mb-16">
               <label class="radio-item"><input v-model="pagamentoSeguro.forma" type="radio" value="debito" class="radio-input" /><span class="radio-label">Débito em Conta Corrente</span></label>
               <label class="radio-item"><input v-model="pagamentoSeguro.forma" type="radio" value="boleto" class="radio-input" /><span class="radio-label">Boleto Bancário</span></label>
