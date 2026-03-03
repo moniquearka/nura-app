@@ -827,10 +827,10 @@ const fundosDisponiveis = [
 
 // Proponente
 const proponente = reactive({
-  cpf: '', nome: '', nomeSocial: '', dataNasc: '', telefone: '', email: '',
-  renda: '', ocupacao: '', empresa: '', origemRenda: '', patrimonio: '', nacionalidade: '',
+  cpf: '123.456.789-00', nome: 'Taís Oliveira Costa', nomeSocial: '', dataNasc: '1984-05-15', telefone: '(11) 98765-4321', email: 'tais.oliveira@email.com',
+  renda: 'R$ 18.000,00', ocupacao: 'Gerente de Marketing', empresa: 'Tech Solutions Brasil', origemRenda: 'Salário CLT', patrimonio: 'R$ 350.000,00', nacionalidade: 'Brasileira',
   pessoaPolitica: 'nao', usPerson: 'nao',
-  cep: '', rua: '', numero: '', complemento: '', bairro: '', municipio: '', estado: '',
+  cep: '01310-100', rua: 'Avenida Paulista', numero: '1000', complemento: 'Apto 42', bairro: 'Bela Vista', municipio: 'São Paulo', estado: 'SP',
 })
 
 const ufs = ['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO']
