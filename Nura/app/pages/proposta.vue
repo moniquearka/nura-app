@@ -881,7 +881,7 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .opcoes-divider { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0 16px; }
 .opcoes-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin: 0 0 12px; }
 /* Proponente — flags e dados residenciais */
-.proponente-flags { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
+.proponente-flags { display: flex; flex-direction: row; gap: 32px; flex-wrap: wrap; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
 .proponente-flag-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
 .proponente-flag-row .field-label { font-size: 13px; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--text-primary); min-width: 220px; }
 .flag-radio-group { display: flex; flex-direction: row; gap: 20px; }
