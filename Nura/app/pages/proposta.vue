@@ -216,12 +216,36 @@
           <h2 class="page-header__title">Forma de Pagamento</h2>
         </div>
 
+        <!-- Pergunta Responsável Financeiro (topo, antes das sub-abas) -->
+        <div class="section-card mb-0" style="margin-bottom:0;padding-bottom:16px;">
+          <div class="resp-financeiro-row">
+            <span class="field-label" style="flex-shrink:0;">Dados do Responsável Financeiro serão os mesmos aos Dados do Proponente?</span>
+            <div class="radio-group-inline">
+              <label class="radio-item"><input v-model="respFinanceiroGlobal" type="radio" value="sim" class="radio-input" @change="preencherRespFinanceiroGlobal" /><span class="radio-label">Sim</span></label>
+              <label class="radio-item"><input v-model="respFinanceiroGlobal" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
+            </div>
+          </div>
+          <!-- Dados do Responsável Financeiro (quando Não) -->
+          <template v-if="respFinanceiroGlobal === 'nao'">
+            <div class="section-card mt-16" style="background:#f8fafc;">
+              <h4 class="subsection-title" style="margin-top:0">Dados do Responsável Financeiro</h4>
+              <div class="field-grid field-grid--3">
+                <div class="form-field"><label class="field-label">Nome Completo</label><input v-model="respFinanceiroData.nome" type="text" class="form-input" /></div>
+                <div class="form-field"><label class="field-label">CPF</label><input v-model="respFinanceiroData.cpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
+                <div class="form-field"><label class="field-label">Data de Nascimento</label><input v-model="respFinanceiroData.dataNasc" type="date" class="form-input" /></div>
+                <div class="form-field"><label class="field-label">Telefone</label><input v-model="respFinanceiroData.telefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
+                <div class="form-field"><label class="field-label">E-mail</label><input v-model="respFinanceiroData.email" type="email" class="form-input" /></div>
+              </div>
+            </div>
+          </template>
+        </div>
+
         <div class="inner-tabs">
           <button class="inner-tab" :class="{ 'inner-tab--active': activeSubTab === 0 }" @click="onSubTabChange(0)">Previdência</button>
           <button class="inner-tab" :class="{ 'inner-tab--active': activeSubTab === 1 }" @click="onSubTabChange(1)">Seguro de Vida</button>
         </div>
 
-        <!-- ── Pagamento Previdência (sem Cartão de Crédito) ── -->
+        <!-- ── Pagamento Previdência (sem Cartão de Crédito) -->
         <template v-if="activeSubTab === 0">
           <div class="section-card">
             <h3 class="section-card__title">Forma de Pagamento — Previdência</h3>
@@ -276,28 +300,7 @@
               </div>
             </template>
 
-            <!-- Pergunta Responsável Financeiro -->
-            <div class="field-block mt-20">
-              <span class="field-label">Dados do Responsável Financeiro serão os mesmos aos Dados do Proponente?</span>
-              <div class="radio-group mt-8">
-                <label class="radio-item"><input v-model="pagamentoPrev.respFinanceiro" type="radio" value="sim" class="radio-input" @change="preencherRespFinanceiroPrev" /><span class="radio-label">Sim</span></label>
-                <label class="radio-item"><input v-model="pagamentoPrev.respFinanceiro" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
-              </div>
-            </div>
-
-            <!-- Dados do Responsável Financeiro (quando Não) -->
-            <template v-if="pagamentoPrev.respFinanceiro === 'nao'">
-              <div class="section-card mt-16" style="background:#f8fafc;">
-                <h4 class="subsection-title" style="margin-top:0">Dados do Responsável Financeiro</h4>
-                <div class="field-grid field-grid--3">
-                  <div class="form-field"><label class="field-label">Nome Completo</label><input v-model="pagamentoPrev.rfNome" type="text" class="form-input" /></div>
-                  <div class="form-field"><label class="field-label">CPF</label><input v-model="pagamentoPrev.rfCpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
-                  <div class="form-field"><label class="field-label">Data de Nascimento</label><input v-model="pagamentoPrev.rfDataNasc" type="date" class="form-input" /></div>
-                  <div class="form-field"><label class="field-label">Telefone</label><input v-model="pagamentoPrev.rfTelefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
-                  <div class="form-field"><label class="field-label">E-mail</label><input v-model="pagamentoPrev.rfEmail" type="email" class="form-input" /></div>
-                </div>
-              </div>
-            </template>
+            <!-- Responsável Financeiro agora no topo da aba (removido daqui) -->
 
             <!-- Valor Total -->
             <div class="valor-total-row mt-16">
@@ -376,29 +379,6 @@
               <div class="info-box-blue mt-12">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span>Será realizada apenas uma <strong>reserva do valor</strong> junto à operadora e ao banco do cartão de crédito.<br>A cobrança só será finalizada após a conclusão do processo de contratação da proposta.</span>
-              </div>
-            </template>
-
-            <!-- Pergunta Responsável Financeiro -->
-            <div class="field-block mt-20">
-              <span class="field-label">Dados do Responsável Financeiro serão os mesmos aos Dados do Proponente?</span>
-              <div class="radio-group mt-8">
-                <label class="radio-item"><input v-model="pagamentoSeguro.respFinanceiro" type="radio" value="sim" class="radio-input" @change="preencherRespFinanceiroSeguro" /><span class="radio-label">Sim</span></label>
-                <label class="radio-item"><input v-model="pagamentoSeguro.respFinanceiro" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
-              </div>
-            </div>
-
-            <!-- Dados do Responsável Financeiro (quando Não) -->
-            <template v-if="pagamentoSeguro.respFinanceiro === 'nao'">
-              <div class="section-card mt-16" style="background:#f8fafc;">
-                <h4 class="subsection-title" style="margin-top:0">Dados do Responsável Financeiro</h4>
-                <div class="field-grid field-grid--3">
-                  <div class="form-field"><label class="field-label">Nome Completo</label><input v-model="pagamentoSeguro.rfNome" type="text" class="form-input" /></div>
-                  <div class="form-field"><label class="field-label">CPF</label><input v-model="pagamentoSeguro.rfCpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
-                  <div class="form-field"><label class="field-label">Data de Nascimento</label><input v-model="pagamentoSeguro.rfDataNasc" type="date" class="form-input" /></div>
-                  <div class="form-field"><label class="field-label">Telefone</label><input v-model="pagamentoSeguro.rfTelefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
-                  <div class="form-field"><label class="field-label">E-mail</label><input v-model="pagamentoSeguro.rfEmail" type="email" class="form-input" /></div>
-                </div>
               </div>
             </template>
 
@@ -639,20 +619,20 @@ const newPag = (): PagamentoData => ({ forma: 'debito', banco: '', agencia: '', 
 const pagamentoPrev = reactive(newPag())
 const pagamentoSeguro = reactive({ ...newPag(), nomeCartao: '', numeroCartao: '', validade: '', cvv: '' })
 
-function preencherRespFinanceiroPrev() {
-  pagamentoPrev.rfNome = 'Taís Oliveira Costa'
-  pagamentoPrev.rfCpf = '123.456.789-00'
-  pagamentoPrev.rfDataNasc = '1990-05-15'
-  pagamentoPrev.rfTelefone = '(11) 99999-9999'
-  pagamentoPrev.rfEmail = 'tais@email.com'
+// Responsável Financeiro global (compartilhado entre sub-abas)
+const respFinanceiroGlobal = ref('sim')
+const respFinanceiroData = reactive({ nome: 'Taís Oliveira Costa', cpf: '123.456.789-00', dataNasc: '1990-05-15', telefone: '(11) 99999-9999', email: 'tais@email.com' })
+
+function preencherRespFinanceiroGlobal() {
+  respFinanceiroData.nome = 'Taís Oliveira Costa'
+  respFinanceiroData.cpf = '123.456.789-00'
+  respFinanceiroData.dataNasc = '1990-05-15'
+  respFinanceiroData.telefone = '(11) 99999-9999'
+  respFinanceiroData.email = 'tais@email.com'
 }
-function preencherRespFinanceiroSeguro() {
-  pagamentoSeguro.rfNome = 'Taís Oliveira Costa'
-  pagamentoSeguro.rfCpf = '123.456.789-00'
-  pagamentoSeguro.rfDataNasc = '1990-05-15'
-  pagamentoSeguro.rfTelefone = '(11) 99999-9999'
-  pagamentoSeguro.rfEmail = 'tais@email.com'
-}
+// Mantém compatibilidade com funções antigas (não usadas mais, mas evita erros)
+function preencherRespFinanceiroPrev() { preencherRespFinanceiroGlobal() }
+function preencherRespFinanceiroSeguro() { preencherRespFinanceiroGlobal() }
 function formaLabel(forma: string) {
   const m: Record<string, string> = { debito: 'Débito em Conta Corrente', boleto: 'Boleto Bancário', cartao: 'Cartão de Crédito' }
   return m[forma] || '—'
@@ -739,4 +719,9 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .mt-16 { margin-top: 16px; }
 .mb-8 { margin-bottom: 8px; }
 .mb-16 { margin-bottom: 16px; }
+.mt-20 { margin-top: 20px; }
+/* Responsável Financeiro no topo da aba Forma de Pagamento */
+.resp-financeiro-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.resp-financeiro-row .field-label { font-size: 13px; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--text-primary); }
+.radio-group-inline { display: flex; flex-direction: row; gap: 20px; flex-shrink: 0; }
 </style>

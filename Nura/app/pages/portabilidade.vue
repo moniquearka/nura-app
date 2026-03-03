@@ -75,15 +75,21 @@
             </div>
             <!-- Linha 3: Tipo do Plano | Regime Tributário -->
             <div class="form-field">
-              <label class="form-label">Tipo do Plano</label>
-              <div class="btn-group">
-                <button v-for="tp in ['PGBL','VGBL']" :key="tp" class="btn-option" :class="{ 'btn-option--active': form.tipoPlano === tp }" @click="form.tipoPlano = tp">{{ tp }}</button>
+              <label class="form-label-radio">Tipo do Plano</label>
+              <div class="radio-group-h">
+                <label v-for="tp in ['PGBL','VGBL']" :key="tp" class="radio-label-h">
+                  <input type="radio" v-model="form.tipoPlano" :value="tp" class="radio-input" />
+                  <span>{{ tp }}</span>
+                </label>
               </div>
             </div>
             <div class="form-field">
-              <label class="form-label">Regime Tributário</label>
-              <div class="btn-group">
-                <button v-for="r in ['Progressiva','Regressiva']" :key="r" class="btn-option" :class="{ 'btn-option--active': form.regime === r }" @click="form.regime = r">{{ r }}</button>
+              <label class="form-label-radio">Regime Tributário</label>
+              <div class="radio-group-h">
+                <label v-for="r in ['Progressiva','Regressiva']" :key="r" class="radio-label-h">
+                  <input type="radio" v-model="form.regime" :value="r" class="radio-input" />
+                  <span>{{ r }}</span>
+                </label>
               </div>
             </div>
             <!-- Linha 4: CNPJ do Fundo | Situação do Regime -->
@@ -92,9 +98,12 @@
               <input v-model="form.cnpjFundo" type="text" placeholder="00.000.000/0000-00" class="form-input" />
             </div>
             <div class="form-field">
-              <label class="form-label">Situação do Regime</label>
-              <div class="btn-group">
-                <button v-for="s in ['Retratável','Irretratável','De acordo com Origem']" :key="s" class="btn-option" :class="{ 'btn-option--active': form.situacaoRegime === s }" @click="form.situacaoRegime = s">{{ s }}</button>
+              <label class="form-label-radio">Situação do Regime</label>
+              <div class="radio-group-h">
+                <label v-for="s in ['Retratável','Irretratável','De acordo com Origem']" :key="s" class="radio-label-h">
+                  <input type="radio" v-model="form.situacaoRegime" :value="s" class="radio-input" />
+                  <span>{{ s }}</span>
+                </label>
               </div>
             </div>
           </div>
@@ -105,9 +114,12 @@
           <h3 class="section-card__title">Configurações da Transferência</h3>
           <div class="form-grid">
             <div class="form-field">
-              <label class="form-label">Tipo de Transferência</label>
-              <div class="btn-group">
-                <button v-for="t in ['Total','Parcial']" :key="t" class="btn-option" :class="{ 'btn-option--active': form.tipoTransferencia === t }" @click="form.tipoTransferencia = t">{{ t }}</button>
+              <label class="form-label-radio">Tipo de Transferência</label>
+              <div class="radio-group-h">
+                <label v-for="t in ['Total','Parcial']" :key="t" class="radio-label-h">
+                  <input type="radio" v-model="form.tipoTransferencia" :value="t" class="radio-input" />
+                  <span>{{ t }}</span>
+                </label>
               </div>
             </div>
             <div class="form-field">
@@ -124,36 +136,7 @@
           </div>
         </div>
 
-        <!-- Deseja realizar contratação adicional? -->
-        <div class="section-card">
-          <h3 class="section-card__title">Contratação Adicional</h3>
-          <div class="form-grid">
-            <div class="form-field form-field--full">
-              <label class="form-label">Deseja realizar contratação adicional?</label>
-              <div class="btn-group btn-group--fit">
-                <button v-for="op in ['Sim','Não']" :key="op" class="btn-option" :class="{ 'btn-option--active': form.contratacaoAdicional === op }" @click="form.contratacaoAdicional = op">{{ op }}</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="page-footer">
-          <button class="btn-primary" @click="changeTab(tabIndex('Destino da Portabilidade'))">Continuar</button>
-        </div>
-      </template>
-
-      <!-- ══ ABA: DESTINO DA PORTABILIDADE ══ -->
-      <template v-if="activeTab === tabIndex('Destino da Portabilidade')">
-        <div class="page-header">
-          <span class="page-header__icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </span>
-          <h2 class="page-header__title">Destino da Portabilidade</h2>
-        </div>
-
-        <!-- Dados do Destino -->
+        <!-- Dados do Destino (movido da aba Destino) -->
         <div class="section-card">
           <h3 class="section-card__title">Dados do Destino</h3>
           <div class="form-grid">
@@ -195,15 +178,21 @@
             </div>
             <!-- Linha 3: Tipo do Plano | Regime Tributário -->
             <div class="form-field">
-              <label class="form-label">Tipo do Plano</label>
-              <div class="btn-group">
-                <button v-for="tp in ['PGBL','VGBL']" :key="tp" class="btn-option" :class="{ 'btn-option--active': destino.tipoPlano === tp }" @click="destino.tipoPlano = tp">{{ tp }}</button>
+              <label class="form-label-radio">Tipo do Plano</label>
+              <div class="radio-group-h">
+                <label v-for="tp in ['PGBL','VGBL']" :key="tp" class="radio-label-h">
+                  <input type="radio" v-model="destino.tipoPlano" :value="tp" class="radio-input" />
+                  <span>{{ tp }}</span>
+                </label>
               </div>
             </div>
             <div class="form-field">
-              <label class="form-label">Regime Tributário</label>
-              <div class="btn-group">
-                <button v-for="r in ['Progressiva','Regressiva']" :key="r" class="btn-option" :class="{ 'btn-option--active': destino.regime === r }" @click="destino.regime = r">{{ r }}</button>
+              <label class="form-label-radio">Regime Tributário</label>
+              <div class="radio-group-h">
+                <label v-for="r in ['Progressiva','Regressiva']" :key="r" class="radio-label-h">
+                  <input type="radio" v-model="destino.regime" :value="r" class="radio-input" />
+                  <span>{{ r }}</span>
+                </label>
               </div>
             </div>
             <!-- Linha 4: CNPJ do Fundo | Situação do Regime -->
@@ -212,16 +201,33 @@
               <input v-model="destino.cnpjFundo" type="text" placeholder="00.000.000/0000-00" class="form-input" />
             </div>
             <div class="form-field">
-              <label class="form-label">Situação do Regime</label>
-              <div class="btn-group">
-                <button v-for="s in ['Retratável','Irretratável','De acordo com Origem']" :key="s" class="btn-option" :class="{ 'btn-option--active': destino.situacaoRegime === s }" @click="destino.situacaoRegime = s">{{ s }}</button>
+              <label class="form-label-radio">Situação do Regime</label>
+              <div class="radio-group-h">
+                <label v-for="s in ['Retratável','Irretratável','De acordo com Destino']" :key="s" class="radio-label-h">
+                  <input type="radio" v-model="destino.situacaoRegime" :value="s" class="radio-input" />
+                  <span>{{ s }}</span>
+                </label>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- Deseja realizar contratação adicional? -->
+        <div class="section-card">
+          <h3 class="section-card__title">Contratação Adicional</h3>
+          <div class="form-field">
+            <label class="form-label-radio">Deseja realizar contratação adicional?</label>
+            <div class="radio-group-h">
+              <label v-for="op in ['Sim','Não']" :key="op" class="radio-label-h">
+                <input type="radio" v-model="form.contratacaoAdicional" :value="op" class="radio-input" />
+                <span>{{ op }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
         <div class="page-footer">
-          <button class="btn-primary" @click="advanceFromDestino">Continuar</button>
+          <button class="btn-primary" @click="advanceFromDetalhes">Continuar</button>
         </div>
       </template>
 
@@ -236,22 +242,71 @@
           <h2 class="page-header__title">Contratação Adicional</h2>
         </div>
 
-        <!-- Aporte Adicional -->
+        <!-- Dados Adicionais do Plano (clone dos campos Dados do Plano do aliaplan — apenas Previdência, sem Tipo de Investimento e sem Idade que deseja se aposentar) -->
+        <div class="section-card">
+          <h3 class="section-card__title">Dados Adicionais do Plano</h3>
+          <div class="form-grid">
+            <!-- Tipo do Plano -->
+            <div class="form-field">
+              <label class="form-label-radio">Tipo do Plano</label>
+              <div class="radio-group-h">
+                <label v-for="tp in ['PGBL','VGBL']" :key="tp" class="radio-label-h">
+                  <input type="radio" v-model="adicional.tipoPlano" :value="tp" class="radio-input" />
+                  <span>{{ tp }}</span>
+                </label>
+              </div>
+            </div>
+            <!-- Regime de Tributação -->
+            <div class="form-field">
+              <label class="form-label-radio">Regime de Tributação</label>
+              <div class="radio-group-h">
+                <label v-for="r in ['Progressiva','Regressiva']" :key="r" class="radio-label-h">
+                  <input type="radio" v-model="adicional.regime" :value="r" class="radio-input" />
+                  <span>{{ r }}</span>
+                </label>
+              </div>
+            </div>
+            <!-- Contribuição Mensal -->
+            <div class="form-field">
+              <label class="form-label">Contribuição Mensal</label>
+              <input v-model="adicional.contribuicaoMensal" type="text" placeholder="R$ 0,00" class="form-input" />
+            </div>
+            <!-- Aporte Inicial -->
+            <div class="form-field">
+              <label class="form-label">Aporte Inicial</label>
+              <input v-model="adicional.aporteInicial" type="text" placeholder="R$ 0,00" class="form-input" />
+            </div>
+            <!-- Fundo de Investimento -->
+            <div class="form-field form-field--full">
+              <label class="form-label">Fundo de Investimento</label>
+              <div class="fund-card">
+                <div class="fund-card__header">
+                  <div class="fund-card__name">Nura Prev Ciclo de Vida 2045 FIC FIM</div>
+                  <div class="fund-card__badge fund-card__badge--moderate">Moderado</div>
+                </div>
+                <div class="fund-card__details">
+                  <div class="fund-detail"><span class="fund-detail__label">CNPJ</span><span class="fund-detail__value">12.345.678/0001-90</span></div>
+                  <div class="fund-detail"><span class="fund-detail__label">Rentabilidade 12m</span><span class="fund-detail__value">+8,4%</span></div>
+                  <div class="fund-detail"><span class="fund-detail__label">Taxa de Adm.</span><span class="fund-detail__value">0,90% a.a.</span></div>
+                  <div class="fund-detail"><span class="fund-detail__label">Carência</span><span class="fund-detail__value">60 dias</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aporte e Contribuição -->
         <div class="section-card">
           <h3 class="section-card__title">Aporte e Contribuição</h3>
           <div class="form-grid">
 
             <!-- Pergunta 1: Aporte Adicional -->
             <div class="form-field form-field--full">
-              <label class="form-label">Além do Valor da Portabilidade, deseja fazer aporte adicional?</label>
-              <div class="radio-group">
-                <label class="radio-label">
-                  <input type="radio" v-model="form.aporteAdicional" value="Sim" class="radio-input" />
-                  <span>Sim</span>
-                </label>
-                <label class="radio-label">
-                  <input type="radio" v-model="form.aporteAdicional" value="Não" class="radio-input" />
-                  <span>Não</span>
+              <label class="form-label-radio">Além do Valor da Portabilidade, deseja fazer aporte adicional?</label>
+              <div class="radio-group-h">
+                <label v-for="op in ['Sim','Não']" :key="op" class="radio-label-h">
+                  <input type="radio" v-model="form.aporteAdicional" :value="op" class="radio-input" />
+                  <span>{{ op }}</span>
                 </label>
               </div>
             </div>
@@ -273,15 +328,10 @@
                   </div>
                   <div class="payment-box__body">
                     <div class="form-field form-field--full">
-                      <label class="form-label">Forma de Pagamento</label>
-                      <div class="radio-group">
-                        <label class="radio-label">
-                          <input type="radio" v-model="form.formaPagAporte" value="Débito em Conta Corrente" class="radio-input" />
-                          <span>Débito em Conta Corrente</span>
-                        </label>
-                        <label class="radio-label">
-                          <input type="radio" v-model="form.formaPagAporte" value="Boleto Bancário" class="radio-input" />
-                          <span>Boleto Bancário</span>
+                      <div class="radio-group-h">
+                        <label v-for="fp in ['Débito em Conta Corrente','Boleto Bancário']" :key="fp" class="radio-label-h">
+                          <input type="radio" v-model="form.formaPagAporte" :value="fp" class="radio-input" />
+                          <span>{{ fp }}</span>
                         </label>
                       </div>
                     </div>
@@ -320,10 +370,18 @@
                           <input v-model="form.cpfTitularAporte" type="text" class="form-input" placeholder="000.000.000-00" />
                         </div>
                         <div class="form-field">
-                          <label class="form-label">Dia de Vencimento</label>
+                          <label class="form-label">Dia de Débito</label>
                           <select v-model="form.diaDebitoAporte" class="form-select">
                             <option v-for="d in [5,10,15,20,25]" :key="d">Dia {{ d }}</option>
                           </select>
+                        </div>
+                      </div>
+                      <div class="info-box-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <div>
+                          O débito será realizado automaticamente no dia selecionado de cada mês.<br />
+                          Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento.<br />
+                          Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.
                         </div>
                       </div>
                     </template>
@@ -339,6 +397,13 @@
                         </div>
                         <div class="form-field"></div>
                       </div>
+                      <div class="info-box-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <div>
+                          Atenção: Após a emissão do certificado, a seguradora enviará o boleto em até 5 dias úteis para o e-mail cadastrado. Fique atento à caixa de Spam.<br />
+                          Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro boleto será a soma destes valores. Este será emitido somente após a conclusão da contratação da proposta.
+                        </div>
+                      </div>
                     </template>
 
                     <div class="valor-total-row">
@@ -352,15 +417,11 @@
 
             <!-- Pergunta 2: Contribuição Mensal -->
             <div class="form-field form-field--full" style="margin-top: 8px;">
-              <label class="form-label">Programar Contribuição Mensal</label>
-              <div class="radio-group">
-                <label class="radio-label">
-                  <input type="radio" v-model="form.contribuicaoMensal" value="Sim" class="radio-input" />
-                  <span>Sim</span>
-                </label>
-                <label class="radio-label">
-                  <input type="radio" v-model="form.contribuicaoMensal" value="Não" class="radio-input" />
-                  <span>Não</span>
+              <label class="form-label-radio">Programar Contribuição Mensal</label>
+              <div class="radio-group-h">
+                <label v-for="op in ['Sim','Não']" :key="op" class="radio-label-h">
+                  <input type="radio" v-model="form.contribuicaoMensal" :value="op" class="radio-input" />
+                  <span>{{ op }}</span>
                 </label>
               </div>
             </div>
@@ -382,15 +443,10 @@
                   </div>
                   <div class="payment-box__body">
                     <div class="form-field form-field--full">
-                      <label class="form-label">Forma de Pagamento</label>
-                      <div class="radio-group">
-                        <label class="radio-label">
-                          <input type="radio" v-model="form.formaPagContrib" value="Débito em Conta Corrente" class="radio-input" />
-                          <span>Débito em Conta Corrente</span>
-                        </label>
-                        <label class="radio-label">
-                          <input type="radio" v-model="form.formaPagContrib" value="Boleto Bancário" class="radio-input" />
-                          <span>Boleto Bancário</span>
+                      <div class="radio-group-h">
+                        <label v-for="fp in ['Débito em Conta Corrente','Boleto Bancário']" :key="fp" class="radio-label-h">
+                          <input type="radio" v-model="form.formaPagContrib" :value="fp" class="radio-input" />
+                          <span>{{ fp }}</span>
                         </label>
                       </div>
                     </div>
@@ -429,10 +485,18 @@
                           <input v-model="form.cpfTitularContrib" type="text" class="form-input" placeholder="000.000.000-00" />
                         </div>
                         <div class="form-field">
-                          <label class="form-label">Dia de Vencimento</label>
+                          <label class="form-label">Dia de Débito</label>
                           <select v-model="form.diaDebitoContrib" class="form-select">
                             <option v-for="d in [5,10,15,20,25]" :key="d">Dia {{ d }}</option>
                           </select>
+                        </div>
+                      </div>
+                      <div class="info-box-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <div>
+                          O débito será realizado automaticamente no dia selecionado de cada mês.<br />
+                          Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento.<br />
+                          Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.
                         </div>
                       </div>
                     </template>
@@ -447,6 +511,13 @@
                           </select>
                         </div>
                         <div class="form-field"></div>
+                      </div>
+                      <div class="info-box-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <div>
+                          Atenção: Após a emissão do certificado, a seguradora enviará o boleto em até 5 dias úteis para o e-mail cadastrado. Fique atento à caixa de Spam.<br />
+                          Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro boleto será a soma destes valores. Este será emitido somente após a conclusão da contratação da proposta.
+                        </div>
                       </div>
                     </template>
 
@@ -504,19 +575,19 @@
         </template>
 
         <div class="page-footer">
-          <button class="btn-primary" @click="changeTab(tabIndex('Confirmação da Portabilidade'))">Continuar</button>
+          <button class="btn-primary" @click="changeTab(tabIndex('Confirmação dos Dados'))">Continuar</button>
         </div>
       </template>
 
-      <!-- ══ ABA: CONFIRMAÇÃO DA PORTABILIDADE ══ -->
-      <template v-if="activeTab === tabIndex('Confirmação da Portabilidade')">
+      <!-- ══ ABA: CONFIRMAÇÃO DOS DADOS ══ -->
+      <template v-if="activeTab === tabIndex('Confirmação dos Dados')">
         <div class="page-header">
           <span class="page-header__icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </span>
-          <h2 class="page-header__title">Confirmação da Portabilidade</h2>
+          <h2 class="page-header__title">Confirmação dos Dados</h2>
         </div>
 
         <!-- Dados da Portabilidade (Origem) -->
@@ -552,6 +623,17 @@
           </div>
         </div>
 
+        <!-- Dados Adicionais do Plano (se Contratação Adicional) -->
+        <div v-if="showContratacaoTab" class="section-card">
+          <h3 class="section-card__title">Dados Adicionais do Plano</h3>
+          <div class="field-grid field-grid--3">
+            <div class="field-item"><span class="field-label">Tipo do Plano</span><span class="field-value">{{ adicional.tipoPlano || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Regime de Tributação</span><span class="field-value">{{ adicional.regime || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Contribuição Mensal</span><span class="field-value">{{ adicional.contribuicaoMensal || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Aporte Inicial</span><span class="field-value">{{ adicional.aporteInicial || '—' }}</span></div>
+          </div>
+        </div>
+
         <!-- Aporte Adicional (se Sim) -->
         <div v-if="form.aporteAdicional === 'Sim'" class="section-card">
           <h3 class="section-card__title">Aporte Adicional</h3>
@@ -565,7 +647,7 @@
               <div class="field-item"><span class="field-label">Conta Corrente</span><span class="field-value">{{ form.contaAporte || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Titular</span><span class="field-value">{{ form.titularAporte || '—' }}</span></div>
               <div class="field-item"><span class="field-label">CPF do Titular</span><span class="field-value">{{ form.cpfTitularAporte || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ form.diaDebitoAporte || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Dia de Débito</span><span class="field-value">{{ form.diaDebitoAporte || '—' }}</span></div>
             </template>
             <template v-if="form.formaPagAporte === 'Boleto Bancário'">
               <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ form.diaDebitoAporte || '—' }}</span></div>
@@ -586,7 +668,7 @@
               <div class="field-item"><span class="field-label">Conta Corrente</span><span class="field-value">{{ form.contaContrib || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Titular</span><span class="field-value">{{ form.titularContrib || '—' }}</span></div>
               <div class="field-item"><span class="field-label">CPF do Titular</span><span class="field-value">{{ form.cpfTitularContrib || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ form.diaDebitoContrib || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Dia de Débito</span><span class="field-value">{{ form.diaDebitoContrib || '—' }}</span></div>
             </template>
             <template v-if="form.formaPagContrib === 'Boleto Bancário'">
               <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ form.diaDebitoContrib || '—' }}</span></div>
@@ -651,6 +733,14 @@ const destino = reactive({
   tipoPlano: 'PGBL', regime: 'Progressiva', cnpjFundo: '', situacaoRegime: 'Retratável',
 })
 
+// Formulário — Dados Adicionais do Plano
+const adicional = reactive({
+  tipoPlano: 'PGBL',
+  regime: 'Progressiva',
+  contribuicaoMensal: '',
+  aporteInicial: '',
+})
+
 // Autocomplete — Origem
 const seguradoraQuery = ref('')
 const showSeguradoraDropdown = ref(false)
@@ -693,8 +783,8 @@ const showBeneficiariosSection = computed(() =>
   form.aporteAdicional === 'Sim' || form.contribuicaoMensal === 'Sim'
 )
 
-// Abas visíveis
-const allTabs = ['Detalhes da Portabilidade', 'Destino da Portabilidade', 'Contratação Adicional', 'Confirmação da Portabilidade']
+// Abas visíveis — sem aba Destino, ordem: Detalhes → Contratação Adicional (condicional) → Confirmação dos Dados
+const allTabs = ['Detalhes da Portabilidade', 'Contratação Adicional', 'Confirmação dos Dados']
 const visibleTabs = computed(() => {
   return allTabs.filter(t => {
     if (t === 'Contratação Adicional') return showContratacaoTab.value
@@ -711,17 +801,17 @@ function changeTab(i: number) {
   if (i >= 0 && i < visibleTabs.value.length) activeTab.value = i
 }
 
-function advanceFromDestino() {
+function advanceFromDetalhes() {
   const next = showContratacaoTab.value
     ? tabIndex('Contratação Adicional')
-    : tabIndex('Confirmação da Portabilidade')
+    : tabIndex('Confirmação dos Dados')
   changeTab(next)
 }
 
-// Quando Contratação Adicional desaparece e estávamos nela, voltar para Destino
+// Quando Contratação Adicional desaparece e estávamos nela, voltar para Detalhes
 watch(showContratacaoTab, (val) => {
   if (!val && activeTab.value === tabIndex('Contratação Adicional')) {
-    activeTab.value = tabIndex('Destino da Portabilidade')
+    activeTab.value = tabIndex('Detalhes da Portabilidade')
   }
 })
 
@@ -770,7 +860,18 @@ watch(showBeneficiariosSection, (val) => {
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 24px; }
 .form-field { display: flex; flex-direction: column; gap: 6px; }
 .form-field--full { grid-column: 1 / -1; }
+
+/* Labels normais (uppercase cinza) */
 .form-label { font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.6px; }
+
+/* Labels de rádio (uppercase azul, estilo portform) */
+.form-label-radio { font-family: var(--font-sans); font-size: 11px; font-weight: 700; color: #1e3a5f; text-transform: uppercase; letter-spacing: 0.6px; display: flex; align-items: center; gap: 6px; }
+
+/* Rádios horizontais (estilo portform) */
+.radio-group-h { display: flex; flex-direction: row; gap: 20px; align-items: center; margin-top: 4px; flex-wrap: wrap; }
+.radio-label-h { display: flex; align-items: center; gap: 7px; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); cursor: pointer; }
+.radio-input { width: 16px; height: 16px; accent-color: var(--btn-primary-bg); cursor: pointer; }
+
 .form-input { font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 6px; background-color: white; outline: none; transition: border-color 0.15s; width: 100%; box-sizing: border-box; }
 .form-input:focus { border-color: #94a3b8; }
 .form-input::placeholder { color: #94a3b8; }
@@ -778,32 +879,36 @@ watch(showBeneficiariosSection, (val) => {
 .form-select { font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 6px; background-color: white; outline: none; cursor: pointer; width: 100%; box-sizing: border-box; }
 .mt-16 { margin-top: 16px; }
 
-/* Botões de seleção (btn-group) */
-.btn-group { display: flex; gap: 0; border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; }
-.btn-group--fit { width: fit-content; }
-.btn-option { flex: 1; padding: 9px 14px; font-family: var(--font-sans); font-size: 13px; font-weight: 500; background: #f8fafc; color: var(--text-muted); border: none; border-right: 1px solid var(--border-color); cursor: pointer; transition: background-color 0.15s, color 0.15s; white-space: nowrap; }
-.btn-option:last-child { border-right: none; }
-.btn-option--active { background-color: var(--btn-primary-bg); color: var(--btn-primary-color); }
-
-/* Radio nativo (estilo portform) */
-.radio-group { display: flex; gap: 24px; align-items: center; margin-top: 4px; }
-.radio-label { display: flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); cursor: pointer; }
-.radio-input { width: 16px; height: 16px; accent-color: var(--btn-primary-bg); cursor: pointer; }
-
 /* Autocomplete */
 .autocomplete-wrapper { position: relative; }
 .autocomplete-dropdown { position: absolute; top: calc(100% + 2px); left: 0; right: 0; background: white; border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); z-index: 100; max-height: 220px; overflow-y: auto; }
 .autocomplete-item { display: block; width: 100%; padding: 9px 12px; text-align: left; background: none; border: none; cursor: pointer; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); transition: background-color 0.1s; }
 .autocomplete-item:hover { background-color: #f8fafc; }
 
+/* Fund card (Dados Adicionais do Plano) */
+.fund-card { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
+.fund-card__header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background-color: #f8fafc; border-bottom: 1px solid var(--border-color); }
+.fund-card__name { font-family: var(--font-sans); font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.fund-card__badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+.fund-card__badge--moderate { background-color: #fef3c7; color: #92400e; }
+.fund-card__details { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+.fund-detail { padding: 12px 16px; border-right: 1px solid var(--border-color); }
+.fund-detail:last-child { border-right: none; }
+.fund-detail__label { font-family: var(--font-sans); font-size: 10px; font-weight: 600; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+.fund-detail__value { font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--text-primary); }
+
 /* Caixa de pagamento */
 .payment-box { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
 .payment-box__title { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background-color: #f8fafc; font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: var(--text-primary); border-bottom: 1px solid var(--border-color); }
 .payment-box__body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
 
+/* Info box azul */
+.info-box-blue { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; font-size: 13px; color: #1e40af; line-height: 1.6; }
+.info-box-blue svg { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; color: #1e40af; }
+
 /* Valor total */
 .valor-total-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0 0; border-top: 1px solid var(--border-color); margin-top: 8px; }
-.valor-total-value { font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.valor-total-value { font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--text-secondary); }
 
 /* Beneficiário card */
 .beneficiary-card { border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; margin-bottom: 12px; }
