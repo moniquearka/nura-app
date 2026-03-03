@@ -33,6 +33,86 @@
           </div>
         </div>
 
+        <!-- Dados do Proponente -->
+        <div class="section-card">
+          <h3 class="section-card__title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            Dados do Proponente
+          </h3>
+          <div class="field-grid field-grid--3">
+            <div class="form-field"><label class="form-label">CPF</label><input v-model="proponente.cpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
+            <div class="form-field"><label class="form-label">Nome Completo</label><input v-model="proponente.nome" type="text" class="form-input" /></div>
+            <div class="form-field"><label class="form-label">Nome Social</label><input v-model="proponente.nomeSocial" type="text" class="form-input" /></div>
+            <div class="form-field"><label class="form-label">Data de Nascimento</label><input v-model="proponente.dataNasc" type="date" class="form-input" /></div>
+            <div class="form-field"><label class="form-label">Telefone</label><input v-model="proponente.telefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
+            <div class="form-field"><label class="form-label">E-mail</label><input v-model="proponente.email" type="email" class="form-input" /></div>
+            <div class="form-field"><label class="form-label">Renda Mensal</label><input v-model="proponente.renda" type="text" class="form-input" placeholder="R$ 0,00" /></div>
+            <div class="form-field"><label class="form-label">Ocupação</label><input v-model="proponente.ocupacao" type="text" class="form-input" /></div>
+            <div class="form-field"><label class="form-label">Empresa</label><input v-model="proponente.empresa" type="text" class="form-input" /></div>
+            <div class="form-field"><label class="form-label">Origem da Renda</label><input v-model="proponente.origemRenda" type="text" class="form-input" /></div>
+            <div class="form-field"><label class="form-label">Patrimônio</label><input v-model="proponente.patrimonio" type="text" class="form-input" /></div>
+            <div class="form-field"><label class="form-label">Nacionalidade</label><input v-model="proponente.nacionalidade" type="text" class="form-input" /></div>
+          </div>
+
+          <!-- Pessoa Politicamente Exposta e US Person -->
+          <div class="proponente-flags">
+            <div class="proponente-flag-row">
+              <span class="form-label" style="font-size:13px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--text-primary);">Pessoa Politicamente Exposta?</span>
+              <div class="flag-radio-group">
+                <label class="flag-radio-label"><input type="radio" v-model="proponente.pessoaPolitica" value="sim" class="radio-input" /><span>Sim</span></label>
+                <label class="flag-radio-label"><input type="radio" v-model="proponente.pessoaPolitica" value="nao" class="radio-input" /><span>Não</span></label>
+              </div>
+            </div>
+            <div class="proponente-flag-row">
+              <span class="form-label" style="font-size:13px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--text-primary);">É US Person?</span>
+              <div class="flag-radio-group">
+                <label class="flag-radio-label"><input type="radio" v-model="proponente.usPerson" value="sim" class="radio-input" /><span>Sim</span></label>
+                <label class="flag-radio-label"><input type="radio" v-model="proponente.usPerson" value="nao" class="radio-input" /><span>Não</span></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dados Residenciais -->
+          <div class="proponente-residencial">
+            <h4 class="subsection-divider-title">Dados Residenciais</h4>
+            <div class="field-grid field-grid--3">
+              <div class="form-field">
+                <label class="form-label">CEP</label>
+                <input v-model="proponente.cep" type="text" class="form-input" placeholder="00000-000" maxlength="9" @input="onCepInput" />
+              </div>
+              <div class="form-field" style="grid-column: span 2">
+                <label class="form-label">Rua</label>
+                <input v-model="proponente.rua" type="text" class="form-input" placeholder="Nome da rua" />
+              </div>
+              <div class="form-field">
+                <label class="form-label">Número</label>
+                <input v-model="proponente.numero" type="text" class="form-input" placeholder="123" />
+              </div>
+              <div class="form-field">
+                <label class="form-label">Complemento</label>
+                <input v-model="proponente.complemento" type="text" class="form-input" placeholder="Apto, sala, etc." />
+              </div>
+              <div class="form-field">
+                <label class="form-label">Bairro</label>
+                <input v-model="proponente.bairro" type="text" class="form-input" placeholder="Bairro" />
+              </div>
+              <div class="form-field" style="grid-column: span 2">
+                <label class="form-label">Município</label>
+                <input v-model="proponente.municipio" type="text" class="form-input" placeholder="Cidade" />
+              </div>
+              <div class="form-field">
+                <label class="form-label">Estado</label>
+                <select v-model="proponente.estado" class="form-select">
+                  <option value="">Selecione</option>
+                  <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Dados da Portabilidade (Origem) -->
         <div class="section-card">
           <h3 class="section-card__title">Dados da Portabilidade</h3>
@@ -486,6 +566,33 @@
           <h2 class="page-header__title">Confirmação dos Dados</h2>
         </div>
 
+        <!-- Dados do Proponente -->
+        <div class="section-card">
+          <h3 class="section-card__title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            Dados do Proponente
+          </h3>
+          <div class="field-grid field-grid--3">
+            <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ proponente.cpf || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">{{ proponente.nome || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Nome Social</span><span class="field-value">{{ proponente.nomeSocial || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ proponente.dataNasc || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">{{ proponente.telefone || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">{{ proponente.email || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Renda Mensal</span><span class="field-value">{{ proponente.renda || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Ocupação</span><span class="field-value">{{ proponente.ocupacao || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Empresa</span><span class="field-value">{{ proponente.empresa || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Origem da Renda</span><span class="field-value">{{ proponente.origemRenda || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Patrimônio</span><span class="field-value">{{ proponente.patrimonio || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Nacionalidade</span><span class="field-value">{{ proponente.nacionalidade || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Pessoa Politicamente Exposta?</span><span class="field-value">{{ proponente.pessoaPolitica === 'sim' ? 'Sim' : 'Não' }}</span></div>
+            <div class="field-item"><span class="field-label">É US Person?</span><span class="field-value">{{ proponente.usPerson === 'sim' ? 'Sim' : 'Não' }}</span></div>
+            <div class="field-item field-item--full"><span class="field-label">Endereço</span><span class="field-value">{{ [proponente.rua, proponente.numero, proponente.complemento, proponente.bairro, proponente.municipio, proponente.estado].filter(Boolean).join(', ') || '—' }}</span></div>
+          </div>
+        </div>
+
         <!-- Dados da Portabilidade (Origem) -->
         <div class="section-card">
           <h3 class="section-card__title">Dados da Portabilidade — Origem</h3>
@@ -717,6 +824,32 @@ const fundosDisponiveis = [
   { nome: 'SulAmérica Prev Renda Fixa FIC FI', cnpj: '55.555.555/0001-55', taxaAdm: '1,10% a.a.', rentabilidade: '+7,5%', classificacao: 'Renda Fixa' },
   { nome: 'Porto Seguro Prev Multimercado FIC FI', cnpj: '66.666.666/0001-66', taxaAdm: '1,30% a.a.', rentabilidade: '+10,2%', classificacao: 'Multimercado' },
 ]
+
+// Proponente
+const proponente = reactive({
+  cpf: '', nome: '', nomeSocial: '', dataNasc: '', telefone: '', email: '',
+  renda: '', ocupacao: '', empresa: '', origemRenda: '', patrimonio: '', nacionalidade: '',
+  pessoaPolitica: 'nao', usPerson: 'nao',
+  cep: '', rua: '', numero: '', complemento: '', bairro: '', municipio: '', estado: '',
+})
+
+const ufs = ['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO']
+
+async function onCepInput() {
+  const raw = proponente.cep.replace(/\D/g, '')
+  if (raw.length === 8) {
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${raw}/json/`)
+      const data = await res.json()
+      if (!data.erro) {
+        proponente.rua = data.logradouro || ''
+        proponente.bairro = data.bairro || ''
+        proponente.municipio = data.localidade || ''
+        proponente.estado = data.uf || ''
+      }
+    } catch {}
+  }
+}
 
 // Tipo de portabilidade
 const tipoPortabilidade = ref('externa')
@@ -1043,6 +1176,13 @@ watch(showContratacaoTab, (val) => {
 .field-value--divergente { color: #dc2626; font-weight: 600; }
 .review-subtab-header { font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; margin: 0 0 14px; padding: 8px 12px; background-color: #f8fafc; border-radius: 6px; border-left: 3px solid var(--btn-primary-bg); }
 
+.field-item--full { grid-column: 1 / -1; }
+.proponente-flags { display: flex; flex-direction: row; gap: 32px; flex-wrap: wrap; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
+.proponente-flag-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.flag-radio-group { display: flex; flex-direction: row; gap: 20px; }
+.flag-radio-label { display: flex; align-items: center; gap: 7px; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); cursor: pointer; }
+.proponente-residencial { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
+.subsection-divider-title { font-family: var(--font-sans); font-size: 12px; font-weight: 700; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.6px; margin: 0 0 14px; }
 .mb-8 { margin-bottom: 8px; }
 .mb-16 { margin-bottom: 16px; }
 .mt-16 { margin-top: 16px; }
