@@ -247,8 +247,13 @@
               </div>
             </template>
 
+            <!-- Separador visual + título Opções Disponíveis -->
+            <div class="opcoes-divider"></div>
+            <h4 class="opcoes-title">Opções Disponíveis</h4>
+
             <div class="radio-group mb-16">
               <label class="radio-item"><input v-model="pagamentoPrev.forma" type="radio" value="debito" class="radio-input" /><span class="radio-label">Débito em Conta Corrente</span></label>
+              <label class="radio-item"><input v-model="pagamentoPrev.forma" type="radio" value="pix" class="radio-input" /><span class="radio-label">PIX</span></label>
               <label class="radio-item"><input v-model="pagamentoPrev.forma" type="radio" value="boleto" class="radio-input" /><span class="radio-label">Boleto Bancário</span></label>
             </div>
 
@@ -278,6 +283,14 @@
               <div class="info-box-blue mt-12">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span>O débito será realizado automaticamente no {{ pagamentoPrev.diaVencimento || 'dia selecionado' }} de cada mês.<br>Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento.<br>Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.</span>
+              </div>
+            </template>
+
+            <!-- PIX -->
+            <template v-if="pagamentoPrev.forma === 'pix'">
+              <div class="info-box-blue mt-12">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>O código da chave PIX será gerado após a conclusão da contratação da proposta.<br>Caso tenha selecionado a opção de um aporte único e contribuições mensais, a primeira cobrança será a soma destes valores.</span>
               </div>
             </template>
 
@@ -334,8 +347,13 @@
               </div>
             </template>
 
+            <!-- Separador visual + título Opções Disponíveis -->
+            <div class="opcoes-divider"></div>
+            <h4 class="opcoes-title">Opções Disponíveis</h4>
+
             <div class="radio-group mb-16">
               <label class="radio-item"><input v-model="pagamentoSeguro.forma" type="radio" value="debito" class="radio-input" /><span class="radio-label">Débito em Conta Corrente</span></label>
+              <label class="radio-item"><input v-model="pagamentoSeguro.forma" type="radio" value="pix" class="radio-input" /><span class="radio-label">PIX</span></label>
               <label class="radio-item"><input v-model="pagamentoSeguro.forma" type="radio" value="boleto" class="radio-input" /><span class="radio-label">Boleto Bancário</span></label>
               <label class="radio-item"><input v-model="pagamentoSeguro.forma" type="radio" value="cartao" class="radio-input" /><span class="radio-label">Cartão de Crédito</span></label>
             </div>
@@ -366,6 +384,14 @@
               <div class="info-box-blue mt-12">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span>O débito será realizado automaticamente no {{ pagamentoSeguro.diaVencimento || 'dia selecionado' }} de cada mês.<br>Certifique-se de que há saldo suficiente na conta para evitar problemas no processamento.<br>Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro débito será a soma destes valores e ocorrerá em 7 dias úteis após a conclusão da contratação da proposta.</span>
+              </div>
+            </template>
+
+            <!-- PIX -->
+            <template v-if="pagamentoSeguro.forma === 'pix'">
+              <div class="info-box-blue mt-12">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>O código da chave PIX será gerado após a conclusão da contratação da proposta.<br>Caso tenha selecionado a opção de um aporte único e contribuições mensais, a primeira cobrança será a soma destes valores.</span>
               </div>
             </template>
 
@@ -556,6 +582,9 @@
             <template v-if="pagamentoPrev.forma === 'boleto'">
               <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoPrev.diaVencimento || '—' }}</span></div>
             </template>
+            <template v-if="pagamentoPrev.forma === 'pix'">
+              <div class="field-item"><span class="field-label">Observação</span><span class="field-value">Código PIX gerado após contratação</span></div>
+            </template>
             <div class="field-item" style="grid-column:1/-1"><span class="field-label">Valor Total</span><span class="valor-total-value">R$ 10.000 de Aporte Inicial + R$ 1.650/mês de Contribuição Mensal</span></div>
             <template v-if="pagamentoPrev.respFinanceiro">
               <div class="field-item"><span class="field-label">Responsável Financeiro</span><span class="field-value">{{ pagamentoPrev.respFinanceiro === 'sim' ? 'Mesmo que o Proponente' : pagamentoPrev.rfNome || '—' }}</span></div>
@@ -579,6 +608,9 @@
             </template>
             <template v-if="pagamentoSeguro.forma === 'boleto'">
               <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoSeguro.diaVencimento || '—' }}</span></div>
+            </template>
+            <template v-if="pagamentoSeguro.forma === 'pix'">
+              <div class="field-item"><span class="field-label">Observação</span><span class="field-value">Código PIX gerado após contratação</span></div>
             </template>
             <template v-if="pagamentoSeguro.forma === 'cartao'">
               <div class="field-item"><span class="field-label">Nome no Cartão</span><span class="field-value">{{ pagamentoSeguro.nomeCartao || '—' }}</span></div>
@@ -654,7 +686,7 @@ function preencherRespFinanceiroGlobal() {
 function preencherRespFinanceiroPrev() { preencherRespFinanceiroGlobal() }
 function preencherRespFinanceiroSeguro() { preencherRespFinanceiroGlobal() }
 function formaLabel(forma: string) {
-  const m: Record<string, string> = { debito: 'Débito em Conta Corrente', boleto: 'Boleto Bancário', cartao: 'Cartão de Crédito' }
+  const m: Record<string, string> = { debito: 'Débito em Conta Corrente', pix: 'PIX', boleto: 'Boleto Bancário', cartao: 'Cartão de Crédito' }
   return m[forma] || '—'
 }
 function onTabChange(index: number) { activeTab.value = index; activeSubTab.value = 0 }
@@ -744,4 +776,6 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .resp-financeiro-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
 .resp-financeiro-row .field-label { font-size: 13px; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--text-primary); }
 .radio-group-inline { display: flex; flex-direction: row; gap: 20px; flex-shrink: 0; }
+.opcoes-divider { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0 16px; }
+.opcoes-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin: 0 0 12px; }
 </style>
