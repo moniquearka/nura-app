@@ -42,18 +42,18 @@
             Dados do Proponente
           </h3>
           <div class="field-grid field-grid--3">
-            <div class="form-field"><label class="form-label">CPF</label><input v-model="proponente.cpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
-            <div class="form-field"><label class="form-label">Nome Completo</label><input v-model="proponente.nome" type="text" class="form-input" /></div>
-            <div class="form-field"><label class="form-label">Nome Social</label><input v-model="proponente.nomeSocial" type="text" class="form-input" /></div>
-            <div class="form-field"><label class="form-label">Data de Nascimento</label><input v-model="proponente.dataNasc" type="date" class="form-input" /></div>
-            <div class="form-field"><label class="form-label">Telefone</label><input v-model="proponente.telefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
-            <div class="form-field"><label class="form-label">E-mail</label><input v-model="proponente.email" type="email" class="form-input" /></div>
-            <div class="form-field"><label class="form-label">Renda Mensal</label><input v-model="proponente.renda" type="text" class="form-input" placeholder="R$ 0,00" /></div>
-            <div class="form-field"><label class="form-label">Ocupação</label><input v-model="proponente.ocupacao" type="text" class="form-input" /></div>
-            <div class="form-field"><label class="form-label">Empresa</label><input v-model="proponente.empresa" type="text" class="form-input" /></div>
-            <div class="form-field"><label class="form-label">Origem da Renda</label><input v-model="proponente.origemRenda" type="text" class="form-input" /></div>
-            <div class="form-field"><label class="form-label">Patrimônio</label><input v-model="proponente.patrimonio" type="text" class="form-input" /></div>
-            <div class="form-field"><label class="form-label">Nacionalidade</label><input v-model="proponente.nacionalidade" type="text" class="form-input" /></div>
+            <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ proponente.cpf || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">{{ proponente.nome || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Nome Social</span><span class="field-value">{{ proponente.nomeSocial || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ proponente.dataNasc ? new Date(proponente.dataNasc + 'T12:00:00').toLocaleDateString('pt-BR') : '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">{{ proponente.telefone || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">{{ proponente.email || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Renda Mensal</span><span class="field-value">{{ proponente.renda || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Ocupação</span><span class="field-value">{{ proponente.ocupacao || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Empresa</span><span class="field-value">{{ proponente.empresa || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Origem da Renda</span><span class="field-value">{{ proponente.origemRenda || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Patrimônio</span><span class="field-value">{{ proponente.patrimonio || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Nacionalidade</span><span class="field-value">{{ proponente.nacionalidade || '—' }}</span></div>
           </div>
 
           <!-- Pessoa Politicamente Exposta e US Person -->
