@@ -330,19 +330,7 @@
 
             <!-- Débito em Conta Corrente -->
             <template v-if="pagamentoPrev.forma === 'debito'">
-              <h4 class="subsection-title">Dados Bancários</h4>
-              <div class="field-grid field-grid--3">
-                <div class="form-field">
-                  <label class="field-label">Banco</label>
-                  <select v-model="pagamentoPrev.banco" class="form-select">
-                    <option value="">Selecione</option>
-                    <option>001 - Banco do Brasil</option><option>033 - Santander</option><option>104 - Caixa Econômica Federal</option><option>237 - Bradesco</option><option>341 - Itaú</option><option>756 - Sicoob</option><option>748 - Sicredi</option><option>260 - Nubank</option>
-                  </select>
-                </div>
-                <div class="form-field"><label class="field-label">Agência</label><input v-model="pagamentoPrev.agencia" type="text" class="form-input" placeholder="0123" /></div>
-                <div class="form-field"><label class="field-label">Conta Corrente</label><input v-model="pagamentoPrev.conta" type="text" class="form-input" placeholder="12345-6" /></div>
-                <div class="form-field"><label class="field-label">Titular da Conta</label><input v-model="pagamentoPrev.titular" type="text" class="form-input" placeholder="Nome do titular" /></div>
-                <div class="form-field"><label class="field-label">CPF do Titular</label><input v-model="pagamentoPrev.cpfTitular" type="text" class="form-input" placeholder="000.000.000-00" /></div>
+              <div class="field-grid field-grid--2 mt-16">
                 <div class="form-field">
                   <label class="field-label">Dia de Vencimento</label>
                   <select v-model="pagamentoPrev.diaVencimento" class="form-select">
@@ -383,6 +371,54 @@
             </template>
 
             <!-- Responsável Financeiro agora no topo da aba (removido daqui) -->
+
+            <!-- Endereço de Cobrança — Previdência -->
+            <div class="opcoes-divider mt-16"></div>
+            <div class="resp-financeiro-row mb-16">
+              <span class="field-label" style="flex-shrink:0;">O Endereço de Cobrança será o mesmo informado nos Dados do Proponente?</span>
+              <div class="radio-group-inline">
+                <label class="radio-item"><input v-model="pagamentoPrev.enderecoCobranca" type="radio" value="sim" class="radio-input" /><span class="radio-label">Sim</span></label>
+                <label class="radio-item"><input v-model="pagamentoPrev.enderecoCobranca" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
+              </div>
+            </div>
+            <template v-if="pagamentoPrev.enderecoCobranca === 'nao'">
+              <div class="section-card mb-16" style="background:#f8fafc;padding:16px;">
+                <h4 class="subsection-title" style="margin-top:0">Endereço de Cobrança</h4>
+                <div class="field-grid field-grid--3">
+                  <div class="form-field">
+                    <label class="form-label">CEP</label>
+                    <input v-model="pagamentoPrev.cobCep" type="text" class="form-input" placeholder="00000-000" maxlength="9" @input="onCepInputPrev" />
+                  </div>
+                  <div class="form-field" style="grid-column: span 2">
+                    <label class="form-label">Rua</label>
+                    <input v-model="pagamentoPrev.cobRua" type="text" class="form-input" placeholder="Nome da rua" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Número</label>
+                    <input v-model="pagamentoPrev.cobNumero" type="text" class="form-input" placeholder="123" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Complemento</label>
+                    <input v-model="pagamentoPrev.cobComplemento" type="text" class="form-input" placeholder="Apto, sala, etc." />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Bairro</label>
+                    <input v-model="pagamentoPrev.cobBairro" type="text" class="form-input" placeholder="Bairro" />
+                  </div>
+                  <div class="form-field" style="grid-column: span 2">
+                    <label class="form-label">Município</label>
+                    <input v-model="pagamentoPrev.cobMunicipio" type="text" class="form-input" placeholder="Cidade" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Estado</label>
+                    <select v-model="pagamentoPrev.cobEstado" class="form-select">
+                      <option value="">Selecione</option>
+                      <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </template>
 
             <!-- Valor Total -->
             <div class="valor-total-row mt-16">
@@ -431,19 +467,7 @@
 
             <!-- Débito em Conta Corrente -->
             <template v-if="pagamentoSeguro.forma === 'debito'">
-              <h4 class="subsection-title">Dados Bancários</h4>
-              <div class="field-grid field-grid--3">
-                <div class="form-field">
-                  <label class="field-label">Banco</label>
-                  <select v-model="pagamentoSeguro.banco" class="form-select">
-                    <option value="">Selecione</option>
-                    <option>001 - Banco do Brasil</option><option>033 - Santander</option><option>104 - Caixa Econômica Federal</option><option>237 - Bradesco</option><option>341 - Itaú</option><option>756 - Sicoob</option><option>748 - Sicredi</option><option>260 - Nubank</option>
-                  </select>
-                </div>
-                <div class="form-field"><label class="field-label">Agência</label><input v-model="pagamentoSeguro.agencia" type="text" class="form-input" placeholder="0123" /></div>
-                <div class="form-field"><label class="field-label">Conta Corrente</label><input v-model="pagamentoSeguro.conta" type="text" class="form-input" placeholder="12345-6" /></div>
-                <div class="form-field"><label class="field-label">Titular da Conta</label><input v-model="pagamentoSeguro.titular" type="text" class="form-input" placeholder="Nome do titular" /></div>
-                <div class="form-field"><label class="field-label">CPF do Titular</label><input v-model="pagamentoSeguro.cpfTitular" type="text" class="form-input" placeholder="000.000.000-00" /></div>
+              <div class="field-grid field-grid--2 mt-16">
                 <div class="form-field">
                   <label class="field-label">Dia de Vencimento</label>
                   <select v-model="pagamentoSeguro.diaVencimento" class="form-select">
@@ -485,17 +509,64 @@
 
             <!-- Cartão de Crédito (apenas Seguro de Vida) -->
             <template v-if="pagamentoSeguro.forma === 'cartao'">
-              <h4 class="subsection-title">Dados do Cartão</h4>
-              <div class="field-grid field-grid--2">
-                <div class="form-field"><label class="field-label">Nome no Cartão</label><input v-model="pagamentoSeguro.nomeCartao" type="text" class="form-input" placeholder="Nome como está no cartão" /></div>
-                <div class="form-field"><label class="field-label">Número do Cartão</label><input v-model="pagamentoSeguro.numeroCartao" type="text" class="form-input" placeholder="0000 0000 0000 0000" /></div>
-                <div class="form-field"><label class="field-label">Validade</label><input v-model="pagamentoSeguro.validade" type="text" class="form-input" placeholder="MM/AA" /></div>
-                <div class="form-field"><label class="field-label">CVV</label><input v-model="pagamentoSeguro.cvv" type="text" class="form-input" placeholder="000" /></div>
-                <div class="form-field"><label class="field-label">CPF do Titular</label><input v-model="pagamentoSeguro.cpfTitular" type="text" class="form-input" placeholder="000.000.000-00" /></div>
-              </div>
               <div class="info-box-blue mt-12">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <span>Será realizada apenas uma <strong>reserva do valor</strong> junto à operadora e ao banco do cartão de crédito.<br>A cobrança só será finalizada após a conclusão do processo de contratação da proposta.</span>
+                <span>O pagamento via cartão de crédito será processado em ambiente seguro.<br>Será realizada apenas uma <strong>reserva do valor</strong> junto à operadora e ao banco do cartão de crédito.<br>A cobrança só será finalizada após a conclusão do processo de contratação da proposta.</span>
+              </div>
+              <div class="mt-16">
+                <a href="https://pagamento.nura.com.br" target="_blank" class="btn-pagamento-externo">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                  Inserir dados do Cartão de Crédito
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;flex-shrink:0;margin-left:auto"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
+              </div>
+            </template>
+
+            <!-- Endereço de Cobrança — Seguro de Vida -->
+            <div class="opcoes-divider mt-16"></div>
+            <div class="resp-financeiro-row mb-16">
+              <span class="field-label" style="flex-shrink:0;">O Endereço de Cobrança será o mesmo informado nos Dados do Proponente?</span>
+              <div class="radio-group-inline">
+                <label class="radio-item"><input v-model="pagamentoSeguro.enderecoCobranca" type="radio" value="sim" class="radio-input" /><span class="radio-label">Sim</span></label>
+                <label class="radio-item"><input v-model="pagamentoSeguro.enderecoCobranca" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
+              </div>
+            </div>
+            <template v-if="pagamentoSeguro.enderecoCobranca === 'nao'">
+              <div class="section-card mb-16" style="background:#f8fafc;padding:16px;">
+                <h4 class="subsection-title" style="margin-top:0">Endereço de Cobrança</h4>
+                <div class="field-grid field-grid--3">
+                  <div class="form-field">
+                    <label class="form-label">CEP</label>
+                    <input v-model="pagamentoSeguro.cobCep" type="text" class="form-input" placeholder="00000-000" maxlength="9" @input="onCepInputSeguro" />
+                  </div>
+                  <div class="form-field" style="grid-column: span 2">
+                    <label class="form-label">Rua</label>
+                    <input v-model="pagamentoSeguro.cobRua" type="text" class="form-input" placeholder="Nome da rua" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Número</label>
+                    <input v-model="pagamentoSeguro.cobNumero" type="text" class="form-input" placeholder="123" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Complemento</label>
+                    <input v-model="pagamentoSeguro.cobComplemento" type="text" class="form-input" placeholder="Apto, sala, etc." />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Bairro</label>
+                    <input v-model="pagamentoSeguro.cobBairro" type="text" class="form-input" placeholder="Bairro" />
+                  </div>
+                  <div class="form-field" style="grid-column: span 2">
+                    <label class="form-label">Município</label>
+                    <input v-model="pagamentoSeguro.cobMunicipio" type="text" class="form-input" placeholder="Cidade" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Estado</label>
+                    <select v-model="pagamentoSeguro.cobEstado" class="form-select">
+                      <option value="">Selecione</option>
+                      <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </template>
 
@@ -643,11 +714,6 @@
           <div class="field-grid field-grid--3 mb-16">
             <div class="field-item"><span class="field-label">Forma</span><span class="field-value">{{ formaLabel(pagamentoPrev.forma) }}</span></div>
             <template v-if="pagamentoPrev.forma === 'debito'">
-              <div class="field-item"><span class="field-label">Banco</span><span class="field-value">{{ pagamentoPrev.banco || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Agência</span><span class="field-value">{{ pagamentoPrev.agencia || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Conta Corrente</span><span class="field-value">{{ pagamentoPrev.conta || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Titular da Conta</span><span class="field-value">{{ pagamentoPrev.titular || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">CPF do Titular</span><span class="field-value">{{ pagamentoPrev.cpfTitular || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoPrev.diaVencimento || '—' }}</span></div>
             </template>
             <template v-if="pagamentoPrev.forma === 'boleto'">
@@ -660,6 +726,7 @@
             <template v-if="pagamentoPrev.respFinanceiro">
               <div class="field-item"><span class="field-label">Responsável Financeiro</span><span class="field-value">{{ pagamentoPrev.respFinanceiro === 'sim' ? 'Mesmo que o Proponente' : pagamentoPrev.rfNome || '—' }}</span></div>
             </template>
+            <div class="field-item"><span class="field-label">Endereço de Cobrança</span><span class="field-value">{{ pagamentoPrev.enderecoCobranca === 'nao' ? (pagamentoPrev.cobRua + ', ' + pagamentoPrev.cobNumero + ' — ' + pagamentoPrev.cobMunicipio + '/' + pagamentoPrev.cobEstado) : 'Mesmo que o Proponente' }}</span></div>
           </div>
 
           <!-- Separador -->
@@ -670,11 +737,6 @@
           <div class="field-grid field-grid--3">
             <div class="field-item"><span class="field-label">Forma</span><span class="field-value">{{ formaLabel(pagamentoSeguro.forma) }}</span></div>
             <template v-if="pagamentoSeguro.forma === 'debito'">
-              <div class="field-item"><span class="field-label">Banco</span><span class="field-value">{{ pagamentoSeguro.banco || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Agência</span><span class="field-value">{{ pagamentoSeguro.agencia || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Conta Corrente</span><span class="field-value">{{ pagamentoSeguro.conta || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Titular da Conta</span><span class="field-value">{{ pagamentoSeguro.titular || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">CPF do Titular</span><span class="field-value">{{ pagamentoSeguro.cpfTitular || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoSeguro.diaVencimento || '—' }}</span></div>
             </template>
             <template v-if="pagamentoSeguro.forma === 'boleto'">
@@ -684,15 +746,13 @@
               <div class="field-item"><span class="field-label">Observação</span><span class="field-value">Código PIX gerado após contratação</span></div>
             </template>
             <template v-if="pagamentoSeguro.forma === 'cartao'">
-              <div class="field-item"><span class="field-label">Nome no Cartão</span><span class="field-value">{{ pagamentoSeguro.nomeCartao || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Número do Cartão</span><span class="field-value">{{ pagamentoSeguro.numeroCartao ? '•••• •••• •••• ' + pagamentoSeguro.numeroCartao.slice(-4) : '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Validade</span><span class="field-value">{{ pagamentoSeguro.validade || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">CPF do Titular</span><span class="field-value">{{ pagamentoSeguro.cpfTitular || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Observação</span><span class="field-value">Dados do cartão inseridos em ambiente seguro externo</span></div>
             </template>
             <div class="field-item" style="grid-column:1/-1"><span class="field-label">Valor Total</span><span class="valor-total-value">R$ 2.500,00/mês</span></div>
             <template v-if="pagamentoSeguro.respFinanceiro">
               <div class="field-item"><span class="field-label">Responsável Financeiro</span><span class="field-value">{{ pagamentoSeguro.respFinanceiro === 'sim' ? 'Mesmo que o Proponente' : pagamentoSeguro.rfNome || '—' }}</span></div>
             </template>
+            <div class="field-item"><span class="field-label">Endereço de Cobrança</span><span class="field-value">{{ pagamentoSeguro.enderecoCobranca === 'nao' ? (pagamentoSeguro.cobRua + ', ' + pagamentoSeguro.cobNumero + ' — ' + pagamentoSeguro.cobMunicipio + '/' + pagamentoSeguro.cobEstado) : 'Mesmo que o Proponente' }}</span></div>
           </div>
         </div>
 
@@ -746,6 +806,38 @@ async function onCepInput() {
   }
 }
 
+async function onCepInputPrev() {
+  const raw = pagamentoPrev.cobCep.replace(/\D/g, '')
+  if (raw.length === 8) {
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${raw}/json/`)
+      const data = await res.json()
+      if (!data.erro) {
+        pagamentoPrev.cobRua = data.logradouro || ''
+        pagamentoPrev.cobBairro = data.bairro || ''
+        pagamentoPrev.cobMunicipio = data.localidade || ''
+        pagamentoPrev.cobEstado = data.uf || ''
+      }
+    } catch {}
+  }
+}
+
+async function onCepInputSeguro() {
+  const raw = pagamentoSeguro.cobCep.replace(/\D/g, '')
+  if (raw.length === 8) {
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${raw}/json/`)
+      const data = await res.json()
+      if (!data.erro) {
+        pagamentoSeguro.cobRua = data.logradouro || ''
+        pagamentoSeguro.cobBairro = data.bairro || ''
+        pagamentoSeguro.cobMunicipio = data.localidade || ''
+        pagamentoSeguro.cobEstado = data.uf || ''
+      }
+    } catch {}
+  }
+}
+
 const tabs = [
   { label: 'Detalhamento da Proposta' },
   { label: 'Beneficiários', subTabs: ['Previdência', 'Seguro de Vida'] },
@@ -769,7 +861,7 @@ function removeBenPrev(i: number) { beneficiariosPrev.value.splice(i, 1) }
 function addBenSeguro() { beneficiariosSeguro.value.push(newBen()) }
 function removeBenSeguro(i: number) { beneficiariosSeguro.value.splice(i, 1) }
 
-const newPag = (): PagamentoData => ({ forma: 'debito', banco: '', agencia: '', conta: '', titular: '', cpfTitular: '', diaVencimento: '' })
+const newPag = (): PagamentoData => ({ forma: 'debito', banco: '', agencia: '', conta: '', titular: '', cpfTitular: '', diaVencimento: '', enderecoCobranca: 'sim', cobCep: '', cobRua: '', cobNumero: '', cobComplemento: '', cobBairro: '', cobMunicipio: '', cobEstado: '' })
 const pagamentoPrev = reactive(newPag())
 const pagamentoSeguro = reactive({ ...newPag(), nomeCartao: '', numeroCartao: '', validade: '', cvv: '' })
 
@@ -791,7 +883,25 @@ function formaLabel(forma: string) {
   const m: Record<string, string> = { debito: 'Débito em Conta Corrente', pix: 'PIX', boleto: 'Boleto Bancário', cartao: 'Cartão de Crédito' }
   return m[forma] || '—'
 }
-function onTabChange(index: number) { activeTab.value = index; activeSubTab.value = 0 }
+function enderecoCobrancaValido(pag: any): boolean {
+  if (pag.enderecoCobranca !== 'nao') return true
+  return !!(pag.cobCep && pag.cobRua && pag.cobNumero && pag.cobBairro && pag.cobMunicipio && pag.cobEstado)
+}
+
+function onTabChange(index: number) {
+  // Validar endereço de cobrança antes de sair da aba Forma de Pagamento
+  if (activeTab.value === 2) {
+    if (activeSubTab.value === 0 && !enderecoCobrancaValido(pagamentoPrev)) {
+      alert('Preencha todos os campos do Endereço de Cobrança da Previdência antes de continuar.')
+      return
+    }
+    if (activeSubTab.value === 1 && !enderecoCobrancaValido(pagamentoSeguro)) {
+      alert('Preencha todos os campos do Endereço de Cobrança do Seguro de Vida antes de continuar.')
+      return
+    }
+  }
+  activeTab.value = index; activeSubTab.value = 0
+}
 function onSubTabChange(index: number) { activeSubTab.value = index }
 </script>
 
@@ -880,6 +990,8 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .radio-group-inline { display: flex; flex-direction: row; gap: 20px; flex-shrink: 0; }
 .opcoes-divider { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0 16px; }
 .opcoes-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin: 0 0 12px; }
+.btn-pagamento-externo { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%); border: 1.5px solid #c7d7fd; border-radius: 10px; color: #1e40af; font-size: 14px; font-weight: 500; text-decoration: none; cursor: pointer; transition: all 0.2s; width: 100%; box-sizing: border-box; }
+.btn-pagamento-externo:hover { background: linear-gradient(135deg, #e0eaff 0%, #d4e4fd 100%); border-color: #93b4fb; box-shadow: 0 2px 8px rgba(30,64,175,0.12); }
 /* Proponente — flags e dados residenciais */
 .proponente-flags { display: flex; flex-direction: row; gap: 32px; flex-wrap: wrap; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
 .proponente-flag-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }

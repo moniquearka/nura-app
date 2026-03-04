@@ -477,38 +477,7 @@
 
           <!-- Débito em Conta Corrente -->
           <template v-if="pagamentoAdicional.forma === 'debito'">
-            <div class="subsection-title">Dados Bancários</div>
-            <div class="form-grid">
-              <div class="form-field">
-                <label class="form-label">Banco</label>
-                <select v-model="pagamentoAdicional.banco" class="form-select">
-                  <option value="">Selecione</option>
-                  <option>001 - Banco do Brasil</option>
-                  <option>033 - Santander</option>
-                  <option>104 - Caixa Econômica Federal</option>
-                  <option>237 - Bradesco</option>
-                  <option>341 - Itaú</option>
-                  <option>422 - Safra</option>
-                  <option>745 - Citibank</option>
-                  <option>756 - Sicoob</option>
-                </select>
-              </div>
-              <div class="form-field">
-                <label class="form-label">Agência</label>
-                <input v-model="pagamentoAdicional.agencia" type="text" class="form-input" placeholder="0123" />
-              </div>
-              <div class="form-field">
-                <label class="form-label">Conta Corrente</label>
-                <input v-model="pagamentoAdicional.conta" type="text" class="form-input" placeholder="12345-6" />
-              </div>
-              <div class="form-field">
-                <label class="form-label">Titular da Conta</label>
-                <input v-model="pagamentoAdicional.titular" type="text" class="form-input" placeholder="Nome do titular" />
-              </div>
-              <div class="form-field">
-                <label class="form-label">CPF do Titular</label>
-                <input v-model="pagamentoAdicional.cpfTitular" type="text" class="form-input" placeholder="000.000.000-00" />
-              </div>
+            <div class="form-grid mt-16">
               <div class="form-field">
                 <label class="form-label">Dia de Vencimento</label>
                 <select v-model="pagamentoAdicional.diaVencimento" class="form-select">
@@ -516,6 +485,7 @@
                   <option>Dia 5</option><option>Dia 10</option><option>Dia 15</option><option>Dia 20</option>
                 </select>
               </div>
+              <div class="form-field"></div>
             </div>
             <div class="info-box-blue mt-16">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -546,6 +516,54 @@
             <div class="info-box-blue mt-16">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               <div>Atenção: Após a emissão do certificado, a seguradora enviará o boleto em até 5 dias úteis para o e-mail cadastrado. Fique atento à caixa de Spam.<br />Caso tenha selecionado a opção de um aporte único e contribuições mensais, o primeiro boleto será a soma destes valores. Este será emitido somente após a conclusão da contratação da proposta.</div>
+            </div>
+          </template>
+
+          <!-- Endereço de Cobrança — Contratação Adicional -->
+          <div class="opcoes-divider mt-16"></div>
+          <div class="resp-financeiro-row mb-16">
+            <span class="form-label" style="flex-shrink:0;">O Endereço de Cobrança será o mesmo informado nos Dados do Proponente?</span>
+            <div class="radio-group-inline">
+              <label class="radio-item"><input v-model="pagamentoAdicional.enderecoCobranca" type="radio" value="sim" class="radio-input" /><span class="radio-label">Sim</span></label>
+              <label class="radio-item"><input v-model="pagamentoAdicional.enderecoCobranca" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
+            </div>
+          </div>
+          <template v-if="pagamentoAdicional.enderecoCobranca === 'nao'">
+            <div class="section-card mb-16" style="background:#f8fafc;padding:16px;">
+              <h4 class="subsection-title" style="margin-top:0">Endereço de Cobrança</h4>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label class="form-label">CEP</label>
+                  <input v-model="pagamentoAdicional.cobCep" type="text" class="form-input" placeholder="00000-000" maxlength="9" @input="onCepInputAdicional" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Rua</label>
+                  <input v-model="pagamentoAdicional.cobRua" type="text" class="form-input" placeholder="Nome da rua" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Número</label>
+                  <input v-model="pagamentoAdicional.cobNumero" type="text" class="form-input" placeholder="123" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Complemento</label>
+                  <input v-model="pagamentoAdicional.cobComplemento" type="text" class="form-input" placeholder="Apto, sala, etc." />
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Bairro</label>
+                  <input v-model="pagamentoAdicional.cobBairro" type="text" class="form-input" placeholder="Bairro" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Município</label>
+                  <input v-model="pagamentoAdicional.cobMunicipio" type="text" class="form-input" placeholder="Cidade" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Estado</label>
+                  <select v-model="pagamentoAdicional.cobEstado" class="form-select">
+                    <option value="">Selecione</option>
+                    <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </template>
         </div>
@@ -670,11 +688,6 @@
             <div class="field-grid field-grid--3">
               <div class="field-item"><span class="field-label">Forma</span><span class="field-value">{{ formaLabelAdicional(pagamentoAdicional.forma) }}</span></div>
               <template v-if="pagamentoAdicional.forma === 'debito'">
-                <div class="field-item"><span class="field-label">Banco</span><span class="field-value">{{ pagamentoAdicional.banco || '—' }}</span></div>
-                <div class="field-item"><span class="field-label">Agência</span><span class="field-value">{{ pagamentoAdicional.agencia || '—' }}</span></div>
-                <div class="field-item"><span class="field-label">Conta Corrente</span><span class="field-value">{{ pagamentoAdicional.conta || '—' }}</span></div>
-                <div class="field-item"><span class="field-label">Titular da Conta</span><span class="field-value">{{ pagamentoAdicional.titular || '—' }}</span></div>
-                <div class="field-item"><span class="field-label">CPF do Titular</span><span class="field-value">{{ pagamentoAdicional.cpfTitular || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoAdicional.diaVencimento || '—' }}</span></div>
               </template>
               <template v-if="pagamentoAdicional.forma === 'boleto'">
@@ -686,6 +699,7 @@
               <template v-if="pagamentoAdicional.respFinanceiro === 'nao'">
                 <div class="field-item"><span class="field-label">Responsável Financeiro</span><span class="field-value">{{ pagamentoAdicional.rfNome || '—' }}</span></div>
               </template>
+              <div class="field-item"><span class="field-label">Endereço de Cobrança</span><span class="field-value">{{ pagamentoAdicional.enderecoCobranca === 'nao' ? (pagamentoAdicional.cobRua + ', ' + pagamentoAdicional.cobNumero + ' — ' + pagamentoAdicional.cobMunicipio + '/' + pagamentoAdicional.cobEstado) : 'Mesmo que o Proponente' }}</span></div>
             </div>
           </div>
         </template>
@@ -835,6 +849,22 @@ const proponente = reactive({
 
 const ufs = ['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO']
 
+async function onCepInputAdicional() {
+  const raw = pagamentoAdicional.cobCep.replace(/\D/g, '')
+  if (raw.length === 8) {
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${raw}/json/`)
+      const data = await res.json()
+      if (!data.erro) {
+        pagamentoAdicional.cobRua = data.logradouro || ''
+        pagamentoAdicional.cobBairro = data.bairro || ''
+        pagamentoAdicional.cobMunicipio = data.localidade || ''
+        pagamentoAdicional.cobEstado = data.uf || ''
+      }
+    } catch {}
+  }
+}
+
 async function onCepInput() {
   const raw = proponente.cep.replace(/\D/g, '')
   if (raw.length === 8) {
@@ -983,6 +1013,7 @@ function confirmarFundosPopup() {
 const pagamentoAdicional = reactive<PagamentoAdicional>({
   forma: 'debito', banco: '', agencia: '', conta: '', titular: '', cpfTitular: '', diaVencimento: '',
   respFinanceiro: 'sim', rfNome: '', rfCpf: '', rfDataNasc: '', rfTelefone: '', rfEmail: '',
+  enderecoCobranca: 'sim', cobCep: '', cobRua: '', cobNumero: '', cobComplemento: '', cobBairro: '', cobMunicipio: '', cobEstado: '',
 })
 
 function preencherRespFinanceiro() {
