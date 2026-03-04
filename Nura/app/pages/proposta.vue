@@ -985,7 +985,7 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .mb-16 { margin-bottom: 16px; }
 .mt-20 { margin-top: 20px; }
 /* Responsável Financeiro no topo da aba Forma de Pagamento */
-.resp-financeiro-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.resp-financeiro-row { display: flex; align-items: center; gap: 20px; flex-wrap: nowrap; }
 .resp-financeiro-row .field-label { font-size: 13px; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--text-primary); }
 .radio-group-inline { display: flex; flex-direction: row; gap: 20px; flex-shrink: 0; }
 .opcoes-divider { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0 16px; }
