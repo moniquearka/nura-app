@@ -439,10 +439,10 @@
 
           <!-- Responsável Financeiro -->
           <div class="resp-financeiro-row mb-16">
-            <span class="form-label" style="font-size:13px; font-weight:500; text-transform:none; letter-spacing:0; color:var(--text-primary);">Dados do Responsável Financeiro serão os mesmos aos Dados do Proponente?</span>
-            <div class="radio-group-h" style="flex-shrink:0">
-              <label class="radio-label-h"><input type="radio" v-model="pagamentoAdicional.respFinanceiro" value="sim" class="radio-input" @change="preencherRespFinanceiro" /><span>Sim</span></label>
-              <label class="radio-label-h"><input type="radio" v-model="pagamentoAdicional.respFinanceiro" value="nao" class="radio-input" /><span>Não</span></label>
+            <span class="field-label" style="flex-shrink:0;">Dados do Responsável Financeiro serão os mesmos aos Dados do Proponente?</span>
+            <div class="radio-group-inline">
+              <label class="radio-item"><input type="radio" v-model="pagamentoAdicional.respFinanceiro" value="sim" class="radio-input" @change="preencherRespFinanceiro" /><span class="radio-label">Sim</span></label>
+              <label class="radio-item"><input type="radio" v-model="pagamentoAdicional.respFinanceiro" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
             </div>
           </div>
 
@@ -1181,7 +1181,9 @@ watch(showContratacaoTab, (val) => {
 .alert-divergencia svg { flex-shrink: 0; color: #f59e0b; margin-top: 1px; }
 
 /* Forma de Pagamento */
-.resp-financeiro-row { display: flex; align-items: center; gap: 20px; flex-wrap: nowrap; }
+.resp-financeiro-row { display: grid; grid-template-columns: 1fr 160px; align-items: center; gap: 20px; }
+.resp-financeiro-row .field-label { font-size: 13px; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--text-primary); }
+.radio-group-inline { display: flex; flex-direction: row; gap: 20px; justify-content: flex-start; }
 .opcoes-divider { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0 16px; }
 .opcoes-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin: 0 0 12px; }
 .subsection-title { font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: var(--text-primary); margin: 16px 0 12px; }

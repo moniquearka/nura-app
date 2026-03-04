@@ -981,9 +981,9 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .mb-16 { margin-bottom: 16px; }
 .mt-20 { margin-top: 20px; }
 /* Responsável Financeiro no topo da aba Forma de Pagamento */
-.resp-financeiro-row { display: flex; align-items: center; gap: 20px; flex-wrap: nowrap; }
+.resp-financeiro-row { display: grid; grid-template-columns: 1fr 160px; align-items: center; gap: 20px; }
 .resp-financeiro-row .field-label { font-size: 13px; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--text-primary); }
-.radio-group-inline { display: flex; flex-direction: row; gap: 20px; flex-shrink: 0; }
+.radio-group-inline { display: flex; flex-direction: row; gap: 20px; justify-content: flex-start; }
 .opcoes-divider { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0 16px; }
 .opcoes-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin: 0 0 12px; }
 .btn-pagamento-externo { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%); border: 1.5px solid #c7d7fd; border-radius: 10px; color: #1e40af; font-size: 14px; font-weight: 500; text-decoration: none; cursor: pointer; transition: all 0.2s; width: 100%; box-sizing: border-box; }
