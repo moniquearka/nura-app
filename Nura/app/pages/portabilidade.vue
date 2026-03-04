@@ -457,6 +457,53 @@
             </div>
           </template>
 
+          <!-- Endereço de Cobrança — Contratação Adicional (logo após Responsável Financeiro) -->
+          <div class="resp-financeiro-row mb-16">
+            <span class="field-label" style="flex-shrink:0;">O Endereço de Cobrança será o mesmo informado nos Dados do Proponente?</span>
+            <div class="radio-group-inline">
+              <label class="radio-item"><input v-model="pagamentoAdicional.enderecoCobranca" type="radio" value="sim" class="radio-input" /><span class="radio-label">Sim</span></label>
+              <label class="radio-item"><input v-model="pagamentoAdicional.enderecoCobranca" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
+            </div>
+          </div>
+          <template v-if="pagamentoAdicional.enderecoCobranca === 'nao'">
+            <div class="section-card mb-16" style="background:#f8fafc;padding:16px;">
+              <h4 class="subsection-title" style="margin-top:0">Endereço de Cobrança</h4>
+              <div class="field-grid field-grid--3">
+                <div class="form-field">
+                  <label class="form-label">CEP</label>
+                  <input v-model="pagamentoAdicional.cobCep" type="text" class="form-input" placeholder="00000-000" maxlength="9" @input="onCepInputAdicional" />
+                </div>
+                <div class="form-field" style="grid-column: span 2">
+                  <label class="form-label">Rua</label>
+                  <input v-model="pagamentoAdicional.cobRua" type="text" class="form-input" placeholder="Nome da rua" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Número</label>
+                  <input v-model="pagamentoAdicional.cobNumero" type="text" class="form-input" placeholder="123" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Complemento</label>
+                  <input v-model="pagamentoAdicional.cobComplemento" type="text" class="form-input" placeholder="Apto, sala, etc." />
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Bairro</label>
+                  <input v-model="pagamentoAdicional.cobBairro" type="text" class="form-input" placeholder="Bairro" />
+                </div>
+                <div class="form-field" style="grid-column: span 2">
+                  <label class="form-label">Município</label>
+                  <input v-model="pagamentoAdicional.cobMunicipio" type="text" class="form-input" placeholder="Cidade" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Estado</label>
+                  <select v-model="pagamentoAdicional.cobEstado" class="form-select">
+                    <option value="">Selecione</option>
+                    <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </template>
+
           <hr class="opcoes-divider" />
           <p class="opcoes-title">Opções Disponíveis</p>
 
@@ -519,53 +566,6 @@
             </div>
           </template>
 
-          <!-- Endereço de Cobrança — Contratação Adicional -->
-          <div class="opcoes-divider mt-16"></div>
-          <div class="resp-financeiro-row mb-16">
-            <span class="form-label" style="font-size:13px; font-weight:500; text-transform:none; letter-spacing:0; color:var(--text-primary); flex-shrink:0;">O Endereço de Cobrança será o mesmo informado nos Dados do Proponente?</span>
-            <div class="radio-group-h" style="flex-shrink:0">
-              <label class="radio-item"><input v-model="pagamentoAdicional.enderecoCobranca" type="radio" value="sim" class="radio-input" /><span class="radio-label">Sim</span></label>
-              <label class="radio-item"><input v-model="pagamentoAdicional.enderecoCobranca" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
-            </div>
-          </div>
-          <template v-if="pagamentoAdicional.enderecoCobranca === 'nao'">
-            <div class="section-card mb-16" style="background:#f8fafc;padding:16px;">
-              <h4 class="subsection-title" style="margin-top:0">Endereço de Cobrança</h4>
-              <div class="form-grid">
-                <div class="form-field">
-                  <label class="form-label">CEP</label>
-                  <input v-model="pagamentoAdicional.cobCep" type="text" class="form-input" placeholder="00000-000" maxlength="9" @input="onCepInputAdicional" />
-                </div>
-                <div class="form-field">
-                  <label class="form-label">Rua</label>
-                  <input v-model="pagamentoAdicional.cobRua" type="text" class="form-input" placeholder="Nome da rua" />
-                </div>
-                <div class="form-field">
-                  <label class="form-label">Número</label>
-                  <input v-model="pagamentoAdicional.cobNumero" type="text" class="form-input" placeholder="123" />
-                </div>
-                <div class="form-field">
-                  <label class="form-label">Complemento</label>
-                  <input v-model="pagamentoAdicional.cobComplemento" type="text" class="form-input" placeholder="Apto, sala, etc." />
-                </div>
-                <div class="form-field">
-                  <label class="form-label">Bairro</label>
-                  <input v-model="pagamentoAdicional.cobBairro" type="text" class="form-input" placeholder="Bairro" />
-                </div>
-                <div class="form-field">
-                  <label class="form-label">Município</label>
-                  <input v-model="pagamentoAdicional.cobMunicipio" type="text" class="form-input" placeholder="Cidade" />
-                </div>
-                <div class="form-field">
-                  <label class="form-label">Estado</label>
-                  <select v-model="pagamentoAdicional.cobEstado" class="form-select">
-                    <option value="">Selecione</option>
-                    <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </template>
         </div>
 
         <div class="page-footer">

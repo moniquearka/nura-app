@@ -318,6 +318,53 @@
               </div>
             </template>
 
+            <!-- Endereço de Cobrança — Previdência (logo após Responsável Financeiro) -->
+            <div class="resp-financeiro-row mb-16">
+              <span class="field-label" style="flex-shrink:0;">O Endereço de Cobrança será o mesmo informado nos Dados do Proponente?</span>
+              <div class="radio-group-inline">
+                <label class="radio-item"><input v-model="pagamentoPrev.enderecoCobranca" type="radio" value="sim" class="radio-input" /><span class="radio-label">Sim</span></label>
+                <label class="radio-item"><input v-model="pagamentoPrev.enderecoCobranca" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
+              </div>
+            </div>
+            <template v-if="pagamentoPrev.enderecoCobranca === 'nao'">
+              <div class="section-card mb-16" style="background:#f8fafc;padding:16px;">
+                <h4 class="subsection-title" style="margin-top:0">Endereço de Cobrança</h4>
+                <div class="field-grid field-grid--3">
+                  <div class="form-field">
+                    <label class="form-label">CEP</label>
+                    <input v-model="pagamentoPrev.cobCep" type="text" class="form-input" placeholder="00000-000" maxlength="9" @input="onCepInputPrev" />
+                  </div>
+                  <div class="form-field" style="grid-column: span 2">
+                    <label class="form-label">Rua</label>
+                    <input v-model="pagamentoPrev.cobRua" type="text" class="form-input" placeholder="Nome da rua" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Número</label>
+                    <input v-model="pagamentoPrev.cobNumero" type="text" class="form-input" placeholder="123" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Complemento</label>
+                    <input v-model="pagamentoPrev.cobComplemento" type="text" class="form-input" placeholder="Apto, sala, etc." />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Bairro</label>
+                    <input v-model="pagamentoPrev.cobBairro" type="text" class="form-input" placeholder="Bairro" />
+                  </div>
+                  <div class="form-field" style="grid-column: span 2">
+                    <label class="form-label">Município</label>
+                    <input v-model="pagamentoPrev.cobMunicipio" type="text" class="form-input" placeholder="Cidade" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Estado</label>
+                    <select v-model="pagamentoPrev.cobEstado" class="form-select">
+                      <option value="">Selecione</option>
+                      <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </template>
+
             <!-- Separador visual + título Opções Disponíveis -->
             <div class="opcoes-divider"></div>
             <h4 class="opcoes-title">Opções Disponíveis</h4>
@@ -370,56 +417,6 @@
               </div>
             </template>
 
-            <!-- Responsável Financeiro agora no topo da aba (removido daqui) -->
-
-            <!-- Endereço de Cobrança — Previdência -->
-            <div class="opcoes-divider mt-16"></div>
-            <div class="resp-financeiro-row mb-16">
-              <span class="field-label" style="flex-shrink:0;">O Endereço de Cobrança será o mesmo informado nos Dados do Proponente?</span>
-              <div class="radio-group-inline">
-                <label class="radio-item"><input v-model="pagamentoPrev.enderecoCobranca" type="radio" value="sim" class="radio-input" /><span class="radio-label">Sim</span></label>
-                <label class="radio-item"><input v-model="pagamentoPrev.enderecoCobranca" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
-              </div>
-            </div>
-            <template v-if="pagamentoPrev.enderecoCobranca === 'nao'">
-              <div class="section-card mb-16" style="background:#f8fafc;padding:16px;">
-                <h4 class="subsection-title" style="margin-top:0">Endereço de Cobrança</h4>
-                <div class="field-grid field-grid--3">
-                  <div class="form-field">
-                    <label class="form-label">CEP</label>
-                    <input v-model="pagamentoPrev.cobCep" type="text" class="form-input" placeholder="00000-000" maxlength="9" @input="onCepInputPrev" />
-                  </div>
-                  <div class="form-field" style="grid-column: span 2">
-                    <label class="form-label">Rua</label>
-                    <input v-model="pagamentoPrev.cobRua" type="text" class="form-input" placeholder="Nome da rua" />
-                  </div>
-                  <div class="form-field">
-                    <label class="form-label">Número</label>
-                    <input v-model="pagamentoPrev.cobNumero" type="text" class="form-input" placeholder="123" />
-                  </div>
-                  <div class="form-field">
-                    <label class="form-label">Complemento</label>
-                    <input v-model="pagamentoPrev.cobComplemento" type="text" class="form-input" placeholder="Apto, sala, etc." />
-                  </div>
-                  <div class="form-field">
-                    <label class="form-label">Bairro</label>
-                    <input v-model="pagamentoPrev.cobBairro" type="text" class="form-input" placeholder="Bairro" />
-                  </div>
-                  <div class="form-field" style="grid-column: span 2">
-                    <label class="form-label">Município</label>
-                    <input v-model="pagamentoPrev.cobMunicipio" type="text" class="form-input" placeholder="Cidade" />
-                  </div>
-                  <div class="form-field">
-                    <label class="form-label">Estado</label>
-                    <select v-model="pagamentoPrev.cobEstado" class="form-select">
-                      <option value="">Selecione</option>
-                      <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </template>
-
             <!-- Valor Total -->
             <div class="valor-total-row mt-16">
               <span class="field-label">Valor Total</span>
@@ -450,6 +447,53 @@
                   <div class="form-field"><label class="field-label">Data de Nascimento</label><input v-model="pagamentoSeguro.rfDataNasc" type="date" class="form-input" /></div>
                   <div class="form-field"><label class="field-label">Telefone</label><input v-model="pagamentoSeguro.rfTelefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
                   <div class="form-field"><label class="field-label">E-mail</label><input v-model="pagamentoSeguro.rfEmail" type="email" class="form-input" /></div>
+                </div>
+              </div>
+            </template>
+
+            <!-- Endereço de Cobrança — Seguro de Vida (logo após Responsável Financeiro) -->
+            <div class="resp-financeiro-row mb-16">
+              <span class="field-label" style="flex-shrink:0;">O Endereço de Cobrança será o mesmo informado nos Dados do Proponente?</span>
+              <div class="radio-group-inline">
+                <label class="radio-item"><input v-model="pagamentoSeguro.enderecoCobranca" type="radio" value="sim" class="radio-input" /><span class="radio-label">Sim</span></label>
+                <label class="radio-item"><input v-model="pagamentoSeguro.enderecoCobranca" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
+              </div>
+            </div>
+            <template v-if="pagamentoSeguro.enderecoCobranca === 'nao'">
+              <div class="section-card mb-16" style="background:#f8fafc;padding:16px;">
+                <h4 class="subsection-title" style="margin-top:0">Endereço de Cobrança</h4>
+                <div class="field-grid field-grid--3">
+                  <div class="form-field">
+                    <label class="form-label">CEP</label>
+                    <input v-model="pagamentoSeguro.cobCep" type="text" class="form-input" placeholder="00000-000" maxlength="9" @input="onCepInputSeguro" />
+                  </div>
+                  <div class="form-field" style="grid-column: span 2">
+                    <label class="form-label">Rua</label>
+                    <input v-model="pagamentoSeguro.cobRua" type="text" class="form-input" placeholder="Nome da rua" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Número</label>
+                    <input v-model="pagamentoSeguro.cobNumero" type="text" class="form-input" placeholder="123" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Complemento</label>
+                    <input v-model="pagamentoSeguro.cobComplemento" type="text" class="form-input" placeholder="Apto, sala, etc." />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Bairro</label>
+                    <input v-model="pagamentoSeguro.cobBairro" type="text" class="form-input" placeholder="Bairro" />
+                  </div>
+                  <div class="form-field" style="grid-column: span 2">
+                    <label class="form-label">Município</label>
+                    <input v-model="pagamentoSeguro.cobMunicipio" type="text" class="form-input" placeholder="Cidade" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Estado</label>
+                    <select v-model="pagamentoSeguro.cobEstado" class="form-select">
+                      <option value="">Selecione</option>
+                      <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </template>
@@ -519,54 +563,6 @@
                   Inserir dados do Cartão de Crédito
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;flex-shrink:0;margin-left:auto"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                 </a>
-              </div>
-            </template>
-
-            <!-- Endereço de Cobrança — Seguro de Vida -->
-            <div class="opcoes-divider mt-16"></div>
-            <div class="resp-financeiro-row mb-16">
-              <span class="field-label" style="flex-shrink:0;">O Endereço de Cobrança será o mesmo informado nos Dados do Proponente?</span>
-              <div class="radio-group-inline">
-                <label class="radio-item"><input v-model="pagamentoSeguro.enderecoCobranca" type="radio" value="sim" class="radio-input" /><span class="radio-label">Sim</span></label>
-                <label class="radio-item"><input v-model="pagamentoSeguro.enderecoCobranca" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
-              </div>
-            </div>
-            <template v-if="pagamentoSeguro.enderecoCobranca === 'nao'">
-              <div class="section-card mb-16" style="background:#f8fafc;padding:16px;">
-                <h4 class="subsection-title" style="margin-top:0">Endereço de Cobrança</h4>
-                <div class="field-grid field-grid--3">
-                  <div class="form-field">
-                    <label class="form-label">CEP</label>
-                    <input v-model="pagamentoSeguro.cobCep" type="text" class="form-input" placeholder="00000-000" maxlength="9" @input="onCepInputSeguro" />
-                  </div>
-                  <div class="form-field" style="grid-column: span 2">
-                    <label class="form-label">Rua</label>
-                    <input v-model="pagamentoSeguro.cobRua" type="text" class="form-input" placeholder="Nome da rua" />
-                  </div>
-                  <div class="form-field">
-                    <label class="form-label">Número</label>
-                    <input v-model="pagamentoSeguro.cobNumero" type="text" class="form-input" placeholder="123" />
-                  </div>
-                  <div class="form-field">
-                    <label class="form-label">Complemento</label>
-                    <input v-model="pagamentoSeguro.cobComplemento" type="text" class="form-input" placeholder="Apto, sala, etc." />
-                  </div>
-                  <div class="form-field">
-                    <label class="form-label">Bairro</label>
-                    <input v-model="pagamentoSeguro.cobBairro" type="text" class="form-input" placeholder="Bairro" />
-                  </div>
-                  <div class="form-field" style="grid-column: span 2">
-                    <label class="form-label">Município</label>
-                    <input v-model="pagamentoSeguro.cobMunicipio" type="text" class="form-input" placeholder="Cidade" />
-                  </div>
-                  <div class="form-field">
-                    <label class="form-label">Estado</label>
-                    <select v-model="pagamentoSeguro.cobEstado" class="form-select">
-                      <option value="">Selecione</option>
-                      <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
-                    </select>
-                  </div>
-                </div>
               </div>
             </template>
 
