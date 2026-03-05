@@ -1,6 +1,8 @@
 // composables/usePdfRevisaoEstudo.ts
 // Gera o PDF "Revisão do Estudo" com layout fiel aos documentos de referência
 
+import { jsPDF } from 'jspdf'
+import autoTable from 'jspdf-autotable'
 import { FAVICON_B64 } from './faviconBase64'
 
 export interface StudyData {
@@ -77,10 +79,6 @@ const CONTENT_W = PAGE_W - MARGIN * 2
 
 export function usePdfRevisaoEstudo() {
   async function generatePdf(study: StudyData): Promise<void> {
-    // Import dinâmico para evitar SSR issues
-    const { default: jsPDF } = await import('jspdf')
-    const { default: autoTable } = await import('jspdf-autotable')
-
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
 
     // Estado de posição vertical
