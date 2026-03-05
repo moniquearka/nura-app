@@ -125,7 +125,6 @@
 </template>
 
 <script setup lang="ts">
-import type { StudyData } from '~/composables/usePdfRevisaoEstudo'
 
 interface Study {
   id: number
@@ -133,17 +132,16 @@ interface Study {
   products: 'Previdência' | 'Seguro de Vida' | 'Previdência + Seguro de Vida'
   date: string
   totalValue: string
+  pdfFile: string // nome do arquivo PDF estático em /pdfs/
 }
 
 const studies = ref<Study[]>([
-  { id: 1, name: 'Estudo Taís Oliveira Costa — v1', products: 'Previdência + Seguro de Vida', date: '02/03/2026', totalValue: 'R$ 4.150,00' },
-  { id: 2, name: 'Estudo Taís Oliveira Costa — v2', products: 'Previdência', date: '02/03/2026', totalValue: 'R$ 1.650,00' },
+  { id: 1, name: 'Estudo Taís Oliveira Costa — v1', products: 'Previdência + Seguro de Vida', date: '02/03/2026', totalValue: 'R$ 4.150,00', pdfFile: 'estudo-v1.pdf' },
+  { id: 2, name: 'Estudo Taís Oliveira Costa — v2', products: 'Previdência', date: '02/03/2026', totalValue: 'R$ 1.650,00', pdfFile: 'estudo-v2.pdf' },
 ])
 
 const selectedId = ref<number | null>(null)
-const isGeneratingPdf = ref(false)
 const router = useRouter()
-const { generatePdf } = usePdfRevisaoEstudo()
 
 function toggleSelect(id: number) {
   selectedId.value = selectedId.value === id ? null : id
@@ -171,93 +169,40 @@ function duplicateStudy(study: Study) {
     products: study.products,
     date: today,
     totalValue: study.totalValue,
+    pdfFile: study.pdfFile,
   })
 }
 
-// Monta os dados do estudo com base no nome/versão
-function buildStudyData(study: Study): StudyData {
-  // Extrai versão do nome
-  const versionMatch = study.name.match(/—\s*v(\d+)(.*)$/)
-  let versao = ''
-  if (versionMatch) {
-    const vNum = versionMatch[1]
-    const extra = versionMatch[2].trim()
-    if (extra) {
-      const extraClean = extra.replace(/[()]/g, '').trim().replace(/\s+/g, '-')
-      versao = `v${vNum}-${extraClean}`
-    } else {
-      versao = `v${vNum}`
-    }
-  }
-
-  // Data do estudo no formato DD/MM/AA
-  const today = new Date()
-  const dd = String(today.getDate()).padStart(2, '0')
-  const mm = String(today.getMonth() + 1).padStart(2, '0')
-  const yy = String(today.getFullYear()).slice(-2)
-
-  // Dados base do cliente (mock — em produção viriam do estado global)
-  const baseData: StudyData = {
-    clientName: 'Taís Oliveira Costa',
-    cpf: '123.456.789-00',
-    dataNascimento: '15/05/1984',
-    telefone: '(21) 99999-0000',
-    email: 'tais.oliveira@email.com',
-    rendaMensal: 'R$ 18.000,00',
-    ocupacao: 'Gerente de Marketing',
-    empresa: 'Medley Farmacêutica Ltda.',
-    tipoPerfil: 'EXECUTORA - ANALÍTICA - CONSERVADORA',
-    descricaoPerfil: 'Orientada a resultados, toma decisões financeiras com cautela e conservadorismo, priorizando a segurança familiar e a previsibilidade do futuro.',
-    tipoPlano: 'PGBL',
-    regimeTributacao: 'Progressiva',
-    contribuicaoMensal: 'R$ 1.650,00',
-    aporteInicial: 'R$ 10.000,00',
-    idadeAposentadoria: '60 anos',
-    fundo: {
-      nome: 'Absolute Atenas Icatu Prev FIC FIRF CP',
-      cnpj: '47.612.701/0001-45',
-      processoSusep: '15414.634898/2022-43',
-      carregamento: '0%',
-      taxaAdm: '0,98% a.a.',
-      rentabilidade: '-',
-      classificacao: 'Renda Fixa',
-      percContribuicao: '100%',
-      percAporte: '100%',
-    },
-    investimentoMensal: study.totalValue,
-    dataEstudo: `${dd}/${mm}/${yy}`,
-    versao,
-  }
-
-  // Se o estudo inclui Seguro de Vida, adiciona coberturas
-  if (study.products === 'Previdência + Seguro de Vida' || study.products === 'Seguro de Vida') {
-    baseData.produtoSeguro = 'Horizonte'
-    baseData.coberturas = [
-      { cobertura: 'Morte Natural ou Acidental + Adiantamento por Doença Terminal (obrigatório)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 2.961.000,00', contribuicaoMensal: 'R$ 1.184,40' },
-      { cobertura: 'Indenização Especial de Morte por Acidente (IEA)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 1.484.000,00', contribuicaoMensal: 'R$ 593,60' },
-      { cobertura: 'Invalidez Permanente por Acidente - Total ou Parcial (IPA)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 1.484.000,00', contribuicaoMensal: 'R$ 593,60' },
-      { cobertura: 'Indenização Especial de Invalidez por Doença (IED)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 155.000,00', contribuicaoMensal: 'R$ 62,00' },
-      { cobertura: 'Doenças Graves (DG)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 155.000,00', contribuicaoMensal: 'R$ 62,00' },
-      { cobertura: 'Diária por Incapacidade Temporária (DIT)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 4.000,00', contribuicaoMensal: 'R$ 1,60' },
-      { cobertura: 'Diária por Internação Hospitalar (DIH)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 2.000,00', contribuicaoMensal: 'R$ 0,80' },
-      { cobertura: 'Serviço de Assistência Funeral (SAF)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 5.000,00', contribuicaoMensal: 'R$ 2,00' },
-    ]
-  }
-
-  return baseData
+// Gera o nome do arquivo para download a partir do nome do estudo
+function buildDownloadName(studyName: string): string {
+  // Remove o prefixo "Estudo " e substitui espaços/traços por formatação limpa
+  // Ex: "Estudo Taís Oliveira Costa — v1" → "RevisãodoEstudo_TaísOliveiraCosta_v1.pdf"
+  const withoutPrefix = studyName.replace(/^Estudo\s+/i, '')
+  // Separa o nome do cliente da versão (separados por —)
+  const parts = withoutPrefix.split(/\s*—\s*/)
+  const clientName = (parts[0] || '').trim().replace(/\s+/g, '')
+  const version = (parts[1] || '').trim().replace(/\s+/g, '')
+  const versionSuffix = version ? `_${version}` : ''
+  return `RevisãodoEstudo_${clientName}${versionSuffix}.pdf`
 }
 
 async function downloadPdf(study: Study) {
-  if (isGeneratingPdf.value) return
-  isGeneratingPdf.value = true
   try {
-    const studyData = buildStudyData(study)
-    await generatePdf(studyData)
+    const baseUrl = '/nura-app/pdfs/'
+    const response = await fetch(baseUrl + study.pdfFile)
+    if (!response.ok) throw new Error('PDF não encontrado')
+    const blob = await response.blob()
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = buildDownloadName(study.name)
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
   } catch (err) {
-    console.error('Erro ao gerar PDF:', err)
-    alert('Erro ao gerar o PDF. Tente novamente.')
-  } finally {
-    isGeneratingPdf.value = false
+    console.error('Erro ao baixar PDF:', err)
+    alert('Erro ao baixar o PDF. Tente novamente.')
   }
 }
 
