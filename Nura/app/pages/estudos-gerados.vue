@@ -52,7 +52,7 @@
 
             <!-- Estudo Gerado (clique no nome → aliaplan; ícone Baixar → download PDF) -->
             <td class="col-study">
-              <a class="study-link" href="https://aliaplan.zooxsmart.com/" target="_blank" rel="noopener noreferrer" @click.stop>
+              <a class="study-link" href="https://moniquearka.github.io/aliaplan/" target="_blank" rel="noopener noreferrer" @click.stop>
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" class="study-link__icon">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
@@ -125,6 +125,8 @@
 </template>
 
 <script setup lang="ts">
+import type { StudyData } from '~/composables/usePdfRevisaoEstudo'
+
 interface Study {
   id: number
   name: string
@@ -139,7 +141,9 @@ const studies = ref<Study[]>([
 ])
 
 const selectedId = ref<number | null>(null)
+const isGeneratingPdf = ref(false)
 const router = useRouter()
+const { generatePdf } = usePdfRevisaoEstudo()
 
 function toggleSelect(id: number) {
   selectedId.value = selectedId.value === id ? null : id
@@ -161,7 +165,6 @@ function deleteStudy(id: number) {
 function duplicateStudy(study: Study) {
   const newId = Math.max(...studies.value.map(s => s.id)) + 1
   const today = new Date().toLocaleDateString('pt-BR')
-  // Inserir no início do array (mais recente no topo)
   studies.value.unshift({
     id: newId,
     name: study.name + ' (cópia)',
@@ -171,46 +174,91 @@ function duplicateStudy(study: Study) {
   })
 }
 
-function downloadPdf(study: Study) {
-  // Gera nome dinâmico do arquivo baseado no nome do estudo
-  // Ex: "Estudo Taís Oliveira Costa — v1" → "Revisão do Estudo_Taís Oliveira Costa_030326_v1.pdf"
-  // Ex: "Estudo Taís Oliveira Costa — v2 (cópia)" → "Revisão do Estudo_Taís Oliveira Costa_030326_v2-cópia.pdf"
-  const today = new Date()
-  const dd = String(today.getDate()).padStart(2, '0')
-  const mm = String(today.getMonth() + 1).padStart(2, '0')
-  const yy = String(today.getFullYear()).slice(-2)
-  const dateStr = `${dd}${mm}${yy}`
-
-  // Extrai versão e sufixo do nome do estudo
-  // Formato esperado: "Estudo {Nome} — v{N}" ou "Estudo {Nome} — v{N} (cópia)"
+// Monta os dados do estudo com base no nome/versão
+function buildStudyData(study: Study): StudyData {
+  // Extrai versão do nome
   const versionMatch = study.name.match(/—\s*v(\d+)(.*)$/)
-  let versionSuffix = ''
+  let versao = ''
   if (versionMatch) {
     const vNum = versionMatch[1]
     const extra = versionMatch[2].trim()
     if (extra) {
-      // Remove parênteses e substitui espaços por hífen
       const extraClean = extra.replace(/[()]/g, '').trim().replace(/\s+/g, '-')
-      versionSuffix = `_v${vNum}-${extraClean}`
+      versao = `v${vNum}-${extraClean}`
     } else {
-      versionSuffix = `_v${vNum}`
+      versao = `v${vNum}`
     }
   }
 
-  // Extrai o nome do cliente do estudo (entre "Estudo " e " —")
-  const clientMatch = study.name.match(/^Estudo\s+(.+?)\s+—/)
-  const clientName = clientMatch ? clientMatch[1] : 'Cliente'
+  // Data do estudo no formato DD/MM/AA
+  const today = new Date()
+  const dd = String(today.getDate()).padStart(2, '0')
+  const mm = String(today.getMonth() + 1).padStart(2, '0')
+  const yy = String(today.getFullYear()).slice(-2)
 
-  const fileName = `Revisão do Estudo_${clientName}_${dateStr}${versionSuffix}.pdf`
+  // Dados base do cliente (mock — em produção viriam do estado global)
+  const baseData: StudyData = {
+    clientName: 'Taís Oliveira Costa',
+    cpf: '123.456.789-00',
+    dataNascimento: '15/05/1984',
+    telefone: '(21) 99999-0000',
+    email: 'tais.oliveira@email.com',
+    rendaMensal: 'R$ 18.000,00',
+    ocupacao: 'Gerente de Marketing',
+    empresa: 'Medley Farmacêutica Ltda.',
+    tipoPerfil: 'EXECUTORA - ANALÍTICA - CONSERVADORA',
+    descricaoPerfil: 'Orientada a resultados, toma decisões financeiras com cautela e conservadorismo, priorizando a segurança familiar e a previsibilidade do futuro.',
+    tipoPlano: 'PGBL',
+    regimeTributacao: 'Progressiva',
+    contribuicaoMensal: 'R$ 1.650,00',
+    aporteInicial: 'R$ 10.000,00',
+    idadeAposentadoria: '60 anos',
+    fundo: {
+      nome: 'Absolute Atenas Icatu Prev FIC FIRF CP',
+      cnpj: '47.612.701/0001-45',
+      processoSusep: '15414.634898/2022-43',
+      carregamento: '0%',
+      taxaAdm: '0,98% a.a.',
+      rentabilidade: '-',
+      classificacao: 'Renda Fixa',
+      percContribuicao: '100%',
+      percAporte: '100%',
+    },
+    investimentoMensal: study.totalValue,
+    dataEstudo: `${dd}/${mm}/${yy}`,
+    versao,
+  }
 
-  // Faz download real do PDF armazenado na pasta public/assets
-  const link = document.createElement('a')
-  // Usa URL encoded para garantir compatibilidade cross-browser com caracteres especiais
-  link.href = '/assets/Revis%C3%A3o%20do%20Estudo_Ta%C3%ADs%20Oliveira%20Costa_030326.pdf'
-  link.download = fileName
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
+  // Se o estudo inclui Seguro de Vida, adiciona coberturas
+  if (study.products === 'Previdência + Seguro de Vida' || study.products === 'Seguro de Vida') {
+    baseData.produtoSeguro = 'Horizonte'
+    baseData.coberturas = [
+      { cobertura: 'Morte Natural ou Acidental + Adiantamento por Doença Terminal (obrigatório)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 2.961.000,00', contribuicaoMensal: 'R$ 1.184,40' },
+      { cobertura: 'Indenização Especial de Morte por Acidente (IEA)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 1.484.000,00', contribuicaoMensal: 'R$ 593,60' },
+      { cobertura: 'Invalidez Permanente por Acidente - Total ou Parcial (IPA)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 1.484.000,00', contribuicaoMensal: 'R$ 593,60' },
+      { cobertura: 'Indenização Especial de Invalidez por Doença (IED)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 155.000,00', contribuicaoMensal: 'R$ 62,00' },
+      { cobertura: 'Doenças Graves (DG)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 155.000,00', contribuicaoMensal: 'R$ 62,00' },
+      { cobertura: 'Diária por Incapacidade Temporária (DIT)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 4.000,00', contribuicaoMensal: 'R$ 1,60' },
+      { cobertura: 'Diária por Internação Hospitalar (DIH)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 2.000,00', contribuicaoMensal: 'R$ 0,80' },
+      { cobertura: 'Serviço de Assistência Funeral (SAF)', vigencia: 'Vitalícia', prazoPagamento: '—', capitalSegurado: 'R$ 5.000,00', contribuicaoMensal: 'R$ 2,00' },
+    ]
+  }
+
+  return baseData
+}
+
+async function downloadPdf(study: Study) {
+  if (isGeneratingPdf.value) return
+  isGeneratingPdf.value = true
+  try {
+    const studyData = buildStudyData(study)
+    await generatePdf(studyData)
+  } catch (err) {
+    console.error('Erro ao gerar PDF:', err)
+    alert('Erro ao gerar o PDF. Tente novamente.')
+  } finally {
+    isGeneratingPdf.value = false
+  }
 }
 
 function gerarProposta() {
