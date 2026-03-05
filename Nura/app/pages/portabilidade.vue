@@ -596,7 +596,7 @@
             <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ proponente.cpf || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">{{ proponente.nome || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Nome Social</span><span class="field-value">{{ proponente.nomeSocial || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ proponente.dataNasc || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ proponente.dataNasc ? new Date(proponente.dataNasc + 'T12:00:00').toLocaleDateString('pt-BR') : '—' }}</span></div>
             <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">{{ proponente.telefone || '—' }}</span></div>
             <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">{{ proponente.email || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Renda Mensal</span><span class="field-value">{{ proponente.renda || '—' }}</span></div>
@@ -605,9 +605,21 @@
             <div class="field-item"><span class="field-label">Origem da Renda</span><span class="field-value">{{ proponente.origemRenda || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Patrimônio</span><span class="field-value">{{ proponente.patrimonio || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Nacionalidade</span><span class="field-value">{{ proponente.nacionalidade || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Pessoa Politicamente Exposta?</span><span class="field-value">{{ proponente.pessoaPolitica === 'sim' ? 'Sim' : 'Não' }}</span></div>
-            <div class="field-item"><span class="field-label">É US Person?</span><span class="field-value">{{ proponente.usPerson === 'sim' ? 'Sim' : 'Não' }}</span></div>
-            <div class="field-item field-item--full"><span class="field-label">Endereço</span><span class="field-value">{{ [proponente.rua, proponente.numero, proponente.complemento, proponente.bairro, proponente.municipio, proponente.estado].filter(Boolean).join(', ') || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Pessoa Politicamente Exposta?</span><span class="field-value">{{ proponente.pessoaPolitica === 'sim' ? 'Sim' : proponente.pessoaPolitica === 'nao' ? 'Não' : '—' }}</span></div>
+            <div class="field-item"><span class="field-label">É US Person?</span><span class="field-value">{{ proponente.usPerson === 'sim' ? 'Sim' : proponente.usPerson === 'nao' ? 'Não' : '—' }}</span></div>
+          </div>
+          <!-- Dados Residenciais -->
+          <div class="conf-subsection">
+            <div class="conf-subsection__title">Dados Residenciais</div>
+            <div class="field-grid field-grid--3">
+              <div class="field-item"><span class="field-label">CEP</span><span class="field-value">{{ proponente.cep || '—' }}</span></div>
+              <div class="field-item" style="grid-column:span 2"><span class="field-label">Rua</span><span class="field-value">{{ proponente.rua || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Número</span><span class="field-value">{{ proponente.numero || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Complemento</span><span class="field-value">{{ proponente.complemento || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Bairro</span><span class="field-value">{{ proponente.bairro || '—' }}</span></div>
+              <div class="field-item" style="grid-column:span 2"><span class="field-label">Município</span><span class="field-value">{{ proponente.municipio || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Estado</span><span class="field-value">{{ proponente.estado || '—' }}</span></div>
+            </div>
           </div>
         </div>
 
@@ -615,37 +627,53 @@
         <div class="section-card">
           <h3 class="section-card__title">Dados da Portabilidade — Origem</h3>
           <div class="field-grid field-grid--3">
-            <div class="field-item"><span class="field-label">Tipo de Portabilidade</span><span class="field-value">De outra instituição para a Nura</span></div>
+            <div class="field-item"><span class="field-label">Tipo de Portabilidade</span><span class="field-value">{{ tipoPortabilidade === 'externa' ? 'De outra instituição para a Nura' : 'Entre planos da Nura' }}</span></div>
             <div class="field-item"><span class="field-label">Processo SUSEP</span><span class="field-value">{{ form.susep || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Seguradora de Origem</span><span class="field-value">{{ form.seguradora || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Número do Certificado</span><span class="field-value">{{ form.certificado || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Número do Certificado / Apólice</span><span class="field-value">{{ form.certificado || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Nome do Plano</span><span class="field-value">{{ form.nomePlano || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Tipo do Plano</span><span class="field-value">{{ form.tipoPlano || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Regime Tributário</span><span class="field-value">{{ form.regime || '—' }}</span></div>
             <div class="field-item"><span class="field-label">CNPJ do Fundo</span><span class="field-value">{{ form.cnpjFundo || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Situação do Regime</span><span class="field-value">{{ form.situacaoRegime || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Tipo de Transferência</span><span class="field-value">{{ form.tipoTransferencia || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Valor da Portabilidade</span><span class="field-value">{{ form.tipoTransferencia === 'Total' ? 'Transferência Total' : (form.valorPortabilidade || '—') }}</span></div>
+          </div>
+          <!-- Configurações da Transferência -->
+          <div class="conf-subsection">
+            <div class="conf-subsection__title">Configurações da Transferência</div>
+            <div class="field-grid field-grid--3">
+              <div class="field-item"><span class="field-label">Tipo de Transferência</span><span class="field-value">{{ form.tipoTransferencia || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Valor da Portabilidade</span><span class="field-value">{{ form.tipoTransferencia === 'Total' ? 'Transferência Total' : (form.valorPortabilidade || '—') }}</span></div>
+            </div>
           </div>
         </div>
 
         <!-- Dados do Destino -->
         <div class="section-card">
           <h3 class="section-card__title">Dados da Portabilidade — Destino</h3>
+          <div v-if="hasDivergencia" class="conf-divergencia-aviso">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            Campos em vermelho indicam divergência em relação à Origem — uma Contratação Adicional foi gerada automaticamente.
+          </div>
           <div class="field-grid field-grid--3">
             <div class="field-item"><span class="field-label">Processo SUSEP</span><span class="field-value">{{ destino.susep || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Seguradora de Destino</span><span class="field-value">{{ destino.seguradora || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Número do Certificado</span><span class="field-value">{{ destino.certificado || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Número do Certificado / Apólice</span><span class="field-value">{{ destino.certificado || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Nome do Plano</span><span class="field-value">{{ destino.nomePlano || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Tipo do Plano</span><span class="field-value" :class="{ 'field-value--divergente': destino.tipoPlano !== form.tipoPlano }">{{ destino.tipoPlano || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Regime Tributário</span><span class="field-value" :class="{ 'field-value--divergente': destino.regime !== form.regime }">{{ destino.regime || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Tipo do Plano</span><span class="field-value" :class="{ 'field-value--divergente': hasDivergencia && destino.tipoPlano !== form.tipoPlano }">{{ destino.tipoPlano || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Regime Tributário</span><span class="field-value" :class="{ 'field-value--divergente': hasDivergencia && destino.regime !== form.regime }">{{ destino.regime || '—' }}</span></div>
             <div class="field-item"><span class="field-label">CNPJ do Fundo</span><span class="field-value">{{ destino.cnpjFundo || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Situação do Regime</span><span class="field-value" :class="{ 'field-value--divergente': destino.situacaoRegime !== form.situacaoRegime }">{{ destino.situacaoRegime || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Situação do Regime</span><span class="field-value" :class="{ 'field-value--divergente': hasDivergencia && destino.situacaoRegime !== form.situacaoRegime }">{{ destino.situacaoRegime || '—' }}</span></div>
           </div>
         </div>
 
         <!-- Dados Adicionais do Plano (se Contratação Adicional) -->
         <template v-if="showContratacaoTab">
+          <!-- Subtítulo separador -->
+          <div class="conf-section-separator">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+            Contratação Adicional
+          </div>
+
           <div v-for="(bloco, bi) in blocosDadosAdicionais" :key="bi" class="section-card">
             <h3 class="section-card__title">{{ bi === 0 ? 'Dados Adicionais do Plano' : `Dados Adicionais do Plano ${bi + 1}` }}</h3>
             <div class="field-grid field-grid--3">
@@ -672,34 +700,74 @@
           <!-- Beneficiários -->
           <div v-if="beneficiarios.length > 0" class="section-card">
             <h3 class="section-card__title">Beneficiários</h3>
-            <div v-for="(ben, i) in beneficiarios" :key="i" class="field-grid field-grid--3 mb-8">
-              <div class="field-item"><span class="field-label">Nome</span><span class="field-value">{{ ben.nome || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ ben.cpf || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Percentual</span><span class="field-value">{{ ben.percentual || 0 }}%</span></div>
-              <div class="field-item"><span class="field-label">Grau de Parentesco</span><span class="field-value">{{ ben.parentesco || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ ben.dataNasc || '—' }}</span></div>
-              <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">{{ ben.telefone || '—' }}</span></div>
+            <div v-for="(ben, i) in beneficiarios" :key="i" class="conf-beneficiario-bloco">
+              <div class="conf-beneficiario-titulo">Beneficiário {{ i + 1 }}</div>
+              <div class="field-grid field-grid--3">
+                <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ ben.cpf || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">{{ ben.nome || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ ben.dataNasc || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Grau de Parentesco</span><span class="field-value">{{ ben.parentesco || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Percentual</span><span class="field-value">{{ ben.percentual || 0 }}%</span></div>
+                <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">{{ ben.telefone || '—' }}</span></div>
+                <div class="field-item field-item--full"><span class="field-label">E-mail</span><span class="field-value">{{ ben.email || '—' }}</span></div>
+              </div>
             </div>
           </div>
 
           <!-- Forma de Pagamento -->
           <div class="section-card">
             <h3 class="section-card__title">Forma de Pagamento — Contratação Adicional</h3>
-            <div class="field-grid field-grid--3">
-              <div class="field-item"><span class="field-label">Forma</span><span class="field-value">{{ formaLabelAdicional(pagamentoAdicional.forma) }}</span></div>
-              <template v-if="pagamentoAdicional.forma === 'debito'">
-                <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoAdicional.diaVencimento || '—' }}</span></div>
-              </template>
-              <template v-if="pagamentoAdicional.forma === 'boleto'">
-                <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoAdicional.diaVencimento || '—' }}</span></div>
-              </template>
-              <template v-if="pagamentoAdicional.forma === 'pix'">
-                <div class="field-item"><span class="field-label">Observação</span><span class="field-value">Código PIX gerado após contratação</span></div>
-              </template>
-              <template v-if="pagamentoAdicional.respFinanceiro === 'nao'">
-                <div class="field-item"><span class="field-label">Responsável Financeiro</span><span class="field-value">{{ pagamentoAdicional.rfNome || '—' }}</span></div>
-              </template>
-              <div class="field-item"><span class="field-label">Endereço de Cobrança</span><span class="field-value">{{ pagamentoAdicional.enderecoCobranca === 'nao' ? (pagamentoAdicional.cobRua + ', ' + pagamentoAdicional.cobNumero + ' — ' + pagamentoAdicional.cobMunicipio + '/' + pagamentoAdicional.cobEstado) : 'Mesmo que o Proponente' }}</span></div>
+
+            <!-- Responsável Financeiro -->
+            <div class="conf-subsection">
+              <div class="conf-subsection__title">Responsável Financeiro</div>
+              <div class="field-grid field-grid--3">
+                <div class="field-item field-item--full">
+                  <span class="field-label">Dados do Responsável Financeiro serão os mesmos aos Dados do Proponente?</span>
+                  <span class="field-value">{{ pagamentoAdicional.respFinanceiro === 'sim' ? 'Sim' : 'Não' }}</span>
+                </div>
+                <template v-if="pagamentoAdicional.respFinanceiro === 'nao'">
+                  <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">{{ pagamentoAdicional.rfNome || '—' }}</span></div>
+                  <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ pagamentoAdicional.rfCpf || '—' }}</span></div>
+                  <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ pagamentoAdicional.rfDataNasc || '—' }}</span></div>
+                  <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">{{ pagamentoAdicional.rfTelefone || '—' }}</span></div>
+                  <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">{{ pagamentoAdicional.rfEmail || '—' }}</span></div>
+                </template>
+              </div>
+            </div>
+
+            <!-- Endereço de Cobrança -->
+            <div class="conf-subsection">
+              <div class="conf-subsection__title">Endereço de Cobrança</div>
+              <div class="field-grid field-grid--3">
+                <div class="field-item field-item--full">
+                  <span class="field-label">O Endereço de Cobrança será o mesmo informado nos Dados do Proponente?</span>
+                  <span class="field-value">{{ pagamentoAdicional.enderecoCobranca === 'sim' ? 'Sim' : 'Não' }}</span>
+                </div>
+                <template v-if="pagamentoAdicional.enderecoCobranca === 'nao'">
+                  <div class="field-item"><span class="field-label">CEP</span><span class="field-value">{{ pagamentoAdicional.cobCep || '—' }}</span></div>
+                  <div class="field-item" style="grid-column:span 2"><span class="field-label">Rua</span><span class="field-value">{{ pagamentoAdicional.cobRua || '—' }}</span></div>
+                  <div class="field-item"><span class="field-label">Número</span><span class="field-value">{{ pagamentoAdicional.cobNumero || '—' }}</span></div>
+                  <div class="field-item"><span class="field-label">Complemento</span><span class="field-value">{{ pagamentoAdicional.cobComplemento || '—' }}</span></div>
+                  <div class="field-item"><span class="field-label">Bairro</span><span class="field-value">{{ pagamentoAdicional.cobBairro || '—' }}</span></div>
+                  <div class="field-item" style="grid-column:span 2"><span class="field-label">Município</span><span class="field-value">{{ pagamentoAdicional.cobMunicipio || '—' }}</span></div>
+                  <div class="field-item"><span class="field-label">Estado</span><span class="field-value">{{ pagamentoAdicional.cobEstado || '—' }}</span></div>
+                </template>
+              </div>
+            </div>
+
+            <!-- Forma selecionada -->
+            <div class="conf-subsection">
+              <div class="conf-subsection__title">Opção de Pagamento</div>
+              <div class="field-grid field-grid--3">
+                <div class="field-item"><span class="field-label">Forma de Pagamento</span><span class="field-value">{{ formaLabelAdicional(pagamentoAdicional.forma) }}</span></div>
+                <template v-if="pagamentoAdicional.forma === 'debito' || pagamentoAdicional.forma === 'boleto'">
+                  <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamentoAdicional.diaVencimento || '—' }}</span></div>
+                </template>
+                <template v-if="pagamentoAdicional.forma === 'pix'">
+                  <div class="field-item"><span class="field-label">Observação</span><span class="field-value">Código PIX gerado após a conclusão da contratação</span></div>
+                </template>
+              </div>
             </div>
           </div>
         </template>
@@ -1281,4 +1349,14 @@ watch(showContratacaoTab, (val) => {
 .page-footer { display: flex; justify-content: flex-end; padding-top: 24px; }
 .btn-primary { font-family: var(--font-sans); font-size: 14px; font-weight: 500; padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; background-color: var(--btn-primary-bg); color: var(--btn-primary-color); transition: opacity 0.15s; line-height: 1; }
 .btn-primary:hover { opacity: 0.85; }
+
+/* Confirmação dos Dados — elementos de layout */
+.conf-subsection { margin-top: 20px; padding-top: 16px; border-top: 1px solid #f1f5f9; }
+.conf-subsection__title { font-family: var(--font-sans); font-size: 11px; font-weight: 700; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 14px; }
+.conf-section-separator { display: flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-size: 13px; font-weight: 700; color: var(--btn-primary-bg); text-transform: uppercase; letter-spacing: 0.06em; padding: 12px 16px; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; margin: 8px 0 4px; }
+.conf-section-separator svg { flex-shrink: 0; }
+.conf-divergencia-aviso { display: flex; align-items: flex-start; gap: 8px; padding: 10px 14px; background-color: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; font-size: 13px; color: #991b1b; margin-bottom: 14px; line-height: 1.5; }
+.conf-divergencia-aviso svg { flex-shrink: 0; color: #dc2626; margin-top: 1px; }
+.conf-beneficiario-bloco { border: 1px solid var(--border-color); border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; }
+.conf-beneficiario-titulo { font-family: var(--font-sans); font-size: 12px; font-weight: 700; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 12px; }
 </style>
