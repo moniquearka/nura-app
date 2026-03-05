@@ -138,13 +138,12 @@ export function usePdfRevisaoEstudo() {
       return cardY
     }
 
-    // Finaliza o card desenhando o retângulo
+    // Finaliza o card desenhando o retângulo (apenas borda, sem fill para não sobrepor conteúdo)
     function endCard(cardY: number) {
       const cardH = y - cardY + 4
-      doc.setFillColor(...COLORS.white)
       doc.setDrawColor(...COLORS.cardBorder)
       doc.setLineWidth(0.4)
-      doc.roundedRect(MARGIN, cardY, CONTENT_W, cardH, 3, 3, 'FD')
+      doc.roundedRect(MARGIN, cardY, CONTENT_W, cardH, 3, 3, 'D')
       y += 6 // gap após card
     }
 
