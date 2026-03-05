@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-const baseURL = process.env.NUXT_APP_BASE_URL || '/'
+const baseURL = process.env.NUXT_APP_BASE_URL || '/nura-app/'
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
