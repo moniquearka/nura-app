@@ -128,23 +128,22 @@
             </div>
           </div>
 
-          <!-- É US Person? + NIF na mesma linha -->
+          <!-- É US Person? + NIF como campos normais em grid -->
           <div class="proponente-flags">
-            <div class="proponente-flag-row">
-              <span class="flag-question form-label--required">É US Person?</span>
-              <div class="flag-radio-group">
-                <label class="flag-radio-label"><input type="radio" v-model="proponente.usPerson" value="sim" class="radio-input" /><span>Sim</span></label>
-                <label class="flag-radio-label"><input type="radio" v-model="proponente.usPerson" value="nao" class="radio-input" /><span>Não</span></label>
-              </div>
-              <!-- NIF na mesma linha quando US Person = Sim -->
-              <template v-if="proponente.usPerson === 'sim'">
-                <div class="nif-inline">
-                  <label class="form-label form-label--required">NIF (Número de Identificação Fiscal)</label>
-                  <input v-model="proponente.nif" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.nif }" placeholder="Digite o NIF" style="width:220px;" />
-                  <span v-if="showErrors && !proponente.nif" class="form-error">Campo obrigatório</span>
+            <div class="form-grid" style="margin-top:0;">
+              <div class="form-field">
+                <label class="form-label form-label--required">É US Person?</label>
+                <div class="radio-group-h" style="margin-top:4px;">
+                  <label class="radio-label-h"><input type="radio" v-model="proponente.usPerson" value="sim" class="radio-input" /><span>Sim</span></label>
+                  <label class="radio-label-h"><input type="radio" v-model="proponente.usPerson" value="nao" class="radio-input" /><span>Não</span></label>
                 </div>
-              </template>
-              <span v-if="showErrors && !proponente.usPerson" class="form-error">Campo obrigatório</span>
+                <span v-if="showErrors && !proponente.usPerson" class="form-error">Campo obrigatório</span>
+              </div>
+              <div class="form-field" v-if="proponente.usPerson === 'sim'">
+                <label class="form-label form-label--required">NIF (Número de Identificação Fiscal)</label>
+                <input v-model="proponente.nif" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.nif }" placeholder="Digite o NIF" />
+                <span v-if="showErrors && !proponente.nif" class="form-error">Campo obrigatório</span>
+              </div>
             </div>
           </div>
 
@@ -319,30 +318,35 @@
         <!-- Dados do Plano -->
         <div class="section-card">
           <h3 class="section-card__title">Dados do Plano</h3>
-          <div class="form-grid">
-            <div class="form-field">
-              <label class="form-label form-label--required">Idade que deseja se aposentar</label>
-              <input v-model="plano.idadeAposentadoria" type="number" min="18" max="99" placeholder="Ex: 60" class="form-input" :class="{ 'form-input--error': showErrors && !plano.idadeAposentadoria }" />
-              <span v-if="showErrors && !plano.idadeAposentadoria" class="form-error">Campo obrigatório</span>
-            </div>
-            <div class="form-field">
-              <label class="form-label form-label--required">Contribuição Mensal</label>
-              <input v-model="plano.contribuicaoMensal" type="text" placeholder="R$ 0,00" class="form-input" :class="{ 'form-input--error': showErrors && !plano.contribuicaoMensal }" @input="formatMoedaPlano($event, 'contribuicaoMensal')" />
-              <span v-if="showErrors && !plano.contribuicaoMensal" class="form-error">Campo obrigatório</span>
-            </div>
-            <div class="form-field">
-              <label class="form-label">Valor do Aporte Inicial</label>
-              <input v-model="plano.aporteInicial" type="text" placeholder="R$ 0,00" class="form-input" @input="formatMoedaPlano($event, 'aporteInicial')" />
-            </div>
-            <div class="form-field">
-              <label class="form-label-radio form-label--required">Tipo do Plano</label>
-              <div class="radio-group-h">
-                <label v-for="tp in ['PGBL','VGBL']" :key="tp" class="radio-label-h">
-                  <input type="radio" v-model="plano.tipoPlano" :value="tp" class="radio-input" />
-                  <span>{{ tp }}</span>
-                </label>
+
+          <!-- Idade sozinha na primeira linha -->
+          <div class="form-field" style="max-width:220px;margin-bottom:16px;">
+            <label class="form-label form-label--required">Idade que deseja se aposentar</label>
+            <input v-model="plano.idadeAposentadoria" type="number" min="18" max="99" placeholder="Ex: 60" class="form-input" :class="{ 'form-input--error': showErrors && !plano.idadeAposentadoria }" />
+            <span v-if="showErrors && !plano.idadeAposentadoria" class="form-error">Campo obrigatório</span>
+          </div>
+
+          <!-- Caixa com Tipo do Plano + Contribuição Mensal + Aporte Inicial na mesma linha -->
+          <div class="plano-inner-box">
+            <div class="form-grid form-grid--3col">
+              <div class="form-field">
+                <label class="form-label-radio form-label--required">Tipo do Plano</label>
+                <div class="radio-group-h" style="margin-top:4px;">
+                  <label v-for="tp in ['PGBL','VGBL']" :key="tp" class="radio-label-h">
+                    <input type="radio" v-model="plano.tipoPlano" :value="tp" class="radio-input" />
+                    <span>{{ tp }}</span>
+                  </label>
+                </div>
+                <span v-if="showErrors && !plano.tipoPlano" class="form-error">Campo obrigatório</span>
               </div>
-              <span v-if="showErrors && !plano.tipoPlano" class="form-error">Campo obrigatório</span>
+              <div class="form-field">
+                <label class="form-label">Contribuição Mensal</label>
+                <input v-model="plano.contribuicaoMensal" type="text" placeholder="R$ 0,00" class="form-input" @input="formatMoedaPlano($event, 'contribuicaoMensal')" />
+              </div>
+              <div class="form-field">
+                <label class="form-label">Valor do Aporte Inicial</label>
+                <input v-model="plano.aporteInicial" type="text" placeholder="R$ 0,00" class="form-input" @input="formatMoedaPlano($event, 'aporteInicial')" />
+              </div>
             </div>
           </div>
 
@@ -598,18 +602,18 @@
                 </div>
                 <!-- É US Person? + NIF na mesma linha -->
                 <div class="form-field form-field--full">
-                  <div class="proponente-flag-row">
-                    <span class="flag-question">É US Person?</span>
-                    <div class="flag-radio-group">
-                      <label class="flag-radio-label"><input type="radio" v-model="pagamento.rfUsPerson" value="sim" class="radio-input" /><span>Sim</span></label>
-                      <label class="flag-radio-label"><input type="radio" v-model="pagamento.rfUsPerson" value="nao" class="radio-input" /><span>Não</span></label>
-                    </div>
-                    <template v-if="pagamento.rfUsPerson === 'sim'">
-                      <div class="nif-inline">
-                        <label class="form-label">NIF (Número de Identificação Fiscal)</label>
-                        <input v-model="pagamento.rfNif" type="text" class="form-input" placeholder="Digite o NIF" style="width:220px;" />
+                  <div class="form-grid" style="margin-top:0;">
+                    <div class="form-field">
+                      <label class="form-label">É US Person?</label>
+                      <div class="radio-group-h" style="margin-top:4px;">
+                        <label class="radio-label-h"><input type="radio" v-model="pagamento.rfUsPerson" value="sim" class="radio-input" /><span>Sim</span></label>
+                        <label class="radio-label-h"><input type="radio" v-model="pagamento.rfUsPerson" value="nao" class="radio-input" /><span>Não</span></label>
                       </div>
-                    </template>
+                    </div>
+                    <div class="form-field" v-if="pagamento.rfUsPerson === 'sim'">
+                      <label class="form-label">NIF (Número de Identificação Fiscal)</label>
+                      <input v-model="pagamento.rfNif" type="text" class="form-input" placeholder="Digite o NIF" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1599,6 +1603,8 @@ function changeTab(i: number) {
 .tipo-port-card__badge { position: absolute; top: 8px; right: 8px; background-color: var(--btn-primary-bg); color: white; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.3px; }
 
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 24px; }
+.form-grid--3col { grid-template-columns: 1fr 1fr 1fr; }
+.plano-inner-box { border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; margin-bottom: 16px; background: #fafbfc; }
 .form-field { display: flex; flex-direction: column; gap: 6px; }
 .form-field--full { grid-column: 1 / -1; }
 
@@ -1645,7 +1651,7 @@ function changeTab(i: number) {
 /* Colunas sortáveis da tabela de fundos */
 .th-sortable { cursor: pointer; user-select: none; }
 .th-sort-inner { display: inline-flex; align-items: center; gap: 5px; }
-.sort-arrows { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; }
+.sort-arrows { display: inline-flex; flex-direction: row; align-items: center; gap: 3px; }
 .sort-arrow-up { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-bottom: 5px solid #d1d5db; }
 .sort-arrow-up.active { border-bottom-color: #1e3a8a; }
 .sort-arrow-down { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid #d1d5db; }
@@ -1731,7 +1737,7 @@ function changeTab(i: number) {
 
 /* Modal de Fundos */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
-.modal-fundos { background: white; border-radius: 12px; width: 100%; max-width: 900px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
+.modal-fundos { background: white; border-radius: 12px; width: 100%; max-width: 1100px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
 .modal-fundos__header { display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 24px 16px; border-bottom: 1px solid var(--border-color); }
 .modal-fundos__title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
 .modal-fundos__count { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
@@ -1744,11 +1750,13 @@ function changeTab(i: number) {
 .modal-fundos__table-wrapper { flex: 1; overflow-y: auto; }
 .modal-fundos__table { width: 100%; border-collapse: collapse; }
 .modal-fundos__table thead { position: sticky; top: 0; background: white; }
-.modal-fundos__table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 600; color: rgb(77, 86, 96); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
+.modal-fundos__table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 600; color: rgb(77, 86, 96); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); white-space: nowrap; }
+.modal-fundos__table th:last-child { border-right: none; }
 .modal-fundos__row { cursor: pointer; transition: background-color 0.12s; }
 .modal-fundos__row:hover { background-color: #f8fafc; }
 .modal-fundos__row--selected { background-color: #f0f4ff; }
-.modal-fundos__table td { padding: 12px 16px; font-size: 13px; color: var(--text-primary); border-bottom: 1px solid #f1f5f9; }
+.modal-fundos__table td { padding: 12px 16px; font-size: 13px; color: var(--text-primary); border-bottom: 1px solid #f1f5f9; border-right: 1px solid #f1f5f9; }
+.modal-fundos__table td:last-child { border-right: none; }
 .modal-fundo-nome { font-weight: 500; font-size: 13px; }
 .modal-fundo-cnpj { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 .modal-checkbox { width: 16px; height: 16px; border: 1.5px solid var(--border-color); border-radius: 3px; display: flex; align-items: center; justify-content: center; transition: background-color 0.12s, border-color 0.12s; }
