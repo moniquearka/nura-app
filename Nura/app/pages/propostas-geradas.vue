@@ -455,20 +455,22 @@ async function downloadPdf(proposal: Proposal) {
   letter-spacing: 0.5px;
   text-align: left;
   background-color: #f8fafc;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* Permite quebra de linha nos cabeçalhos para evitar corte */
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.3;
+  vertical-align: bottom;
 }
 
-/* Larguras fixas das colunas para caber tudo sem scroll horizontal */
-.proposals-table th.col-proposal   { width: 14%; }
-.proposals-table th.col-products   { width: 12%; }
-.proposals-table th.col-type       { width: 13%; }
+/* Larguras das colunas — distribuição equilibrada sem scroll horizontal */
+.proposals-table th.col-proposal   { width: 20%; }
+.proposals-table th.col-products   { width: 11%; }
+.proposals-table th.col-type       { width: 12%; }
 .proposals-table th.col-date       { width: 9%; }
 .proposals-table th.col-value      { width: 8%; }
-.proposals-table th.col-status-prev{ width: 17%; }
-.proposals-table th.col-status-seg { width: 17%; }
-.proposals-table th.col-actions    { width: 10%; text-align: right; }
+.proposals-table th.col-status-prev{ width: 16%; }
+.proposals-table th.col-status-seg { width: 16%; }
+.proposals-table th.col-actions    { width: 8%; text-align: right; }
 
 /* ── Linhas ──────────────────────────────────────────────────────────────── */
 .proposal-row {
@@ -482,9 +484,7 @@ async function downloadPdf(proposal: Proposal) {
 .proposal-row td {
   padding: 9px 10px;
   vertical-align: middle;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* Sem overflow hidden — o conteúdo não será cortado */
 }
 
 .proposal-row td.col-actions { text-align: right; }
@@ -492,15 +492,14 @@ async function downloadPdf(proposal: Proposal) {
 /* ── Nome da proposta ────────────────────────────────────────────────────── */
 .proposal-name {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 4px;
   font-size: 10.5px;
   font-weight: 500;
   color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
 }
 .proposal-name__icon { color: var(--text-muted); flex-shrink: 0; }
 
@@ -545,18 +544,22 @@ async function downloadPdf(proposal: Proposal) {
 /* ── Tags de status (clicáveis, substituem os selects) ───────────────────── */
 .status-tag {
   display: inline-block;
-  padding: 1px 5px;
+  padding: 2px 6px;
   border-radius: 4px;
   font-family: var(--font-sans);
   font-size: 10px;
   font-weight: 500;
-  white-space: nowrap;
+  /* Permite quebra de linha nas tags de status longas */
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
   border: 1px solid transparent;
   cursor: default;
   transition: filter 0.15s;
   line-height: 1.4;
   background: none;
   outline: none;
+  max-width: 100%;
 }
 
 /* Tags com ação clicável têm cursor pointer */
