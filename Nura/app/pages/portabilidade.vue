@@ -13,7 +13,7 @@
           <h2 class="page-header__title">Detalhes da Solicitação</h2>
         </div>
 
-        <!-- Dados do Proponente (editável) -->
+        <!-- Dados do Proponente -->
         <div class="section-card">
           <h3 class="section-card__title">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
@@ -22,123 +22,135 @@
             Dados do Proponente
           </h3>
           <div class="field-grid field-grid--3">
-            <!-- CPF (obrigatório) -->
+            <!-- CPF -->
             <div class="form-field">
               <label class="form-label form-label--required">CPF</label>
               <input v-model="proponente.cpf" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.cpf }" placeholder="000.000.000-00" maxlength="14" @input="formatCpf" />
               <span v-if="showErrors && !proponente.cpf" class="form-error">Campo obrigatório</span>
             </div>
-            <!-- Nome Completo (obrigatório) -->
+            <!-- Nome Completo -->
             <div class="form-field">
               <label class="form-label form-label--required">Nome Completo</label>
               <input v-model="proponente.nome" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.nome }" placeholder="Nome completo" />
               <span v-if="showErrors && !proponente.nome" class="form-error">Campo obrigatório</span>
             </div>
-            <!-- Nome Social -->
-            <div class="form-field">
-              <label class="form-label">Nome Social</label>
-              <input v-model="proponente.nomeSocial" type="text" class="form-input" placeholder="Nome social (opcional)" />
-            </div>
-            <!-- Data de Nascimento (obrigatório) -->
+            <!-- Data de Nascimento -->
             <div class="form-field">
               <label class="form-label form-label--required">Data de Nascimento</label>
               <input v-model="proponente.dataNasc" type="date" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.dataNasc }" />
               <span v-if="showErrors && !proponente.dataNasc" class="form-error">Campo obrigatório</span>
             </div>
-            <!-- Telefone (obrigatório) -->
+            <!-- Gênero -->
             <div class="form-field">
-              <label class="form-label form-label--required">Telefone</label>
-              <input v-model="proponente.telefone" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.telefone }" placeholder="(00) 00000-0000" maxlength="15" @input="formatTelefone" />
-              <span v-if="showErrors && !proponente.telefone" class="form-error">Campo obrigatório</span>
-            </div>
-            <!-- E-mail (obrigatório) -->
-            <div class="form-field">
-              <label class="form-label form-label--required">E-mail</label>
-              <input v-model="proponente.email" type="email" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.email }" placeholder="email@exemplo.com" />
-              <span v-if="showErrors && !proponente.email" class="form-error">Campo obrigatório</span>
-            </div>
-            <!-- Renda Mensal (obrigatório) -->
-            <div class="form-field">
-              <label class="form-label form-label--required">Renda Mensal</label>
-              <input v-model="proponente.renda" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.renda }" placeholder="R$ 0,00" @input="formatMoeda($event, 'renda')" />
-              <span v-if="showErrors && !proponente.renda" class="form-error">Campo obrigatório</span>
-            </div>
-            <!-- Profissão (obrigatório) — select com opções -->
-            <div class="form-field">
-              <label class="form-label form-label--required">Profissão</label>
-              <select v-model="proponente.profissao" class="form-select" :class="{ 'form-input--error': showErrors && !proponente.profissao }">
-                <option value="">Selecione</option>
-                <option>Administrador(a)</option>
-                <option>Advogado(a)</option>
-                <option>Analista</option>
-                <option>Arquiteto(a)</option>
-                <option>Autônomo(a)</option>
-                <option>Contador(a)</option>
-                <option>Dentista</option>
-                <option>Diretor(a)</option>
-                <option>Economista</option>
-                <option>Empresário(a)</option>
-                <option>Engenheiro(a)</option>
-                <option>Estudante</option>
-                <option>Farmacêutico(a)</option>
-                <option>Funcionário(a) Público(a)</option>
-                <option>Gerente</option>
-                <option>Médico(a)</option>
-                <option>Professor(a)</option>
-                <option>Psicólogo(a)</option>
-                <option>Servidor(a) Público(a)</option>
-                <option>Técnico(a)</option>
-                <option>Outro</option>
+              <label class="form-label form-label--required">Gênero</label>
+              <select v-model="proponente.genero" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.genero }">
+                <option value="">Selecione...</option>
+                <option>Feminino</option>
+                <option>Masculino</option>
               </select>
-              <span v-if="showErrors && !proponente.profissao" class="form-error">Campo obrigatório</span>
+              <span v-if="showErrors && !proponente.genero" class="form-error">Campo obrigatório</span>
             </div>
-            <!-- Origem da Renda (obrigatório) — select com opções do aliapropos -->
-            <div class="form-field">
-              <label class="form-label form-label--required">Origem da Renda</label>
-              <select v-model="proponente.origemRenda" class="form-select" :class="{ 'form-input--error': showErrors && !proponente.origemRenda }">
-                <option value="">Selecione</option>
-                <option>Salário CLT</option>
-                <option>Pró-labore</option>
-                <option>Autônomo / Freelancer</option>
-                <option>Aposentadoria / Pensão</option>
-                <option>Aluguel / Renda Passiva</option>
-                <option>Investimentos</option>
-                <option>Herança / Doação</option>
-                <option>Outro</option>
-              </select>
-              <span v-if="showErrors && !proponente.origemRenda" class="form-error">Campo obrigatório</span>
-            </div>
-            <!-- Patrimônio (obrigatório) -->
-            <div class="form-field">
-              <label class="form-label form-label--required">Patrimônio</label>
-              <input v-model="proponente.patrimonio" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.patrimonio }" placeholder="R$ 0,00" @input="formatMoeda($event, 'patrimonio')" />
-              <span v-if="showErrors && !proponente.patrimonio" class="form-error">Campo obrigatório</span>
-            </div>
-            <!-- Nacionalidade (obrigatório) -->
+            <!-- Nacionalidade -->
             <div class="form-field">
               <label class="form-label form-label--required">Nacionalidade</label>
               <input v-model="proponente.nacionalidade" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.nacionalidade }" placeholder="Ex: Brasileira" />
               <span v-if="showErrors && !proponente.nacionalidade" class="form-error">Campo obrigatório</span>
             </div>
+            <!-- Telefone -->
+            <div class="form-field">
+              <label class="form-label form-label--required">Telefone</label>
+              <input v-model="proponente.telefone" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.telefone }" placeholder="(00) 00000-0000" maxlength="15" @input="formatTelefone" />
+              <span v-if="showErrors && !proponente.telefone" class="form-error">Campo obrigatório</span>
+            </div>
+            <!-- E-mail -->
+            <div class="form-field">
+              <label class="form-label form-label--required">E-mail</label>
+              <input v-model="proponente.email" type="email" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.email }" placeholder="email@exemplo.com" />
+              <span v-if="showErrors && !proponente.email" class="form-error">Campo obrigatório</span>
+            </div>
+            <!-- Renda Mensal -->
+            <div class="form-field">
+              <label class="form-label form-label--required">Renda Mensal</label>
+              <input v-model="proponente.renda" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.renda }" placeholder="R$ 0,00" @input="formatMoeda($event, 'renda')" />
+              <span v-if="showErrors && !proponente.renda" class="form-error">Campo obrigatório</span>
+            </div>
+            <!-- Profissão (busca com autocomplete) -->
+            <div class="form-field">
+              <label class="form-label form-label--required">Profissão</label>
+              <div class="autocomplete-wrapper">
+                <input v-model="profissaoQuery" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.profissao }" placeholder="Digite para buscar..." @input="onProfissaoInput" @blur="hideProfissaoDropdownDelayed" @focus="onProfissaoInput" />
+                <div v-if="showProfissaoDropdown && profissaoResults.length > 0" class="autocomplete-dropdown">
+                  <button v-for="p in profissaoResults" :key="p" class="autocomplete-item" @mousedown.prevent="selectProfissao(p)">{{ p }}</button>
+                </div>
+              </div>
+              <span v-if="showErrors && !proponente.profissao" class="form-error">Campo obrigatório</span>
+            </div>
+            <!-- Especificação da Profissão (quando "Outros (Especificar)" selecionado) -->
+            <template v-if="proponente.profissao === 'Outros (Especificar)'">
+              <div class="form-field">
+                <label class="form-label form-label--required">Especificação da Profissão</label>
+                <input v-model="proponente.profissaoEspecificacao" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.profissaoEspecificacao }" placeholder="Descreva a profissão" />
+                <span v-if="showErrors && !proponente.profissaoEspecificacao" class="form-error">Campo obrigatório</span>
+              </div>
+            </template>
+            <!-- Origem da Renda -->
+            <div class="form-field">
+              <label class="form-label form-label--required">Origem da Renda</label>
+              <select v-model="proponente.origemRenda" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.origemRenda }">
+                <option value="">Selecione</option>
+                <option>Salário CLT</option>
+                <option>Salário Estatutário</option>
+                <option>Pró-labore</option>
+                <option>Atividade Autônoma</option>
+                <option>Atividade Empresarial</option>
+                <option>Aposentadoria / Pensão</option>
+                <option>Aluguel / Renda Passiva</option>
+                <option>Investimentos</option>
+                <option>Herança / Doação</option>
+                <option>Outros</option>
+              </select>
+              <span v-if="showErrors && !proponente.origemRenda" class="form-error">Campo obrigatório</span>
+            </div>
+            <!-- Especificação da Origem de Renda (quando "Outros" selecionado) -->
+            <template v-if="proponente.origemRenda === 'Outros'">
+              <div class="form-field">
+                <label class="form-label form-label--required">Especificação da Origem de Renda</label>
+                <input v-model="proponente.origemRendaEspecificacao" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.origemRendaEspecificacao }" placeholder="Descreva a origem da renda" />
+                <span v-if="showErrors && !proponente.origemRendaEspecificacao" class="form-error">Campo obrigatório</span>
+              </div>
+            </template>
+            <!-- Patrimônio -->
+            <div class="form-field">
+              <label class="form-label form-label--required">Patrimônio</label>
+              <input v-model="proponente.patrimonio" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.patrimonio }" placeholder="R$ 0,00" @input="formatMoeda($event, 'patrimonio')" />
+              <span v-if="showErrors && !proponente.patrimonio" class="form-error">Campo obrigatório</span>
+            </div>
           </div>
 
-          <!-- É US Person (obrigatório) -->
+          <!-- É US Person? -->
           <div class="proponente-flags">
             <div class="proponente-flag-row">
-              <span class="form-label form-label--required" style="font-size:13px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--text-primary);">É US Person?</span>
+              <span class="flag-question form-label--required">É US Person?</span>
               <div class="flag-radio-group">
                 <label class="flag-radio-label"><input type="radio" v-model="proponente.usPerson" value="sim" class="radio-input" /><span>Sim</span></label>
                 <label class="flag-radio-label"><input type="radio" v-model="proponente.usPerson" value="nao" class="radio-input" /><span>Não</span></label>
               </div>
               <span v-if="showErrors && !proponente.usPerson" class="form-error">Campo obrigatório</span>
             </div>
+            <!-- NIF (quando US Person = Sim) -->
+            <template v-if="proponente.usPerson === 'sim'">
+              <div class="form-field" style="max-width:320px;margin-top:12px;">
+                <label class="form-label form-label--required">NIF (Número de Identificação Fiscal)</label>
+                <input v-model="proponente.nif" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.nif }" placeholder="Digite o NIF" />
+                <span v-if="showErrors && !proponente.nif" class="form-error">Campo obrigatório</span>
+              </div>
+            </template>
           </div>
 
           <!-- Dados Residenciais -->
           <div class="proponente-residencial">
             <h4 class="subsection-divider-title">Dados Residenciais</h4>
             <div class="field-grid field-grid--3">
-              <!-- CEP (obrigatório) -->
               <div class="form-field">
                 <label class="form-label form-label--required">CEP</label>
                 <input v-model="proponente.cep" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.cep }" placeholder="00000-000" maxlength="9" @input="onCepInput" />
@@ -148,7 +160,6 @@
                 <label class="form-label">Rua</label>
                 <input v-model="proponente.rua" type="text" class="form-input" placeholder="Nome da rua" />
               </div>
-              <!-- Número (obrigatório) -->
               <div class="form-field">
                 <label class="form-label form-label--required">Número</label>
                 <input v-model="proponente.numero" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.numero }" placeholder="123" />
@@ -168,7 +179,7 @@
               </div>
               <div class="form-field">
                 <label class="form-label">Estado</label>
-                <select v-model="proponente.estado" class="form-select">
+                <select v-model="proponente.estado" class="form-input">
                   <option value="">Selecione</option>
                   <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
                 </select>
@@ -181,30 +192,20 @@
         <div class="section-card">
           <h3 class="section-card__title">Defina o Tipo de Solicitação</h3>
 
-          <!-- Pergunta: Será com uma Portabilidade atrelada? -->
           <div class="form-field mb-20">
-            <label class="form-label form-label--required" style="font-size:13px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--text-primary);margin-bottom:10px;">Será com uma Portabilidade atrelada?</label>
-            <div class="tipo-port-grid">
-              <button
-                class="tipo-port-card"
-                :class="{ 'tipo-port-card--active': comPortabilidade === 'sim' }"
-                @click="comPortabilidade = 'sim'"
-              >
-                <span class="tipo-port-card__radio" :class="{ 'tipo-port-card__radio--active': comPortabilidade === 'sim' }"></span>
-                <span class="tipo-port-card__label">Sim</span>
-              </button>
-              <button
-                class="tipo-port-card"
-                :class="{ 'tipo-port-card--active': comPortabilidade === 'nao' }"
-                @click="comPortabilidade = 'nao'"
-              >
-                <span class="tipo-port-card__radio" :class="{ 'tipo-port-card__radio--active': comPortabilidade === 'nao' }"></span>
-                <span class="tipo-port-card__label">Não</span>
-              </button>
+            <label class="flag-question form-label--required" style="margin-bottom:10px;display:block;">Será com uma Portabilidade atrelada?</label>
+            <div class="flag-radio-group">
+              <label class="flag-radio-label">
+                <input type="radio" v-model="comPortabilidade" value="sim" class="radio-input" />
+                <span>Sim</span>
+              </label>
+              <label class="flag-radio-label">
+                <input type="radio" v-model="comPortabilidade" value="nao" class="radio-input" />
+                <span>Não</span>
+              </label>
             </div>
           </div>
 
-          <!-- Se Sim: Selecione o Tipo de Portabilidade -->
           <template v-if="comPortabilidade === 'sim'">
             <div class="form-field mt-20">
               <label class="form-label" style="margin-bottom:10px;">Selecione o Tipo de Portabilidade</label>
@@ -227,12 +228,11 @@
           </template>
         </div>
 
-        <!-- Se Sim: Dados da Portabilidade (Origem) -->
+        <!-- Dados da Portabilidade (condicional) -->
         <template v-if="comPortabilidade === 'sim'">
           <div class="section-card">
             <h3 class="section-card__title">Dados da Portabilidade</h3>
             <div class="form-grid">
-              <!-- Processo SUSEP (obrigatório) -->
               <div class="form-field">
                 <label class="form-label form-label--required">Processo SUSEP</label>
                 <input v-model="form.susep" type="text" placeholder="Digite o número SUSEP" class="form-input" :class="{ 'form-input--error': showErrors && !form.susep }" />
@@ -289,7 +289,7 @@
             </div>
           </div>
 
-          <!-- Configurações da Transferência (obrigatório como bloco) -->
+          <!-- Configurações da Transferência -->
           <div class="section-card">
             <h3 class="section-card__title">
               Configurações da Transferência
@@ -315,28 +315,24 @@
           </div>
         </template>
 
-        <!-- Dados do Plano (Previdência) — copiado do aliaplan -->
+        <!-- Dados do Plano -->
         <div class="section-card">
           <h3 class="section-card__title">Dados do Plano</h3>
           <div class="form-grid">
-            <!-- Idade que deseja se aposentar (obrigatório) -->
             <div class="form-field">
               <label class="form-label form-label--required">Idade que deseja se aposentar</label>
               <input v-model="plano.idadeAposentadoria" type="number" min="18" max="99" placeholder="Ex: 60" class="form-input" :class="{ 'form-input--error': showErrors && !plano.idadeAposentadoria }" />
               <span v-if="showErrors && !plano.idadeAposentadoria" class="form-error">Campo obrigatório</span>
             </div>
-            <!-- Contribuição Mensal (obrigatório) -->
             <div class="form-field">
               <label class="form-label form-label--required">Contribuição Mensal</label>
               <input v-model="plano.contribuicaoMensal" type="text" placeholder="R$ 0,00" class="form-input" :class="{ 'form-input--error': showErrors && !plano.contribuicaoMensal }" @input="formatMoedaPlano($event, 'contribuicaoMensal')" />
               <span v-if="showErrors && !plano.contribuicaoMensal" class="form-error">Campo obrigatório</span>
             </div>
-            <!-- Valor do Aporte Inicial -->
             <div class="form-field">
               <label class="form-label">Valor do Aporte Inicial</label>
               <input v-model="plano.aporteInicial" type="text" placeholder="R$ 0,00" class="form-input" @input="formatMoedaPlano($event, 'aporteInicial')" />
             </div>
-            <!-- Tipo do Plano (obrigatório) -->
             <div class="form-field">
               <label class="form-label-radio form-label--required">Tipo do Plano</label>
               <div class="radio-group-h">
@@ -349,7 +345,7 @@
             </div>
           </div>
 
-          <!-- Seleção de Fundos (obrigatório) -->
+          <!-- Seleção de Fundos -->
           <div class="form-field form-field--full mt-20">
             <div class="selecao-fundos-box">
               <div class="selecao-fundos-box__header">SELEÇÃO DE FUNDOS</div>
@@ -364,7 +360,6 @@
                   <span v-if="showErrors && plano.fundosSelecionados.length === 0" class="form-error">Selecione ao menos 1 fundo</span>
                 </div>
 
-                <!-- Fundos Selecionados -->
                 <div v-if="plano.fundosSelecionados.length > 0" class="fundos-selecionados-list">
                   <label class="form-label" style="margin-bottom: 8px; display: block;">Fundos Selecionados</label>
                   <div v-for="(fs, fi) in plano.fundosSelecionados" :key="fi" class="fund-card">
@@ -397,7 +392,7 @@
                       <div class="fund-card__meta">
                         <span>Taxa Máx. Adm.: <strong>{{ fs.taxaAdm }}</strong></span>
                         <span>Rentabilidade: <strong>{{ fs.rentabilidade }}</strong></span>
-                        <span>Classificação: <strong>{{ fs.classificacao }}</strong></span>
+                        <span>Estratégia: <strong>{{ fs.estrategia }}</strong></span>
                       </div>
                     </div>
                   </div>
@@ -423,13 +418,7 @@
           <h2 class="page-header__title">Beneficiários</h2>
         </div>
 
-        <!-- Sub-aba apenas Previdência -->
-        <div class="inner-tabs">
-          <button class="inner-tab inner-tab--active">Previdência</button>
-        </div>
-
         <div class="section-card">
-          <h3 class="section-card__title">Beneficiários — Previdência</h3>
           <div v-for="(ben, i) in beneficiarios" :key="i" class="beneficiary-card">
             <div class="beneficiary-card__header">
               <span class="beneficiary-card__title">Beneficiário {{ i + 1 }}</span>
@@ -437,30 +426,37 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </div>
-            <div class="field-grid field-grid--2">
-              <div class="form-field"><label class="form-label">CPF</label><input v-model="ben.cpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
-              <div class="form-field"><label class="form-label">Nome Completo</label><input v-model="ben.nome" type="text" class="form-input" /></div>
-              <div class="form-field"><label class="form-label">Data de Nascimento</label><input v-model="ben.dataNasc" type="date" class="form-input" /></div>
+            <div class="field-grid field-grid--3">
+              <div class="form-field">
+                <label class="form-label">Nome Completo</label>
+                <input v-model="ben.nome" type="text" class="form-input" />
+              </div>
+              <div class="form-field">
+                <label class="form-label">Data de Nascimento</label>
+                <input v-model="ben.dataNasc" type="date" class="form-input" />
+              </div>
               <div class="form-field">
                 <label class="form-label">Grau de Parentesco</label>
-                <select v-model="ben.parentesco" class="form-select">
+                <select v-model="ben.parentesco" class="form-input">
                   <option value="">Selecione</option>
                   <option>Cônjuge</option><option>Filho(a)</option><option>Pai/Mãe</option><option>Irmão/Irmã</option><option>Outro</option>
                 </select>
               </div>
-              <div class="form-field"><label class="form-label">Percentual (%)</label><input v-model.number="ben.percentual" type="number" class="form-input" placeholder="0" min="0" max="100" /></div>
-              <div class="form-field"><label class="form-label">Telefone</label><input v-model="ben.telefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
-              <div class="form-field form-field--full"><label class="form-label">E-mail</label><input v-model="ben.email" type="email" class="form-input" /></div>
+              <div class="form-field">
+                <label class="form-label">Percentual (%)</label>
+                <input v-model.number="ben.percentual" type="number" class="form-input" placeholder="0" min="0" max="100" />
+              </div>
             </div>
           </div>
           <div v-if="somaPercentual !== 100 && beneficiarios.some(b => b.nome)" class="alert-warning">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
             A soma dos percentuais deve ser igual a 100%. Atualmente: {{ somaPercentual }}%
           </div>
-          <button class="btn-add" @click="addBen">
+          <button v-if="beneficiarios.length < 20" class="btn-add" @click="addBen">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
             Adicionar Beneficiário
           </button>
+          <p class="disclaimer-note">Na ausência de designação de beneficiários, a indenização será paga de acordo com a legislação aplicável.</p>
         </div>
 
         <div class="page-footer">
@@ -479,38 +475,133 @@
           <h2 class="page-header__title">Formas de Pagamento</h2>
         </div>
 
-        <!-- Sub-aba apenas Previdência -->
-        <div class="inner-tabs">
-          <button class="inner-tab inner-tab--active">Previdência</button>
-        </div>
-
         <div class="section-card">
-          <h3 class="section-card__title">Forma de Pagamento — Previdência</h3>
-
           <!-- Responsável Financeiro -->
           <div class="resp-financeiro-row mb-16">
-            <span class="field-label" style="flex-shrink:0;">Dados do Responsável Financeiro serão os mesmos aos Dados do Proponente?</span>
+            <span class="flag-question">Dados do Responsável Financeiro serão os mesmos aos Dados do Proponente?</span>
             <div class="radio-group-inline">
               <label class="radio-item"><input v-model="pagamento.respFinanceiro" type="radio" value="sim" class="radio-input" /><span class="radio-label">Sim</span></label>
               <label class="radio-item"><input v-model="pagamento.respFinanceiro" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
             </div>
           </div>
+
           <template v-if="pagamento.respFinanceiro === 'nao'">
             <div class="section-card mb-16" style="background:#f8fafc;padding:16px;">
               <h4 class="subsection-title" style="margin-top:0">Dados do Responsável Financeiro</h4>
               <div class="field-grid field-grid--3">
-                <div class="form-field"><label class="form-label">Nome Completo</label><input v-model="pagamento.rfNome" type="text" class="form-input" /></div>
-                <div class="form-field"><label class="form-label">CPF</label><input v-model="pagamento.rfCpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
-                <div class="form-field"><label class="form-label">Data de Nascimento</label><input v-model="pagamento.rfDataNasc" type="date" class="form-input" /></div>
-                <div class="form-field"><label class="form-label">Telefone</label><input v-model="pagamento.rfTelefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
-                <div class="form-field form-field--full"><label class="form-label">E-mail</label><input v-model="pagamento.rfEmail" type="email" class="form-input" /></div>
+                <!-- CPF -->
+                <div class="form-field">
+                  <label class="form-label">CPF</label>
+                  <input v-model="pagamento.rfCpf" type="text" class="form-input" placeholder="000.000.000-00" maxlength="14" @input="formatRfCpf" />
+                </div>
+                <!-- Nome Completo -->
+                <div class="form-field">
+                  <label class="form-label">Nome Completo</label>
+                  <input v-model="pagamento.rfNome" type="text" class="form-input" />
+                </div>
+                <!-- Data de Nascimento -->
+                <div class="form-field">
+                  <label class="form-label">Data de Nascimento</label>
+                  <input v-model="pagamento.rfDataNasc" type="date" class="form-input" />
+                </div>
+                <!-- Gênero -->
+                <div class="form-field">
+                  <label class="form-label">Gênero</label>
+                  <select v-model="pagamento.rfGenero" class="form-input">
+                    <option value="">Selecione...</option>
+                    <option>Feminino</option>
+                    <option>Masculino</option>
+                  </select>
+                </div>
+                <!-- Nacionalidade -->
+                <div class="form-field">
+                  <label class="form-label">Nacionalidade</label>
+                  <input v-model="pagamento.rfNacionalidade" type="text" class="form-input" placeholder="Ex: Brasileira" />
+                </div>
+                <!-- Telefone -->
+                <div class="form-field">
+                  <label class="form-label">Telefone</label>
+                  <input v-model="pagamento.rfTelefone" type="text" class="form-input" placeholder="(00) 00000-0000" maxlength="15" @input="formatRfTelefone" />
+                </div>
+                <!-- E-mail -->
+                <div class="form-field">
+                  <label class="form-label">E-mail</label>
+                  <input v-model="pagamento.rfEmail" type="email" class="form-input" />
+                </div>
+                <!-- Renda Mensal -->
+                <div class="form-field">
+                  <label class="form-label">Renda Mensal</label>
+                  <input v-model="pagamento.rfRenda" type="text" class="form-input" placeholder="R$ 0,00" @input="formatRfMoeda($event, 'rfRenda')" />
+                </div>
+                <!-- Profissão -->
+                <div class="form-field">
+                  <label class="form-label">Profissão</label>
+                  <div class="autocomplete-wrapper">
+                    <input v-model="rfProfissaoQuery" type="text" class="form-input" placeholder="Digite para buscar..." @input="onRfProfissaoInput" @blur="hideRfProfissaoDropdownDelayed" @focus="onRfProfissaoInput" />
+                    <div v-if="showRfProfissaoDropdown && rfProfissaoResults.length > 0" class="autocomplete-dropdown">
+                      <button v-for="p in rfProfissaoResults" :key="p" class="autocomplete-item" @mousedown.prevent="selectRfProfissao(p)">{{ p }}</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- Especificação da Profissão RF -->
+                <template v-if="pagamento.rfProfissao === 'Outros (Especificar)'">
+                  <div class="form-field">
+                    <label class="form-label">Especificação da Profissão</label>
+                    <input v-model="pagamento.rfProfissaoEspecificacao" type="text" class="form-input" placeholder="Descreva a profissão" />
+                  </div>
+                </template>
+                <!-- Origem da Renda -->
+                <div class="form-field">
+                  <label class="form-label">Origem da Renda</label>
+                  <select v-model="pagamento.rfOrigemRenda" class="form-input">
+                    <option value="">Selecione</option>
+                    <option>Salário CLT</option>
+                    <option>Salário Estatutário</option>
+                    <option>Pró-labore</option>
+                    <option>Atividade Autônoma</option>
+                    <option>Atividade Empresarial</option>
+                    <option>Aposentadoria / Pensão</option>
+                    <option>Aluguel / Renda Passiva</option>
+                    <option>Investimentos</option>
+                    <option>Herança / Doação</option>
+                    <option>Outros</option>
+                  </select>
+                </div>
+                <!-- Especificação da Origem de Renda RF -->
+                <template v-if="pagamento.rfOrigemRenda === 'Outros'">
+                  <div class="form-field">
+                    <label class="form-label">Especificação da Origem de Renda</label>
+                    <input v-model="pagamento.rfOrigemRendaEspecificacao" type="text" class="form-input" placeholder="Descreva a origem da renda" />
+                  </div>
+                </template>
+                <!-- Patrimônio -->
+                <div class="form-field">
+                  <label class="form-label">Patrimônio</label>
+                  <input v-model="pagamento.rfPatrimonio" type="text" class="form-input" placeholder="R$ 0,00" @input="formatRfMoeda($event, 'rfPatrimonio')" />
+                </div>
+                <!-- É US Person? -->
+                <div class="form-field form-field--full">
+                  <div class="proponente-flag-row">
+                    <span class="flag-question">É US Person?</span>
+                    <div class="flag-radio-group">
+                      <label class="flag-radio-label"><input type="radio" v-model="pagamento.rfUsPerson" value="sim" class="radio-input" /><span>Sim</span></label>
+                      <label class="flag-radio-label"><input type="radio" v-model="pagamento.rfUsPerson" value="nao" class="radio-input" /><span>Não</span></label>
+                    </div>
+                  </div>
+                  <template v-if="pagamento.rfUsPerson === 'sim'">
+                    <div class="form-field" style="max-width:320px;margin-top:12px;">
+                      <label class="form-label">NIF (Número de Identificação Fiscal)</label>
+                      <input v-model="pagamento.rfNif" type="text" class="form-input" placeholder="Digite o NIF" />
+                    </div>
+                  </template>
+                </div>
               </div>
             </div>
           </template>
 
           <!-- Endereço de Cobrança -->
           <div class="resp-financeiro-row mb-16">
-            <span class="field-label" style="flex-shrink:0;">O Endereço de Cobrança será o mesmo informado nos Dados do Proponente?</span>
+            <span class="flag-question">O Endereço de Cobrança será o mesmo informado nos Dados do Proponente?</span>
             <div class="radio-group-inline">
               <label class="radio-item"><input v-model="pagamento.enderecoCobranca" type="radio" value="sim" class="radio-input" /><span class="radio-label">Sim</span></label>
               <label class="radio-item"><input v-model="pagamento.enderecoCobranca" type="radio" value="nao" class="radio-input" /><span class="radio-label">Não</span></label>
@@ -546,7 +637,7 @@
                 </div>
                 <div class="form-field">
                   <label class="form-label">Estado</label>
-                  <select v-model="pagamento.cobEstado" class="form-select">
+                  <select v-model="pagamento.cobEstado" class="form-input">
                     <option value="">Selecione</option>
                     <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
                   </select>
@@ -568,13 +659,29 @@
           <template v-if="pagamento.forma === 'debito'">
             <div class="form-grid mt-16">
               <div class="form-field">
+                <label class="form-label">Banco</label>
+                <div class="autocomplete-wrapper">
+                  <input v-model="bancoQuery" type="text" class="form-input" placeholder="Digite o nome ou código do banco..." @input="onBancoInput" @blur="hideBancoDropdownDelayed" @focus="onBancoInput" />
+                  <div v-if="showBancoDropdown && bancoResults.length > 0" class="autocomplete-dropdown">
+                    <button v-for="b in bancoResults" :key="b.codigo" class="autocomplete-item" @mousedown.prevent="selectBanco(b)">{{ b.codigo }} - {{ b.nome }}</button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-label">Agência</label>
+                <input v-model="pagamento.agencia" type="text" class="form-input" placeholder="0000-0" maxlength="6" @input="formatAgencia" />
+              </div>
+              <div class="form-field">
+                <label class="form-label">Conta Corrente</label>
+                <input v-model="pagamento.contaCorrente" type="text" class="form-input" placeholder="00000000-0" maxlength="10" @input="formatContaCorrente" />
+              </div>
+              <div class="form-field">
                 <label class="form-label">Dia de Vencimento</label>
-                <select v-model="pagamento.diaVencimento" class="form-select">
+                <select v-model="pagamento.diaVencimento" class="form-input">
                   <option value="">Selecione o dia</option>
                   <option v-for="d in [5,10,15,20,25]" :key="d" :value="`Dia ${d}`">Dia {{ d }}</option>
                 </select>
               </div>
-              <div class="form-field"></div>
             </div>
             <div class="info-box-blue mt-16">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -586,7 +693,64 @@
           <template v-if="pagamento.forma === 'pix'">
             <div class="info-box-blue mt-16">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              <div>O código da chave PIX será gerado após a conclusão da contratação da proposta.<br />Caso tenha selecionado a opção de um aporte único e contribuições mensais, a primeira cobrança será a soma destes valores.</div>
+              <div>
+                Somente a primeira cobrança será realizada via PIX. As demais cobranças serão realizadas em recorrência via {{ pagamento.pixRecorrencia === 'debito' ? 'Débito em Conta Corrente' : pagamento.pixRecorrencia === 'boleto' ? 'Boleto Bancário' : '—' }}.<br />
+                O código da chave PIX será gerado após a conclusão da contratação da proposta.<br />
+                Caso tenha selecionado a opção de um aporte único e contribuições mensais, a primeira cobrança será a soma destes valores.
+              </div>
+            </div>
+            <div class="mt-16">
+              <p class="opcoes-title">Modalidade das Parcelas Seguintes</p>
+              <div class="radio-group mb-16">
+                <label class="radio-item"><input type="radio" v-model="pagamento.pixRecorrencia" value="debito" class="radio-input" /><span class="radio-label">Débito em Conta Corrente</span></label>
+                <label class="radio-item"><input type="radio" v-model="pagamento.pixRecorrencia" value="boleto" class="radio-input" /><span class="radio-label">Boleto Bancário</span></label>
+              </div>
+              <!-- Débito em Conta Corrente para parcelas seguintes -->
+              <template v-if="pagamento.pixRecorrencia === 'debito'">
+                <div class="form-grid mt-16">
+                  <div class="form-field">
+                    <label class="form-label">Banco</label>
+                    <div class="autocomplete-wrapper">
+                      <input v-model="bancoQuery" type="text" class="form-input" placeholder="Digite o nome ou código do banco..." @input="onBancoInput" @blur="hideBancoDropdownDelayed" @focus="onBancoInput" />
+                      <div v-if="showBancoDropdown && bancoResults.length > 0" class="autocomplete-dropdown">
+                        <button v-for="b in bancoResults" :key="b.codigo" class="autocomplete-item" @mousedown.prevent="selectBanco(b)">{{ b.codigo }} - {{ b.nome }}</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Agência</label>
+                    <input v-model="pagamento.agencia" type="text" class="form-input" placeholder="0000-0" maxlength="6" @input="formatAgencia" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Conta Corrente</label>
+                    <input v-model="pagamento.contaCorrente" type="text" class="form-input" placeholder="00000000-0" maxlength="10" @input="formatContaCorrente" />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Dia de Vencimento</label>
+                    <select v-model="pagamento.diaVencimento" class="form-input">
+                      <option value="">Selecione o dia</option>
+                      <option v-for="d in [5,10,15,20,25]" :key="d" :value="`Dia ${d}`">Dia {{ d }}</option>
+                    </select>
+                  </div>
+                </div>
+              </template>
+              <!-- Boleto para parcelas seguintes -->
+              <template v-if="pagamento.pixRecorrencia === 'boleto'">
+                <div class="form-grid mt-16">
+                  <div class="form-field">
+                    <label class="form-label">Dia de Vencimento</label>
+                    <select v-model="pagamento.diaVencimento" class="form-input">
+                      <option value="">Selecione o dia</option>
+                      <option v-for="d in [5,10,15,20,25]" :key="d" :value="`Dia ${d}`">Dia {{ d }}</option>
+                    </select>
+                  </div>
+                  <div class="form-field"></div>
+                </div>
+                <div class="info-box-blue mt-16">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <div>Atenção: Após a emissão do certificado, a seguradora enviará o boleto em até 5 dias úteis para o e-mail cadastrado. Fique atento à caixa de Spam.</div>
+                </div>
+              </template>
             </div>
           </template>
 
@@ -595,7 +759,7 @@
             <div class="form-grid mt-16">
               <div class="form-field">
                 <label class="form-label">Dia de Vencimento</label>
-                <select v-model="pagamento.diaVencimento" class="form-select">
+                <select v-model="pagamento.diaVencimento" class="form-input">
                   <option value="">Selecione o dia</option>
                   <option v-for="d in [5,10,15,20,25]" :key="d" :value="`Dia ${d}`">Dia {{ d }}</option>
                 </select>
@@ -636,16 +800,25 @@
           <div class="field-grid field-grid--3">
             <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ proponente.cpf || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">{{ proponente.nome || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Nome Social</span><span class="field-value">{{ proponente.nomeSocial || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ proponente.dataNasc ? new Date(proponente.dataNasc + 'T12:00:00').toLocaleDateString('pt-BR') : '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Gênero</span><span class="field-value">{{ proponente.genero || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Nacionalidade</span><span class="field-value">{{ proponente.nacionalidade || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">{{ proponente.telefone || '—' }}</span></div>
             <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">{{ proponente.email || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Renda Mensal</span><span class="field-value">{{ proponente.renda || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Profissão</span><span class="field-value">{{ proponente.profissao || '—' }}</span></div>
+            <template v-if="proponente.profissao === 'Outros (Especificar)'">
+              <div class="field-item"><span class="field-label">Especificação da Profissão</span><span class="field-value">{{ proponente.profissaoEspecificacao || '—' }}</span></div>
+            </template>
             <div class="field-item"><span class="field-label">Origem da Renda</span><span class="field-value">{{ proponente.origemRenda || '—' }}</span></div>
+            <template v-if="proponente.origemRenda === 'Outros'">
+              <div class="field-item"><span class="field-label">Especificação da Origem de Renda</span><span class="field-value">{{ proponente.origemRendaEspecificacao || '—' }}</span></div>
+            </template>
             <div class="field-item"><span class="field-label">Patrimônio</span><span class="field-value">{{ proponente.patrimonio || '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Nacionalidade</span><span class="field-value">{{ proponente.nacionalidade || '—' }}</span></div>
             <div class="field-item"><span class="field-label">É US Person?</span><span class="field-value">{{ proponente.usPerson === 'sim' ? 'Sim' : proponente.usPerson === 'nao' ? 'Não' : '—' }}</span></div>
+            <template v-if="proponente.usPerson === 'sim'">
+              <div class="field-item"><span class="field-label">NIF</span><span class="field-value">{{ proponente.nif || '—' }}</span></div>
+            </template>
           </div>
           <div class="conf-subsection">
             <div class="conf-subsection__title">Dados Residenciais</div>
@@ -665,7 +838,7 @@
         <div class="section-card">
           <h3 class="section-card__title">Tipo de Solicitação</h3>
           <div class="field-grid field-grid--3">
-            <div class="field-item"><span class="field-label">Com Portabilidade Atrelada?</span><span class="field-value">{{ comPortabilidade === 'sim' ? 'Sim' : 'Não' }}</span></div>
+            <div class="field-item"><span class="field-label">Com Portabilidade Atrelada?</span><span class="field-value">{{ comPortabilidade === 'sim' ? 'Sim' : comPortabilidade === 'nao' ? 'Não' : '—' }}</span></div>
             <template v-if="comPortabilidade === 'sim'">
               <div class="field-item"><span class="field-label">Tipo de Portabilidade</span><span class="field-value">{{ tipoPortabilidade === 'externa' ? 'De outra instituição para a Nura' : '—' }}</span></div>
             </template>
@@ -723,7 +896,7 @@
                 <div class="fund-card__meta">
                   <span>Taxa Máx. Adm.: <strong>{{ fs.taxaAdm }}</strong></span>
                   <span>Rentabilidade: <strong>{{ fs.rentabilidade }}</strong></span>
-                  <span>Classificação: <strong>{{ fs.classificacao }}</strong></span>
+                  <span>Estratégia: <strong>{{ fs.estrategia }}</strong></span>
                 </div>
               </div>
             </div>
@@ -732,24 +905,21 @@
 
         <!-- Beneficiários -->
         <div v-if="beneficiarios.length > 0" class="section-card">
-          <h3 class="section-card__title">Beneficiários — Previdência</h3>
+          <h3 class="section-card__title">Beneficiários</h3>
           <div v-for="(ben, i) in beneficiarios" :key="i" class="conf-beneficiario-bloco">
             <div class="conf-beneficiario-titulo">Beneficiário {{ i + 1 }}</div>
             <div class="field-grid field-grid--3">
-              <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ ben.cpf || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">{{ ben.nome || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ ben.dataNasc || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Grau de Parentesco</span><span class="field-value">{{ ben.parentesco || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Percentual</span><span class="field-value">{{ ben.percentual || 0 }}%</span></div>
-              <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">{{ ben.telefone || '—' }}</span></div>
-              <div class="field-item field-item--full"><span class="field-label">E-mail</span><span class="field-value">{{ ben.email || '—' }}</span></div>
             </div>
           </div>
         </div>
 
         <!-- Forma de Pagamento -->
         <div class="section-card">
-          <h3 class="section-card__title">Forma de Pagamento — Previdência</h3>
+          <h3 class="section-card__title">Forma de Pagamento</h3>
           <div class="conf-subsection">
             <div class="conf-subsection__title">Responsável Financeiro</div>
             <div class="field-grid field-grid--3">
@@ -758,11 +928,27 @@
                 <span class="field-value">{{ pagamento.respFinanceiro === 'sim' ? 'Sim' : 'Não' }}</span>
               </div>
               <template v-if="pagamento.respFinanceiro === 'nao'">
-                <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">{{ pagamento.rfNome || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ pagamento.rfCpf || '—' }}</span></div>
-                <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ pagamento.rfDataNasc || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">{{ pagamento.rfNome || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ pagamento.rfDataNasc ? new Date(pagamento.rfDataNasc + 'T12:00:00').toLocaleDateString('pt-BR') : '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Gênero</span><span class="field-value">{{ pagamento.rfGenero || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Nacionalidade</span><span class="field-value">{{ pagamento.rfNacionalidade || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">{{ pagamento.rfTelefone || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">{{ pagamento.rfEmail || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Renda Mensal</span><span class="field-value">{{ pagamento.rfRenda || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Profissão</span><span class="field-value">{{ pagamento.rfProfissao || '—' }}</span></div>
+                <template v-if="pagamento.rfProfissao === 'Outros (Especificar)'">
+                  <div class="field-item"><span class="field-label">Especificação da Profissão</span><span class="field-value">{{ pagamento.rfProfissaoEspecificacao || '—' }}</span></div>
+                </template>
+                <div class="field-item"><span class="field-label">Origem da Renda</span><span class="field-value">{{ pagamento.rfOrigemRenda || '—' }}</span></div>
+                <template v-if="pagamento.rfOrigemRenda === 'Outros'">
+                  <div class="field-item"><span class="field-label">Especificação da Origem de Renda</span><span class="field-value">{{ pagamento.rfOrigemRendaEspecificacao || '—' }}</span></div>
+                </template>
+                <div class="field-item"><span class="field-label">Patrimônio</span><span class="field-value">{{ pagamento.rfPatrimonio || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">É US Person?</span><span class="field-value">{{ pagamento.rfUsPerson === 'sim' ? 'Sim' : pagamento.rfUsPerson === 'nao' ? 'Não' : '—' }}</span></div>
+                <template v-if="pagamento.rfUsPerson === 'sim'">
+                  <div class="field-item"><span class="field-label">NIF</span><span class="field-value">{{ pagamento.rfNif || '—' }}</span></div>
+                </template>
               </template>
             </div>
           </div>
@@ -785,55 +971,49 @@
             </div>
           </div>
           <div class="conf-subsection">
-            <div class="conf-subsection__title">Opção de Pagamento</div>
+            <div class="conf-subsection__title">Modalidade de Pagamento</div>
             <div class="field-grid field-grid--3">
               <div class="field-item"><span class="field-label">Forma de Pagamento</span><span class="field-value">{{ formaLabel(pagamento.forma) }}</span></div>
-              <template v-if="pagamento.forma === 'debito' || pagamento.forma === 'boleto'">
-                <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamento.diaVencimento || '—' }}</span></div>
-              </template>
               <template v-if="pagamento.forma === 'pix'">
-                <div class="field-item"><span class="field-label">Observação</span><span class="field-value">Código PIX gerado após a conclusão da contratação</span></div>
+                <div class="field-item"><span class="field-label">Parcelas Seguintes</span><span class="field-value">{{ pagamento.pixRecorrencia === 'debito' ? 'Débito em Conta Corrente' : pagamento.pixRecorrencia === 'boleto' ? 'Boleto Bancário' : '—' }}</span></div>
+              </template>
+              <template v-if="pagamento.forma === 'debito' || (pagamento.forma === 'pix' && pagamento.pixRecorrencia === 'debito')">
+                <div class="field-item"><span class="field-label">Banco</span><span class="field-value">{{ pagamento.banco || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Agência</span><span class="field-value">{{ pagamento.agencia || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Conta Corrente</span><span class="field-value">{{ pagamento.contaCorrente || '—' }}</span></div>
+              </template>
+              <template v-if="pagamento.forma !== 'pix' || pagamento.pixRecorrencia">
+                <div class="field-item"><span class="field-label">Dia de Vencimento</span><span class="field-value">{{ pagamento.diaVencimento || '—' }}</span></div>
               </template>
             </div>
           </div>
         </div>
-
-        <div class="page-footer">
-          <button class="btn-primary">Confirmar Solicitação</button>
-        </div>
       </template>
 
-    </div>
-
-    <!-- ══ MODAL: BUSCA DE FUNDOS ══ -->
-    <teleport to="body">
+      <!-- Modal de Fundos -->
       <div v-if="popupFundos.aberto" class="modal-overlay" @click.self="fecharPopupFundos">
         <div class="modal-fundos">
           <div class="modal-fundos__header">
             <div>
-              <h3 class="modal-fundos__title">Buscar Fundos Disponíveis</h3>
-              <span class="modal-fundos__count">{{ fundosPopupFiltrados.length }} de {{ fundosDisponiveis.length }} fundos encontrados</span>
+              <div class="modal-fundos__title">Buscar Fundos Disponíveis</div>
+              <div class="modal-fundos__count">{{ fundosPopupFiltrados.length }} de {{ fundosDisponiveis.length }} fundos encontrados</div>
             </div>
             <div class="modal-fundos__header-right">
               <div class="termometro-risco">
                 <span class="termometro-label">Muito baixo</span>
-                <div class="termometro-barra">
-                  <div class="termometro-fill"></div>
-                </div>
+                <div class="termometro-barra"><div class="termometro-fill" style="background:linear-gradient(to right,#22c55e,#f59e0b,#ef4444);width:100%"></div></div>
                 <span class="termometro-label">Média</span>
-                <div class="termometro-barra termometro-barra--mid">
-                  <div class="termometro-fill termometro-fill--mid"></div>
-                </div>
+                <div class="termometro-barra"><div class="termometro-fill" style="background:linear-gradient(to right,#f59e0b,#ef4444);width:100%"></div></div>
                 <span class="termometro-label">Muito alto</span>
               </div>
               <button class="modal-fundos__close" @click="fecharPopupFundos">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </div>
           </div>
           <div class="modal-fundos__search">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-            <input v-model="popupFundos.busca" type="text" placeholder="Pesquisar por nome ou CNPJ do fundo..." class="modal-fundos__input" autofocus />
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <input v-model="popupFundos.busca" type="text" class="modal-fundos__input" placeholder="Pesquisar por nome ou CNPJ do fundo..." />
           </div>
           <div class="modal-fundos__table-wrapper">
             <table class="modal-fundos__table">
@@ -841,9 +1021,10 @@
                 <tr>
                   <th class="col-check"></th>
                   <th class="col-nome">Nome</th>
-                  <th class="col-taxa">Taxa Máx. Adm. ▴▾</th>
-                  <th class="col-rent">Rentabilidade ▴▾</th>
-                  <th class="col-class">Classificação</th>
+                  <th class="col-rent">Rentabilidade</th>
+                  <th class="col-risco">Grau de Risco</th>
+                  <th class="col-taxa">Taxa Máx. Adm.</th>
+                  <th class="col-class">Estratégia</th>
                 </tr>
               </thead>
               <tbody>
@@ -854,48 +1035,72 @@
                   :class="{ 'modal-fundos__row--selected': popupFundos.selecionados.includes(f.cnpj) }"
                   @click="toggleFundoPopup(f)"
                 >
-                  <td class="col-check">
+                  <td>
                     <div class="modal-checkbox" :class="{ 'modal-checkbox--checked': popupFundos.selecionados.includes(f.cnpj) }">
                       <svg v-if="popupFundos.selecionados.includes(f.cnpj)" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
                     </div>
                   </td>
-                  <td class="col-nome">
+                  <td>
                     <div class="modal-fundo-nome">{{ f.nome }}</div>
                     <div class="modal-fundo-cnpj">{{ f.cnpj }}</div>
                   </td>
-                  <td class="col-taxa">{{ f.taxaAdm }}</td>
-                  <td class="col-rent">{{ f.rentabilidade }}</td>
-                  <td class="col-class">{{ f.classificacao }}</td>
+                  <td>{{ f.rentabilidade }}</td>
+                  <td>
+                    <div class="risco-dot" :style="{ backgroundColor: riscoColor(f.risco) }"></div>
+                  </td>
+                  <td>{{ f.taxaAdm }}</td>
+                  <td>{{ f.estrategia }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="modal-fundos__footer">
-            <span class="modal-fundos__footer-info">{{ popupFundos.selecionados.length }} fundo(s) selecionado(s)</span>
+            <span class="modal-fundos__footer-info">{{ popupFundos.selecionados.length }} fundo{{ popupFundos.selecionados.length !== 1 ? 's' : '' }} selecionado{{ popupFundos.selecionados.length !== 1 ? 's' : '' }}</span>
             <button class="btn-confirmar-fundos" @click="confirmarFundosPopup">Confirmar</button>
           </div>
         </div>
       </div>
-    </teleport>
+
+    </div>
   </AppShell>
 </template>
 
 <script setup lang="ts">
-interface Beneficiary {
-  cpf: string; nome: string; dataNasc: string; parentesco: string; percentual: number; telefone: string; email: string
-}
-
-interface FundoSelecionado {
-  nome: string; cnpj: string; taxaAdm: string; rentabilidade: string; classificacao: string
-  valorContrib: string; percContrib: string; valorAporte: string; percAporte: string
-}
+import { ref, reactive, computed } from 'vue'
+import { PROFISSOES } from '~/composables/profissoes'
 
 interface PlanoData {
-  idadeAposentadoria: string
+  idadeAposentadoria: string | number
   contribuicaoMensal: string
   aporteInicial: string
   tipoPlano: string
   fundosSelecionados: FundoSelecionado[]
+}
+
+interface FundoSelecionado {
+  nome: string
+  cnpj: string
+  taxaAdm: string
+  rentabilidade: string
+  classificacao: string
+  estrategia: string
+  risco: number
+  valorContrib: string
+  percContrib: string
+  valorAporte: string
+  percAporte: string
+}
+
+interface Beneficiary {
+  nome: string
+  dataNasc: string
+  parentesco: string
+  percentual: number
+}
+
+interface Banco {
+  codigo: string
+  nome: string
 }
 
 const seguradoras = [
@@ -906,39 +1111,74 @@ const seguradoras = [
   'MetLife Seguros', 'Generali Brasil Seguros', 'Sompo Seguros', 'HDI Seguros',
 ]
 
-const fundosDisponiveis = [
-  { nome: 'Absolute Atenas Icatu Prev FIC FIRF CP', cnpj: '47.612.701/0001-45', taxaAdm: '0,98% a.a.', rentabilidade: '—', classificacao: 'Renda Fixa' },
-  { nome: 'Nura Prev Ciclo de Vida 2045 FIC FIM', cnpj: '12.345.678/0001-90', taxaAdm: '0,90% a.a.', rentabilidade: '+8,4%', classificacao: 'Multimercado' },
-  { nome: 'Bradesco FIC FI Prev RF Crédito Privado', cnpj: '11.111.111/0001-11', taxaAdm: '1,20% a.a.', rentabilidade: '+7,2%', classificacao: 'Renda Fixa' },
-  { nome: 'Itaú Flexprev FIC FI Prev RF', cnpj: '22.222.222/0001-22', taxaAdm: '1,00% a.a.', rentabilidade: '+7,8%', classificacao: 'Renda Fixa' },
-  { nome: 'XP Prev Renda Fixa FIC FI', cnpj: '33.333.333/0001-33', taxaAdm: '0,75% a.a.', rentabilidade: '+8,1%', classificacao: 'Renda Fixa' },
-  { nome: 'Icatu Vanguarda Inflação FIC FI Prev RF', cnpj: '44.444.444/0001-44', taxaAdm: '0,85% a.a.', rentabilidade: '+9,0%', classificacao: 'Renda Fixa' },
-  { nome: 'SulAmérica Exclusive FIC FI Prev RF', cnpj: '55.555.555/0001-55', taxaAdm: '1,10% a.a.', rentabilidade: '+7,5%', classificacao: 'Renda Fixa' },
-  { nome: 'Porto Seguro Prev Multimercado FIC FI', cnpj: '66.666.666/0001-66', taxaAdm: '1,30% a.a.', rentabilidade: '+10,2%', classificacao: 'Multimercado' },
+const bancos: Banco[] = [
+  { codigo: '001', nome: 'Banco do Brasil' },
+  { codigo: '033', nome: 'Santander' },
+  { codigo: '041', nome: 'Banrisul' },
+  { codigo: '070', nome: 'BRB - Banco de Brasília' },
+  { codigo: '077', nome: 'Banco Inter' },
+  { codigo: '085', nome: 'Cecred' },
+  { codigo: '104', nome: 'Caixa Econômica Federal' },
+  { codigo: '136', nome: 'Unicred' },
+  { codigo: '197', nome: 'Stone Pagamentos' },
+  { codigo: '208', nome: 'BTG Pactual' },
+  { codigo: '212', nome: 'Banco Original' },
+  { codigo: '218', nome: 'BS2' },
+  { codigo: '237', nome: 'Bradesco' },
+  { codigo: '260', nome: 'Nu Pagamentos (Nubank)' },
+  { codigo: '290', nome: 'PagSeguro Internet' },
+  { codigo: '318', nome: 'Banco BMG' },
+  { codigo: '336', nome: 'Banco C6' },
+  { codigo: '341', nome: 'Itaú Unibanco' },
+  { codigo: '380', nome: 'PicPay' },
+  { codigo: '389', nome: 'Banco Mercantil do Brasil' },
+  { codigo: '422', nome: 'Banco Safra' },
+  { codigo: '505', nome: 'Credit Suisse' },
+  { codigo: '623', nome: 'Banco Pan' },
+  { codigo: '633', nome: 'Banco Rendimento' },
+  { codigo: '637', nome: 'Banco Sofisa' },
+  { codigo: '655', nome: 'Banco Votorantim' },
+  { codigo: '707', nome: 'Banco Daycoval' },
+  { codigo: '735', nome: 'Banco Neon' },
+  { codigo: '741', nome: 'Banco Ribeirão Preto' },
+  { codigo: '745', nome: 'Citibank' },
+  { codigo: '748', nome: 'Sicredi' },
+  { codigo: '756', nome: 'Sicoob' },
+  { codigo: '077', nome: 'Banco Inter' },
 ]
+
+const fundosDisponiveis = ref<FundoSelecionado[]>([])
+
+// Carregar fundos do JSON
+onMounted(async () => {
+  try {
+    const res = await fetch('/nura-app/fundos.json')
+    const data = await res.json()
+    fundosDisponiveis.value = data
+  } catch {
+    fundosDisponiveis.value = []
+  }
+})
 
 const ufs = ['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO']
 
-// Pergunta: com portabilidade atrelada?
 const comPortabilidade = ref<'sim' | 'nao' | ''>('')
 const tipoPortabilidade = ref('externa')
 
-// Dados do Proponente (editável)
 const proponente = reactive({
-  cpf: '', nome: '', nomeSocial: '', dataNasc: '', telefone: '', email: '',
-  renda: '', profissao: '', origemRenda: '', patrimonio: '', nacionalidade: '',
-  usPerson: 'nao',
+  cpf: '', nome: '', dataNasc: '', genero: '', nacionalidade: '',
+  telefone: '', email: '', renda: '', profissao: '', profissaoEspecificacao: '',
+  origemRenda: '', origemRendaEspecificacao: '', patrimonio: '',
+  usPerson: 'nao', nif: '',
   cep: '', rua: '', numero: '', complemento: '', bairro: '', municipio: '', estado: '',
 })
 
-// Formulário — Origem (portabilidade)
 const form = reactive({
   susep: '', seguradora: '', certificado: '', nomePlano: '',
   tipoPlano: 'PGBL', regime: 'Progressiva', cnpjFundo: '', situacaoRegime: 'Retratável',
   tipoTransferencia: 'Total', valorPortabilidade: '',
 })
 
-// Dados do Plano (Previdência)
 const plano = reactive<PlanoData>({
   idadeAposentadoria: '',
   contribuicaoMensal: '',
@@ -947,14 +1187,17 @@ const plano = reactive<PlanoData>({
   fundosSelecionados: [],
 })
 
-// Validação
 const showErrors = ref(false)
 
 function proponenteValido(): boolean {
-  return !!(proponente.cpf && proponente.nome && proponente.dataNasc && proponente.telefone &&
-    proponente.email && proponente.renda && proponente.profissao && proponente.origemRenda &&
-    proponente.patrimonio && proponente.nacionalidade && proponente.usPerson &&
-    proponente.cep && proponente.numero)
+  const profOk = proponente.profissao !== 'Outros (Especificar)' || !!proponente.profissaoEspecificacao
+  const rendaOk = proponente.origemRenda !== 'Outros' || !!proponente.origemRendaEspecificacao
+  const nifOk = proponente.usPerson !== 'sim' || !!proponente.nif
+  return !!(proponente.cpf && proponente.nome && proponente.dataNasc && proponente.genero &&
+    proponente.telefone && proponente.email && proponente.renda && proponente.profissao &&
+    proponente.origemRenda && proponente.patrimonio && proponente.nacionalidade &&
+    proponente.usPerson && proponente.cep && proponente.numero &&
+    profOk && rendaOk && nifOk)
 }
 
 function planoValido(): boolean {
@@ -975,7 +1218,7 @@ function advanceFromDetalhes() {
   changeTab(tabIndex('Beneficiários'))
 }
 
-// Formatação de campos
+// Formatação CPF
 function formatCpf() {
   let v = proponente.cpf.replace(/\D/g, '').slice(0, 11)
   if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, '$1.$2.$3-$4')
@@ -1045,18 +1288,109 @@ async function onCepInputPag() {
   }
 }
 
+// Profissão autocomplete
+const profissaoQuery = ref('')
+const showProfissaoDropdown = ref(false)
+const profissaoResults = computed(() => {
+  if (!profissaoQuery.value) return PROFISSOES.slice(0, 8)
+  const q = profissaoQuery.value.toLowerCase()
+  return PROFISSOES.filter(p => p.toLowerCase().includes(q)).slice(0, 10)
+})
+function onProfissaoInput() { showProfissaoDropdown.value = true }
+function hideProfissaoDropdownDelayed() { setTimeout(() => { showProfissaoDropdown.value = false }, 200) }
+function selectProfissao(p: string) {
+  proponente.profissao = p
+  profissaoQuery.value = p
+  showProfissaoDropdown.value = false
+  if (p !== 'Outros (Especificar)') proponente.profissaoEspecificacao = ''
+}
+
+// RF Profissão autocomplete
+const rfProfissaoQuery = ref('')
+const showRfProfissaoDropdown = ref(false)
+const rfProfissaoResults = computed(() => {
+  if (!rfProfissaoQuery.value) return PROFISSOES.slice(0, 8)
+  const q = rfProfissaoQuery.value.toLowerCase()
+  return PROFISSOES.filter(p => p.toLowerCase().includes(q)).slice(0, 10)
+})
+function onRfProfissaoInput() { showRfProfissaoDropdown.value = true }
+function hideRfProfissaoDropdownDelayed() { setTimeout(() => { showRfProfissaoDropdown.value = false }, 200) }
+function selectRfProfissao(p: string) {
+  pagamento.rfProfissao = p
+  rfProfissaoQuery.value = p
+  showRfProfissaoDropdown.value = false
+  if (p !== 'Outros (Especificar)') pagamento.rfProfissaoEspecificacao = ''
+}
+
+// RF formatação
+function formatRfCpf() {
+  let v = pagamento.rfCpf.replace(/\D/g, '').slice(0, 11)
+  if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, '$1.$2.$3-$4')
+  else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3')
+  else if (v.length > 3) v = v.replace(/(\d{3})(\d{0,3})/, '$1.$2')
+  pagamento.rfCpf = v
+}
+function formatRfTelefone() {
+  let v = pagamento.rfTelefone.replace(/\D/g, '').slice(0, 11)
+  if (v.length > 10) v = v.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')
+  else if (v.length > 6) v = v.replace(/(\d{2})(\d{4,5})(\d{0,4})/, '($1) $2-$3')
+  else if (v.length > 2) v = v.replace(/(\d{2})(\d{0,5})/, '($1) $2')
+  pagamento.rfTelefone = v
+}
+function formatRfMoeda(e: Event, field: 'rfRenda' | 'rfPatrimonio') {
+  const input = e.target as HTMLInputElement
+  let v = input.value.replace(/\D/g, '')
+  if (!v) { (pagamento as any)[field] = ''; return }
+  const num = parseInt(v) / 100
+  ;(pagamento as any)[field] = num.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+}
+
+// Banco autocomplete
+const bancoQuery = ref('')
+const showBancoDropdown = ref(false)
+const bancoResults = computed(() => {
+  if (!bancoQuery.value) return bancos.slice(0, 8)
+  const q = bancoQuery.value.toLowerCase()
+  return bancos.filter(b => b.nome.toLowerCase().includes(q) || b.codigo.includes(q)).slice(0, 10)
+})
+function onBancoInput() { showBancoDropdown.value = true }
+function hideBancoDropdownDelayed() { setTimeout(() => { showBancoDropdown.value = false }, 200) }
+function selectBanco(b: Banco) {
+  pagamento.banco = `${b.codigo} - ${b.nome}`
+  bancoQuery.value = `${b.codigo} - ${b.nome}`
+  showBancoDropdown.value = false
+}
+
+// Formatação Agência e Conta Corrente
+function formatAgencia() {
+  let v = pagamento.agencia.replace(/\D/g, '').slice(0, 5)
+  if (v.length > 4) v = v.replace(/(\d{4})(\d{1})/, '$1-$2')
+  pagamento.agencia = v
+}
+function formatContaCorrente() {
+  let v = pagamento.contaCorrente.replace(/\D/g, '').slice(0, 9)
+  if (v.length > 1) v = v.replace(/(\d{1,8})(\d{1})$/, '$1-$2')
+  pagamento.contaCorrente = v
+}
+
 // Beneficiários
-function newBen(): Beneficiary { return { cpf: '', nome: '', dataNasc: '', parentesco: '', percentual: 0, telefone: '', email: '' } }
+function newBen(): Beneficiary { return { nome: '', dataNasc: '', parentesco: '', percentual: 0 } }
 const beneficiarios = ref<Beneficiary[]>([newBen()])
 const somaPercentual = computed(() => beneficiarios.value.reduce((s, b) => s + (b.percentual || 0), 0))
-function addBen() { beneficiarios.value.push(newBen()) }
+function addBen() { if (beneficiarios.value.length < 20) beneficiarios.value.push(newBen()) }
 function removeBen(i: number) { beneficiarios.value.splice(i, 1) }
 
 // Pagamento
 const pagamento = reactive({
-  forma: 'debito', diaVencimento: '',
-  respFinanceiro: 'sim', rfNome: '', rfCpf: '', rfDataNasc: '', rfTelefone: '', rfEmail: '',
-  enderecoCobranca: 'sim', cobCep: '', cobRua: '', cobNumero: '', cobComplemento: '', cobBairro: '', cobMunicipio: '', cobEstado: '',
+  forma: 'debito', diaVencimento: '', pixRecorrencia: '',
+  banco: '', agencia: '', contaCorrente: '',
+  respFinanceiro: 'sim',
+  rfCpf: '', rfNome: '', rfDataNasc: '', rfGenero: '', rfNacionalidade: '',
+  rfTelefone: '', rfEmail: '', rfRenda: '', rfProfissao: '', rfProfissaoEspecificacao: '',
+  rfOrigemRenda: '', rfOrigemRendaEspecificacao: '', rfPatrimonio: '',
+  rfUsPerson: 'nao', rfNif: '',
+  enderecoCobranca: 'sim',
+  cobCep: '', cobRua: '', cobNumero: '', cobComplemento: '', cobBairro: '', cobMunicipio: '', cobEstado: '',
 })
 
 function formaLabel(forma: string) {
@@ -1064,7 +1398,7 @@ function formaLabel(forma: string) {
   return m[forma] || '—'
 }
 
-// Autocomplete — Origem
+// Autocomplete — Seguradora
 const seguradoraQuery = ref('')
 const showSeguradoraDropdown = ref(false)
 const seguradoraResults = computed(() => {
@@ -1075,6 +1409,18 @@ function onSeguradoraInput() { showSeguradoraDropdown.value = true }
 function hideDropdownDelayed() { setTimeout(() => { showSeguradoraDropdown.value = false }, 200) }
 function selectSeguradora(s: string) { form.seguradora = s; seguradoraQuery.value = s; showSeguradoraDropdown.value = false }
 
+// Cor do risco
+function riscoColor(risco: number): string {
+  const colors: Record<number, string> = {
+    1: '#22c55e',
+    2: '#84cc16',
+    3: '#3b82f6',
+    4: '#f59e0b',
+    5: '#ef4444',
+  }
+  return colors[risco] || '#3b82f6'
+}
+
 // Pop-up de busca de fundos
 const popupFundos = reactive({
   aberto: false,
@@ -1084,9 +1430,9 @@ const popupFundos = reactive({
 })
 
 const fundosPopupFiltrados = computed(() => {
-  if (!popupFundos.busca) return fundosDisponiveis
+  if (!popupFundos.busca) return fundosDisponiveis.value
   const q = popupFundos.busca.toLowerCase()
-  return fundosDisponiveis.filter(f =>
+  return fundosDisponiveis.value.filter(f =>
     f.nome.toLowerCase().includes(q) || f.cnpj.includes(q)
   )
 })
@@ -1104,7 +1450,7 @@ function fecharPopupFundos() {
   popupFundos.busca = ''
 }
 
-function toggleFundoPopup(f: typeof fundosDisponiveis[0]) {
+function toggleFundoPopup(f: FundoSelecionado) {
   const idx = popupFundos.selecionados.indexOf(f.cnpj)
   if (idx === -1) popupFundos.selecionados.push(f.cnpj)
   else popupFundos.selecionados.splice(idx, 1)
@@ -1118,7 +1464,7 @@ function confirmarFundosPopup() {
   )
   for (const cnpj of popupFundos.selecionados) {
     if (!bloco.fundosSelecionados.find(fs => fs.cnpj === cnpj)) {
-      const f = fundosDisponiveis.find(fd => fd.cnpj === cnpj)
+      const f = fundosDisponiveis.value.find(fd => fd.cnpj === cnpj)
       if (f) bloco.fundosSelecionados.push({ ...f, valorContrib: '', percContrib: '', valorAporte: '', percAporte: '' })
     }
   }
@@ -1127,7 +1473,7 @@ function confirmarFundosPopup() {
 
 function removerFundoPlano(i: number) { plano.fundosSelecionados.splice(i, 1) }
 
-// Abas dinâmicas
+// Abas
 const allTabs = ['Detalhes da Solicitação', 'Beneficiários', 'Formas de Pagamento', 'Confirmação dos Dados']
 const visibleTabs = computed(() => allTabs)
 
@@ -1148,7 +1494,7 @@ function changeTab(i: number) {
 .page-header__icon { color: var(--text-muted); display: flex; align-items: center; }
 .page-header__title { font-family: var(--font-sans); font-size: 20px; font-weight: 600; color: var(--text-primary); margin: 0; }
 
-.section-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; margin-bottom: 16px; }
+.section-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; box-shadow: rgba(0,0,0,0.04) 0px 1px 3px 0px, rgba(0,0,0,0.03) 0px 1px 2px 0px; }
 .section-card__title { display: flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: var(--text-primary); margin: 0 0 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); }
 
 .tipo-port-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -1164,46 +1510,49 @@ function changeTab(i: number) {
 .form-field { display: flex; flex-direction: column; gap: 6px; }
 .form-field--full { grid-column: 1 / -1; }
 
-.form-label { font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.6px; }
+/* Estilos dos inputs idênticos ao aliaplan */
+.form-label { font-family: var(--font-sans); font-size: 11px; font-weight: 500; color: rgb(77, 86, 96); text-transform: uppercase; letter-spacing: 0.6px; }
 .form-label--required::after { content: ' *'; color: #ef4444; }
-.form-label-radio { font-family: var(--font-sans); font-size: 11px; font-weight: 700; color: #1e3a5f; text-transform: uppercase; letter-spacing: 0.6px; display: flex; align-items: center; gap: 6px; }
-.form-hint { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.form-input { font-family: var(--font-sans); font-size: 13px; color: rgb(15, 23, 42); padding: 4px 8px; border: 1px solid rgb(226, 232, 240); border-radius: 6px; background-color: rgb(248, 250, 252); outline: none; height: 29.5px; box-sizing: border-box; width: 100%; transition: border-color 0.15s; }
+.form-input:focus { border-color: var(--btn-primary-bg); }
+.form-input--error { border-color: #ef4444 !important; }
+.form-input--disabled { background-color: #f1f5f9; color: #94a3b8; cursor: not-allowed; }
+.form-select { font-family: var(--font-sans); font-size: 13px; color: rgb(15, 23, 42); padding: 4px 8px; border: 1px solid rgb(226, 232, 240); border-radius: 6px; background-color: rgb(248, 250, 252); outline: none; height: 29.5px; box-sizing: border-box; width: 100%; }
+.form-label-radio { font-family: var(--font-sans); font-size: 11px; font-weight: 500; color: rgb(77, 86, 96); text-transform: uppercase; letter-spacing: 0.6px; }
 .form-error { font-size: 11px; color: #ef4444; margin-top: 2px; }
+.form-hint { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
-.radio-group-h { display: flex; flex-direction: row; gap: 20px; align-items: center; margin-top: 4px; flex-wrap: wrap; }
-.radio-label-h { display: flex; align-items: center; gap: 7px; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); cursor: pointer; }
-.radio-input { width: 16px; height: 16px; accent-color: var(--btn-primary-bg); cursor: pointer; }
+.radio-group-h { display: flex; flex-direction: row; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
+.radio-label-h { display: flex; align-items: center; gap: 6px; font-family: var(--font-sans); font-size: 13px; color: var(--text-primary); cursor: pointer; }
+.radio-input { accent-color: var(--btn-primary-bg); width: 14px; height: 14px; }
 
-.radio-group { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
-.radio-item { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-.radio-label { font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); }
+/* Flag question (É US Person? / Será com portabilidade?) */
+.flag-question { font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--text-primary); }
+.proponente-flags { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
+.proponente-flag-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.flag-radio-group { display: flex; flex-direction: row; gap: 20px; }
+.flag-radio-label { display: flex; align-items: center; gap: 7px; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); cursor: pointer; }
+.proponente-residencial { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
+.subsection-divider-title { font-family: var(--font-sans); font-size: 12px; font-weight: 700; color: rgb(77, 86, 96); text-transform: uppercase; letter-spacing: 0.6px; margin: 0 0 14px; }
 
-.form-input { font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 6px; background-color: white; outline: none; transition: border-color 0.15s; width: 100%; box-sizing: border-box; }
-.form-input:focus { border-color: #94a3b8; }
-.form-input::placeholder { color: #94a3b8; }
-.form-input--disabled { background-color: #f1f5f9; color: var(--text-muted); cursor: not-allowed; }
-.form-input--error { border-color: #ef4444; }
-.form-select { font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 6px; background-color: white; outline: none; cursor: pointer; width: 100%; box-sizing: border-box; }
-
+/* Autocomplete */
 .autocomplete-wrapper { position: relative; }
-.autocomplete-dropdown { position: absolute; top: calc(100% + 2px); left: 0; right: 0; background: white; border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); z-index: 100; max-height: 220px; overflow-y: auto; }
-.autocomplete-item { display: flex; flex-direction: column; width: 100%; padding: 9px 12px; text-align: left; background: none; border: none; cursor: pointer; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); transition: background-color 0.1s; }
+.autocomplete-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; max-height: 200px; overflow-y: auto; }
+.autocomplete-item { display: block; width: 100%; padding: 8px 12px; background: none; border: none; text-align: left; font-family: var(--font-sans); font-size: 13px; color: var(--text-primary); cursor: pointer; transition: background-color 0.1s; }
 .autocomplete-item:hover { background-color: #f8fafc; }
 
-/* Seleção de Fundos */
+/* Fundos */
 .selecao-fundos-box { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
-.selecao-fundos-box__header { padding: 10px 16px; background-color: #f8fafc; border-bottom: 1px solid var(--border-color); font-family: var(--font-sans); font-size: 11px; font-weight: 700; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.6px; }
-.selecao-fundos-box__body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
-.fundos-selecionados-list { display: flex; flex-direction: column; gap: 12px; }
-
-/* Fund card */
-.fund-card { border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; }
+.selecao-fundos-box__header { background-color: #f8fafc; padding: 10px 16px; font-family: var(--font-sans); font-size: 11px; font-weight: 700; color: rgb(77, 86, 96); text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 1px solid var(--border-color); }
+.selecao-fundos-box__body { padding: 16px; }
+.fundos-selecionados-list { margin-top: 16px; }
+.fund-card { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; margin-bottom: 8px; }
 .fund-card__header { padding: 12px 16px; background-color: #f8fafc; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .fund-card__name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
 .fund-card__cnpj { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 .fund-card__body { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
 .fund-card__row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.fund-card__label { font-size: 11px; font-weight: 600; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.5px; min-width: 140px; }
+.fund-card__label { font-size: 11px; font-weight: 600; color: rgb(77, 86, 96); text-transform: uppercase; letter-spacing: 0.5px; min-width: 140px; }
 .fund-card__text { font-size: 12px; color: var(--text-primary); }
 .fund-card__meta { display: flex; gap: 20px; margin-top: 4px; flex-wrap: wrap; }
 .fund-card__meta span { font-size: 12px; color: var(--text-muted); }
@@ -1212,22 +1561,22 @@ function changeTab(i: number) {
 .btn-remove-fund { background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; border-radius: 4px; display: flex; align-items: center; transition: color 0.12s; }
 .btn-remove-fund:hover { color: #ef4444; }
 
-/* Botão buscar fundos */
 .btn-buscar-fundos { display: flex; align-items: center; gap: 8px; width: 100%; padding: 9px 12px; background: white; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; font-family: var(--font-sans); font-size: 14px; color: #94a3b8; text-align: left; transition: border-color 0.15s; }
 .btn-buscar-fundos:hover { border-color: #94a3b8; }
 
-/* Required badge */
 .required-badge { font-size: 10px; font-weight: 600; color: #ef4444; background: #fef2f2; border: 1px solid #fecaca; border-radius: 4px; padding: 2px 6px; text-transform: uppercase; letter-spacing: 0.3px; margin-left: auto; }
 
 /* Forma de Pagamento */
 .resp-financeiro-row { display: grid; grid-template-columns: 1fr 160px; align-items: center; gap: 20px; }
-.resp-financeiro-row .field-label { font-size: 13px; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--text-primary); }
 .radio-group-inline { display: flex; flex-direction: row; gap: 20px; justify-content: flex-start; }
 .opcoes-divider { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0 16px; }
 .opcoes-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin: 0 0 12px; }
 .subsection-title { font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: var(--text-primary); margin: 16px 0 12px; }
 .info-box-blue { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; font-size: 13px; color: #1e40af; line-height: 1.5; }
 .info-box-blue svg { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; color: #1e40af; }
+.radio-group { display: flex; flex-direction: column; gap: 10px; }
+.radio-item { display: flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); }
+.radio-label { font-size: 14px; }
 
 /* Beneficiários */
 .beneficiary-card { border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; margin-bottom: 12px; }
@@ -1235,83 +1584,85 @@ function changeTab(i: number) {
 .beneficiary-card__title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
 .btn-remove { display: flex; align-items: center; gap: 4px; font-family: var(--font-sans); font-size: 12px; font-weight: 500; color: #ef4444; background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: background-color 0.15s; }
 .btn-remove:hover { background-color: #fef2f2; }
-.btn-add { display: flex; align-items: center; gap: 6px; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--text-muted); background: none; border: 1px dashed var(--border-color); border-radius: 6px; padding: 10px 16px; cursor: pointer; width: 100%; justify-content: center; transition: border-color 0.15s, color 0.15s, background-color 0.15s; }
-.btn-add:hover { border-color: #94a3b8; color: var(--text-primary); background-color: #f8fafc; }
-.alert-warning { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background-color: #fefce8; border: 1px solid #fde047; border-radius: 6px; font-size: 13px; color: #854d0e; margin: 8px 0; }
+.btn-add { display: flex; align-items: center; gap: 6px; font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+ color: var(--btn-primary-bg); background: none; border: 1px dashed var(--btn-primary-bg); border-radius: 6px; padding: 8px 16px; cursor: pointer; margin-top: 8px; transition: background-color 0.15s; }
+.btn-add:hover { background-color: #f0f4ff; }
+.alert-warning { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background-color: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; font-size: 13px; color: #92400e; margin-bottom: 12px; }
+.disclaimer-note { font-size: 12px; color: var(--text-muted); margin-top: 16px; font-style: italic; }
 
-/* Inner tabs */
-.inner-tabs { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); }
-.inner-tab { padding: 10px 20px; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s, border-color 0.15s; margin-bottom: -1px; }
-.inner-tab--active { color: var(--text-primary); border-bottom-color: var(--btn-primary-bg); font-weight: 600; }
-
-/* Campos de revisão */
-.field-grid { display: grid; gap: 16px 24px; }
-.field-grid--2 { grid-template-columns: 1fr 1fr; }
-.field-grid--3 { grid-template-columns: 1fr 1fr 1fr; }
-.field-item { display: flex; flex-direction: column; gap: 4px; }
-.field-label { font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.6px; }
-.field-value { font-family: var(--font-sans); font-size: 15px; font-weight: 400; color: var(--text-primary); }
+/* Confirmação */
+.field-grid { display: grid; gap: 12px 20px; }
+.field-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.field-item { display: flex; flex-direction: column; gap: 3px; }
 .field-item--full { grid-column: 1 / -1; }
-.proponente-flags { display: flex; flex-direction: row; gap: 32px; flex-wrap: wrap; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
-.proponente-flag-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-.flag-radio-group { display: flex; flex-direction: row; gap: 20px; }
-.flag-radio-label { display: flex; align-items: center; gap: 7px; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); cursor: pointer; }
-.proponente-residencial { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
-.subsection-divider-title { font-family: var(--font-sans); font-size: 12px; font-weight: 700; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.6px; margin: 0 0 14px; }
+.field-label { font-size: 11px; font-weight: 600; color: rgb(77, 86, 96); text-transform: uppercase; letter-spacing: 0.5px; }
+.field-value { font-size: 14px; color: var(--text-primary); }
 .conf-subsection { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-color); }
-.conf-subsection__title { font-family: var(--font-sans); font-size: 12px; font-weight: 700; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 12px; }
-.conf-beneficiario-bloco { padding: 12px 0; border-bottom: 1px solid var(--border-color); }
-.conf-beneficiario-bloco:last-child { border-bottom: none; }
-.conf-beneficiario-titulo { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 10px; }
+.conf-subsection__title { font-size: 12px; font-weight: 700; color: rgb(77, 86, 96); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 12px; }
+.conf-beneficiario-bloco { border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; margin-bottom: 10px; }
+.conf-beneficiario-titulo { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; }
 
+/* Modal de Fundos */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.modal-fundos { background: white; border-radius: 12px; width: 100%; max-width: 900px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
+.modal-fundos__header { display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 24px 16px; border-bottom: 1px solid var(--border-color); }
+.modal-fundos__title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+.modal-fundos__count { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+.modal-fundos__header-right { display: flex; align-items: center; gap: 16px; }
+.modal-fundos__close { background: none; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; padding: 6px; display: flex; align-items: center; color: var(--text-muted); transition: background-color 0.15s; }
+.modal-fundos__close:hover { background-color: #f8fafc; }
+.modal-fundos__search { display: flex; align-items: center; gap: 10px; padding: 12px 24px; border-bottom: 1px solid var(--border-color); }
+.modal-fundos__search svg { color: var(--text-muted); flex-shrink: 0; }
+.modal-fundos__input { flex: 1; border: none; outline: none; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); background: none; }
+.modal-fundos__table-wrapper { flex: 1; overflow-y: auto; }
+.modal-fundos__table { width: 100%; border-collapse: collapse; }
+.modal-fundos__table thead { position: sticky; top: 0; background: white; }
+.modal-fundos__table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 600; color: rgb(77, 86, 96); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
+.modal-fundos__row { cursor: pointer; transition: background-color 0.12s; }
+.modal-fundos__row:hover { background-color: #f8fafc; }
+.modal-fundos__row--selected { background-color: #f0f4ff; }
+.modal-fundos__table td { padding: 12px 16px; font-size: 13px; color: var(--text-primary); border-bottom: 1px solid #f1f5f9; }
+.modal-fundo-nome { font-weight: 500; font-size: 13px; }
+.modal-fundo-cnpj { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.modal-checkbox { width: 16px; height: 16px; border: 1.5px solid var(--border-color); border-radius: 3px; display: flex; align-items: center; justify-content: center; transition: background-color 0.12s, border-color 0.12s; }
+.modal-checkbox--checked { background-color: var(--btn-primary-bg); border-color: var(--btn-primary-bg); }
+.risco-dot { width: 14px; height: 14px; border-radius: 50%; }
+.modal-fundos__footer { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; border-top: 1px solid var(--border-color); }
+.modal-fundos__footer-info { font-size: 13px; color: var(--text-muted); }
+.btn-confirmar-fundos { background-color: var(--btn-primary-bg); color: white; border: none; border-radius: 8px; padding: 10px 24px; font-family: var(--font-sans); font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.15s; }
+.btn-confirmar-fundos:hover { background-color: var(--btn-primary-hover); }
+
+/* Termômetro de risco */
+.termometro-risco { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); }
+.termometro-barra { width: 40px; height: 6px; border-radius: 3px; overflow: hidden; }
+.termometro-fill { height: 100%; }
+.termometro-label { font-size: 10px; white-space: nowrap; }
+
+/* Coluna tamanhos */
+.col-check { width: 40px; }
+.col-nome { min-width: 200px; }
+.col-rent { width: 100px; }
+.col-risco { width: 80px; }
+.col-taxa { width: 120px; }
+.col-class { min-width: 140px; }
+
+/* Page footer */
+.page-footer { display: flex; justify-content: flex-end; margin-top: 24px; }
+.btn-primary { background-color: var(--btn-primary-bg); color: white; border: none; border-radius: 8px; padding: 12px 28px; font-family: var(--font-sans); font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color 0.15s; }
+.btn-primary:hover { background-color: var(--btn-primary-hover); }
+
+/* Utilitários */
 .mb-8 { margin-bottom: 8px; }
 .mb-16 { margin-bottom: 16px; }
 .mb-20 { margin-bottom: 20px; }
 .mt-16 { margin-top: 16px; }
 .mt-20 { margin-top: 20px; }
 
-/* Modal overlay */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000; display: flex; align-items: center; justify-content: center; }
-
-/* Modal de fundos */
-.modal-fundos { background: white; border-radius: 12px; width: 680px; max-width: 95vw; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
-.modal-fundos__header { display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 24px 16px; border-bottom: 1px solid var(--border-color); gap: 16px; }
-.modal-fundos__title { font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-primary); margin: 0 0 4px; }
-.modal-fundos__count { font-size: 12px; color: var(--text-muted); }
-.modal-fundos__header-right { display: flex; align-items: center; gap: 16px; }
-.modal-fundos__close { background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; border-radius: 4px; display: flex; align-items: center; transition: color 0.12s; }
-.modal-fundos__close:hover { color: var(--text-primary); }
-.modal-fundos__search { display: flex; align-items: center; gap: 10px; padding: 12px 24px; border-bottom: 1px solid var(--border-color); color: var(--text-muted); }
-.modal-fundos__input { flex: 1; border: none; outline: none; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); background: transparent; }
-.modal-fundos__table-wrapper { flex: 1; overflow-y: auto; }
-.modal-fundos__table { width: 100%; border-collapse: collapse; font-family: var(--font-sans); }
-.modal-fundos__table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.5px; background-color: #f8fafc; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; }
-.modal-fundos__table td { padding: 12px 16px; border-bottom: 1px solid var(--border-color); font-size: 13px; color: var(--text-primary); }
-.modal-fundos__row { cursor: pointer; transition: background-color 0.1s; }
-.modal-fundos__row:hover { background-color: #f8fafc; }
-.modal-fundos__row--selected { background-color: #f0f4ff; }
-.modal-checkbox { width: 16px; height: 16px; border: 2px solid var(--border-color); border-radius: 3px; display: flex; align-items: center; justify-content: center; transition: background-color 0.1s, border-color 0.1s; }
-.modal-checkbox--checked { background-color: var(--btn-primary-bg); border-color: var(--btn-primary-bg); }
-.modal-fundo-nome { font-size: 13px; font-weight: 500; color: var(--text-primary); }
-.modal-fundo-cnpj { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-.col-check { width: 40px; }
-.col-nome { min-width: 200px; }
-.col-taxa, .col-rent { width: 130px; }
-.col-class { width: 120px; }
-.modal-fundos__footer { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-top: 1px solid var(--border-color); }
-.modal-fundos__footer-info { font-size: 13px; color: var(--text-muted); }
-.btn-confirmar-fundos { padding: 10px 24px; background-color: var(--btn-primary-bg); color: var(--btn-primary-color); border: none; border-radius: 8px; cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 500; transition: opacity 0.15s; }
-.btn-confirmar-fundos:hover { opacity: 0.9; }
-
-/* Termômetro de risco */
-.termometro-risco { display: flex; align-items: center; gap: 6px; }
-.termometro-label { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
-.termometro-barra { width: 40px; height: 6px; background-color: #e2e8f0; border-radius: 3px; overflow: hidden; }
-.termometro-fill { height: 100%; width: 40%; background-color: #22c55e; border-radius: 3px; }
-.termometro-barra--mid { }
-.termometro-fill--mid { width: 60%; background-color: #f59e0b; }
-
-.page-footer { display: flex; justify-content: flex-end; padding-top: 16px; }
-.btn-primary { padding: 11px 28px; background-color: var(--btn-primary-bg); color: var(--btn-primary-color); border: none; border-radius: 8px; cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: 500; transition: opacity 0.15s; }
-.btn-primary:hover { opacity: 0.9; }
+@media (max-width: 768px) {
+  .page-content { padding: 16px 16px 60px; }
+  .field-grid--3 { grid-template-columns: 1fr 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .tipo-port-grid { grid-template-columns: 1fr; }
+  .resp-financeiro-row { grid-template-columns: 1fr; }
+}
 </style>
