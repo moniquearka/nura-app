@@ -27,7 +27,7 @@
           <thead>
             <tr>
               <th class="col-proposal">Solicitações Geradas</th>
-              <th class="col-products">Produtos</th>
+              <th class="col-products">Produtos Selecionados</th>
               <th class="col-type">Tipo de Solicitação</th>
               <th class="col-date">Proposta Gerada em</th>
               <th class="col-value">Valor Total</th>
@@ -192,69 +192,36 @@ const proposals = ref<Proposal[]>([
     name: 'Proposta Taís Oliveira Costa — v1',
     products: 'Previdência + Seguro de Vida',
     type: 'Estudo + Proposta',
-    date: '19/03/2026',
+    date: '18/03/2026',
     totalValue: 'R$ 4.150,00',
     pdfFile: 'proposta-v1.pdf',
-    statusPrev: 'assinatura-andamento',
-    statusSeg: 'assinatura-andamento',
+    statusPrev: 'assinatura-concluida',
+    statusSeg: 'dps-pendente',
   },
   {
     id: 2,
     name: 'Proposta Taís Oliveira Costa — v2',
     products: 'Previdência + Seguro de Vida',
     type: 'Estudo + Proposta',
-    date: '18/03/2026',
+    date: '17/03/2026',
     totalValue: 'R$ 4.150,00',
     pdfFile: 'proposta-v2.pdf',
-    statusPrev: 'assinatura-concluida',
-    statusSeg: 'dps-pendente',
+    statusPrev: 'pendente-pagamento',
+    statusSeg: 'tele-entrevista-pendente',
   },
   {
     id: 3,
     name: 'Proposta Taís Oliveira Costa — v3',
     products: 'Previdência + Seguro de Vida',
     type: 'Estudo + Proposta',
-    date: '17/03/2026',
-    totalValue: 'R$ 4.150,00',
-    pdfFile: 'proposta-v3.pdf',
-    statusPrev: 'pendente-pagamento',
-    statusSeg: 'tele-entrevista-pendente',
-  },
-  {
-    id: 4,
-    name: 'Proposta Taís Oliveira Costa — v4',
-    products: 'Previdência + Seguro de Vida',
-    type: 'Estudo + Proposta',
-    date: '16/03/2026',
-    totalValue: 'R$ 4.150,00',
-    pdfFile: 'proposta-v4.pdf',
-    statusPrev: 'pagamento-concluido',
-    statusSeg: 'implementacao-simplificada',
-  },
-  {
-    id: 5,
-    name: 'Proposta Taís Oliveira Costa — v5',
-    products: 'Previdência + Seguro de Vida',
-    type: 'Estudo + Proposta',
     date: '15/03/2026',
     totalValue: 'R$ 4.150,00',
-    pdfFile: 'proposta-v5.pdf',
+    pdfFile: 'proposta-v3.pdf',
     statusPrev: 'contratacao-implementada',
     statusSeg: 'implementacao-andamento',
   },
   {
-    id: 6,
-    name: 'Proposta Taís Oliveira Costa — v6',
-    products: 'Previdência + Seguro de Vida',
-    type: 'Estudo + Proposta',
-    date: '14/03/2026',
-    totalValue: 'R$ 4.150,00',
-    pdfFile: 'proposta-v6.pdf',
-    statusPrev: 'contratacao-implementada',
-    statusSeg: 'contratacao-implementada',
-  },
-  {
-    id: 7,
+    id: 4,
     name: 'Proposta Taís Oliveira Costa — Prev',
     products: 'Previdência',
     type: 'Proposta sem Estudo',
@@ -265,7 +232,7 @@ const proposals = ref<Proposal[]>([
     statusSeg: '',
   },
   {
-    id: 8,
+    id: 5,
     name: 'Portabilidade Taís Oliveira Costa — v1',
     products: 'Previdência',
     type: 'Portabilidade',
@@ -471,7 +438,8 @@ async function downloadPdf(proposal: Proposal) {
   width: 100%;
   border-collapse: collapse;
   font-family: var(--font-sans);
-  min-width: 1100px;
+  min-width: 0;
+  table-layout: auto;
 }
 
 .proposals-table thead tr {
@@ -490,11 +458,13 @@ async function downloadPdf(proposal: Proposal) {
   white-space: nowrap;
 }
 
-.proposals-table th.col-actions { width: 70px; text-align: right; }
+.proposals-table th.col-actions { width: 60px; text-align: right; }
 .proposals-table th.col-status-prev,
-.proposals-table th.col-status-seg { min-width: 190px; }
-.proposals-table th.col-type { min-width: 150px; }
-.proposals-table th.col-products { min-width: 130px; }
+.proposals-table th.col-status-seg { white-space: nowrap; }
+.proposals-table th.col-type { white-space: nowrap; }
+.proposals-table th.col-products { white-space: nowrap; }
+.proposals-table th.col-date { white-space: nowrap; }
+.proposals-table th.col-value { white-space: nowrap; }
 
 /* ── Linhas ──────────────────────────────────────────────────────────────── */
 .proposal-row {
@@ -517,20 +487,20 @@ async function downloadPdf(proposal: Proposal) {
 .proposal-name {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12.5px;
+  gap: 5px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--text-primary);
   white-space: nowrap;
 }
 .proposal-name__icon { color: var(--text-muted); flex-shrink: 0; }
 
-/* ── Badge de produto ────────────────────────────────────────────────────── */
+/* ── Badge de produto ────────────────────────────────────────────────── */
 .product-badge {
   display: inline-block;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 4px;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -538,13 +508,12 @@ async function downloadPdf(proposal: Proposal) {
 .product-badge--prev   { background-color: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; }
 .product-badge--seguro { background-color: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
 .product-badge--both   { background-color: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
-
-/* ── Badge de tipo de solicitação ────────────────────────────────────────── */
+/* ── Badge de tipo de solicitação ───────────────────────────────────────────────── */
 .type-badge {
   display: inline-block;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 4px;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -555,23 +524,22 @@ async function downloadPdf(proposal: Proposal) {
 
 /* ── Valores de célula ───────────────────────────────────────────────────── */
 .cell-value {
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--text-primary);
   white-space: nowrap;
 }
 .cell-empty {
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
 /* ── Tags de status (clicáveis, substituem os selects) ───────────────────── */
 .status-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 9px;
-  border-radius: 20px;
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
   font-family: var(--font-sans);
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 500;
   white-space: nowrap;
   border: 1px solid transparent;
