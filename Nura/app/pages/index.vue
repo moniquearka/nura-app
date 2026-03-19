@@ -29,7 +29,7 @@
             </svg>
           </div>
           <h2 class="sel-card__title">Realizar Portabilidade ou<br>Nova Contratação</h2>
-          <p class="sel-card__desc">Solicite a portabilidade ou uma nova contratação de um plano de Previdência.</p>
+          <p class="sel-card__desc">Crie uma nova solicitação de Previdência Privada.</p>
           <span class="sel-card__btn">Iniciar</span>
         </button>
       </div>
@@ -76,6 +76,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+  align-items: stretch;
 }
 
 @media (max-width: 560px) {
@@ -111,6 +112,7 @@
   justify-content: center;
   margin-bottom: 16px;
   color: var(--text-muted);
+  flex-shrink: 0;
 }
 
 .sel-card__title {
@@ -126,6 +128,7 @@
   color: var(--text-muted);
   margin: 0 0 20px;
   line-height: 1.5;
+  flex-grow: 1;
 }
 
 .sel-card__btn {
@@ -138,5 +141,6 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
+  flex-shrink: 0;
 }
 </style>
