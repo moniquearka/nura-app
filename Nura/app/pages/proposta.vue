@@ -963,24 +963,195 @@
             <div class="field-item"><span class="field-label">Tipo de Investimento</span><span class="field-value">Seguro de Vida</span></div>
             <div class="field-item"><span class="field-label">Produto</span><span class="field-value">Horizonte</span></div>
           </div>
-          <div class="product-card mb-12">
-            <span class="product-card__name">Horizonte</span>
-            <p class="product-card__desc">O Horizonte é o seguro de vida que oferece a combinação perfeita entre proteção e a possibilidade de formação de reserva, de forma temporária ou durante toda a vida.</p>
+          <!-- Produto Recomendado -->
+          <div class="product-card-ref mb-16">
+            <div class="product-card-ref__name">Horizonte</div>
+            <p class="product-card-ref__desc">O Horizonte é o seguro de vida que oferece a combinação perfeita entre proteção e a possibilidade de formação de reserva, de forma temporária ou durante toda a vida.</p>
           </div>
-          <table class="coverage-table">
-            <thead><tr><th>Cobertura</th><th>Vigência</th><th>Prazo de Pagamento</th><th>Capital Segurado</th><th>Contribuição Mensal</th></tr></thead>
-            <tbody>
-              <tr><td>Morte Natural ou Acidental + Adiantamento por Doença Terminal (obrigatório)</td><td>Vitalícia</td><td>—</td><td>R$ 2.961.000,00</td><td><strong>R$ 1.184,40</strong></td></tr>
-              <tr><td>Indenização Especial de Morte por Acidente (IEA)</td><td>Vitalícia</td><td>—</td><td>R$ 1.484.000,00</td><td><strong>R$ 593,60</strong></td></tr>
-              <tr><td>Invalidez Permanente por Acidente - Total ou Parcial (IPA)</td><td>Vitalícia</td><td>—</td><td>R$ 1.484.000,00</td><td><strong>R$ 593,60</strong></td></tr>
-              <tr><td>Indenização Especial de Invalidez por Doença (IED)</td><td>Vitalícia</td><td>—</td><td>R$ 155.000,00</td><td><strong>R$ 62,00</strong></td></tr>
-              <tr><td>Doenças Graves (DG)</td><td>Vitalícia</td><td>—</td><td>R$ 155.000,00</td><td><strong>R$ 62,00</strong></td></tr>
-              <tr><td>Diária por Incapacidade Temporária (DIT)</td><td>Vitalícia</td><td>—</td><td>R$ 4.000,00</td><td><strong>R$ 1,60</strong></td></tr>
-              <tr><td>Diária por Internação Hospitalar (DIH)</td><td>Vitalícia</td><td>—</td><td>R$ 2.000,00</td><td><strong>R$ 0,80</strong></td></tr>
-              <tr><td>Serviço de Assistência Funeral (SAF)</td><td>Vitalícia</td><td>—</td><td>R$ 5.000,00</td><td><strong>R$ 2,00</strong></td></tr>
-            </tbody>
-            <tfoot><tr class="coverage-table__total"><td colspan="3"><strong>Total</strong></td><td>—</td><td>R$ 2.500,00/mês</td></tr></tfoot>
-          </table>
+
+          <!-- Preferência do Proponente -->
+          <div class="plano-inner-box mb-16">
+            <div class="field-label" style="margin-bottom:12px;">PREFERÊNCIA DO PROPONENTE</div>
+            <div class="field-grid field-grid--3">
+              <div class="field-item"><span class="field-label">VIGÊNCIA</span><span class="field-value">Vitalícia</span></div>
+              <div class="field-item"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><span class="field-value">10 anos</span></div>
+              <div class="field-item"><span class="field-label">PROPONENTE</span><span class="field-value">41 anos · Feminino</span></div>
+            </div>
+          </div>
+
+          <!-- Coberturas individuais -->
+          <div class="coverage-card mb-8">
+            <div class="coverage-card__header">
+              <span class="coverage-card__check">☑</span>
+              Morte Natural ou Acidental + Adiantamento por Doença Terminal
+              <span class="coverage-card__badge-obrig">(Obrigatório)</span>
+            </div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><span class="field-value">Vitalícia</span></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><span class="field-value">10 anos</span></div>
+                <div class="coverage-card__field"><span class="field-label">CAPITAL SEGURADO *</span><span class="field-value field-value--highlight">R$ 1.000.000,00</span><span class="field-hint">Min: R$ 50.000 | Máx: R$ 20.000.000</span></div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><span class="field-value field-value--highlight">R$ 170,00</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="coverage-card mb-8">
+            <div class="coverage-card__header"><span class="coverage-card__check">☑</span> Morte Natural ou Acidental (Vigência Temporária)</div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><span class="field-value">Temporária 20 anos</span></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><span class="field-value">20 anos</span></div>
+                <div class="coverage-card__field"><span class="field-label">CAPITAL SEGURADO *</span><span class="field-value field-value--highlight">R$ 150.000,00</span><span class="field-hint">Min: R$ 50.000 | Máx: R$ 20.000.000</span></div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><span class="field-value field-value--highlight">R$ 21,67</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="coverage-card mb-8">
+            <div class="coverage-card__header"><span class="coverage-card__check">☑</span> Indenização Especial de Morte por Acidente (IEA)</div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><span class="field-value">Vitalícia</span></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><span class="field-value">30 anos</span></div>
+                <div class="coverage-card__field"><span class="field-label">CAPITAL SEGURADO *</span><span class="field-value field-value--highlight">R$ 500.000,00</span><span class="field-hint">Min: R$ 50.000 | Máx: R$ 10.000.000</span></div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><span class="field-value field-value--highlight">R$ 14,00</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="coverage-card mb-8">
+            <div class="coverage-card__header"><span class="coverage-card__check">☑</span> Invalidez Permanente Parcial ou Total por Acidente (IPA)</div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><span class="field-value">Vitalícia</span></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><span class="field-value">25 anos</span></div>
+                <div class="coverage-card__field"><span class="field-label">CAPITAL SEGURADO *</span><span class="field-value field-value--highlight">R$ 500.000,01</span><span class="field-hint">Min: R$ 50.000 | Máx: R$ 5.750.000</span></div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><span class="field-value field-value--highlight">R$ 19,00</span></div>
+              </div>
+              <div class="coverage-card__extra">
+                <div class="coverage-card__field"><span class="field-label">RETIRAR VÍNCULO DE CAPITAL?</span><span class="field-value">Não</span></div>
+                <div class="coverage-card__field"><span class="field-label">IPA MAJORADA?</span><span class="field-value">Não</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="coverage-card mb-8">
+            <div class="coverage-card__header"><span class="coverage-card__check">☑</span> Indenização Especial de Invalidez por Doença (IED)</div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><span class="field-value">Vitalícia</span></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><span class="field-value">20 anos</span></div>
+                <div class="coverage-card__field"><span class="field-label">CAPITAL SEGURADO *</span><span class="field-value field-value--highlight">R$ 400.000,00</span><span class="field-hint">Min: R$ 50.000 | Máx: R$ 1.000.000</span></div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><span class="field-value field-value--highlight">R$ 59,20</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="coverage-card mb-8">
+            <div class="coverage-card__header"><span class="coverage-card__check">☑</span> Diagnóstico de Doenças Graves (DG)</div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><span class="field-value">5 anos</span></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><span class="field-value">5 anos</span></div>
+                <div class="coverage-card__field"><span class="field-label">CAPITAL SEGURADO *</span><span class="field-value field-value--highlight">R$ 50.000,00</span><span class="field-hint">Min: R$ 50.000 | Máx: R$ 1.000.000</span></div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><span class="field-value field-value--highlight">R$ 10,75</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="coverage-card mb-8">
+            <div class="coverage-card__header"><span class="coverage-card__check">☑</span> Diária de Internação Hospitalar (DIH)</div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><span class="field-value">5 anos</span></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><span class="field-value">5 anos</span></div>
+                <div class="coverage-card__field"><span class="field-label">CAPITAL SEGURADO (DIÁRIA) *</span><span class="field-value field-value--highlight">R$ 300,00</span><span class="field-hint">Min: R$ 100 | Máx: R$ 1.000</span></div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><span class="field-value field-value--highlight">R$ 18,00</span></div>
+              </div>
+              <div class="coverage-card__extra">
+                <div class="coverage-card__field"><span class="field-label">DIH COM ADICIONAL DE UTI?</span><span class="field-value">Sim</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="coverage-card mb-8">
+            <div class="coverage-card__header"><span class="coverage-card__check">☑</span> Diária de Incapacidade Temporária (DIT)</div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><span class="field-value">5 anos</span></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><span class="field-value">5 anos</span></div>
+                <div class="coverage-card__field"><span class="field-label">CAPITAL SEGURADO (DIÁRIA) *</span><span class="field-value field-value--highlight">R$ 12.500,00</span><span class="field-hint">Min: R$ 1.000 | Máx: R$ 30.000.000</span></div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><span class="field-value field-value--highlight">R$ 550,00</span></div>
+              </div>
+              <div class="coverage-card__extra">
+                <div class="coverage-card__field"><span class="field-label">FRANQUIA REDUZIDA?</span><span class="field-value">Não</span></div>
+                <div class="coverage-card__field"><span class="field-label">EVENTOS COM LER/DORT/LTC?</span><span class="field-value">Não</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="coverage-card mb-16">
+            <div class="coverage-card__header"><span class="coverage-card__check">☑</span> Serviço de Assistência Funeral (SAF)</div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><span class="field-value">Vitalícia</span></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><span class="field-value">Vitalício</span></div>
+                <div class="coverage-card__field"><span class="field-label">CAPITAL SEGURADO</span><span class="field-value field-value--highlight">R$ 12.000,00</span></div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><span class="field-value field-value--highlight">R$ 1,38</span></div>
+              </div>
+              <div class="coverage-card__extra">
+                <div class="coverage-card__field"><span class="field-label">TIPO DE SAF</span><span class="field-value">Familiar</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resumo de Contribuição -->
+          <div class="plano-inner-box">
+            <div class="field-label" style="margin-bottom:12px;">RESUMO DE CONTRIBUIÇÃO</div>
+            <div class="resumo-contrib">
+              <div class="resumo-contrib__card resumo-contrib__card--active">
+                <div class="resumo-contrib__radio">● Contribuição mensal</div>
+                <div class="resumo-contrib__value">R$ 864,00</div>
+                <div class="resumo-contrib__sub">(12 x = R$ 10.368,00)</div>
+              </div>
+              <div class="resumo-contrib__card">
+                <div class="resumo-contrib__radio">○ Contribuição anual</div>
+                <div class="resumo-contrib__value">R$ 9.953,37</div>
+                <div class="resumo-contrib__sub">(Desconto aplicado de 4%)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Soluções Propostas (textos do aliaplan) -->
+          <div class="plano-inner-box" style="margin-top:16px;">
+            <div class="field-label" style="margin-bottom:14px;">SOLUÇÕES PROPOSTAS</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Seguro de Vida</div>
+                <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">Este produto garante:</div>
+                <ul style="margin:0;padding-left:18px;font-size:13px;color:var(--text-primary);line-height:1.7;">
+                  <li>Tranquilidade para o futuro</li>
+                  <li>Proteção do patrimônio</li>
+                  <li>Segurança para enfrentar imprevistos</li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Previdência Privada</div>
+                <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">Este produto garante:</div>
+                <ul style="margin:0;padding-left:18px;font-size:13px;color:var(--text-primary);line-height:1.7;">
+                  <li>Aposentadoria com renda previsível</li>
+                  <li>Confiança no planejamento sucessório</li>
+                </ul>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border-color);font-size:13px;color:var(--text-primary);line-height:1.6;">
+              Com <strong>Benefício Fiscal</strong> relevante <strong>no plano PGBL</strong>. As contribuições podem ser abatidas da base de cálculo do Imposto de Renda, com possibilidade de <strong>dedução de até 12%</strong>.
+            </div>
+            <div style="margin-top:8px;font-size:13px;color:var(--text-primary);line-height:1.6;">
+              E <strong>nos planos PGBL e VGBL</strong> a tributação é realizada apenas no momento do resgate ou da concessão de renda.
+            </div>
+          </div>
         </div>
 
         <div class="section-card">
@@ -1401,7 +1572,7 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .fund-card-ref {
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  overflow: hidden;
+  overflow: visible;
 }
 .fund-card-ref__top {
   display: flex;
@@ -1432,10 +1603,11 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 }
 .fund-card-ref__meta {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   flex-wrap: nowrap;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
+  white-space: nowrap;
 }
 .fund-card-ref__meta span {
   font-family: var(--font-sans);

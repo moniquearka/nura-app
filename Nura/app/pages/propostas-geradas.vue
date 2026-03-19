@@ -447,7 +447,7 @@ async function downloadPdf(proposal: Proposal) {
 }
 
 .proposals-table th {
-  padding: 9px 10px;
+  padding: 8px 8px;
   font-size: 10px;
   font-weight: 600;
   color: var(--text-label);
@@ -455,22 +455,23 @@ async function downloadPdf(proposal: Proposal) {
   letter-spacing: 0.5px;
   text-align: left;
   background-color: #f8fafc;
-  /* Permite quebra de linha nos cabeçalhos para evitar corte */
+  /* Permite quebra de linha nos cabeçalhos apenas quando necessário */
   white-space: normal;
-  word-break: break-word;
+  word-break: normal;
   line-height: 1.3;
   vertical-align: bottom;
 }
 
 /* Larguras das colunas — distribuição equilibrada sem scroll horizontal */
-.proposals-table th.col-proposal   { width: 20%; }
-.proposals-table th.col-products   { width: 11%; }
+/* Total = 100% | Status cols têm 15% cada para caber textos longos sem quebra */
+.proposals-table th.col-proposal   { width: 18%; }
+.proposals-table th.col-products   { width: 10%; }
 .proposals-table th.col-type       { width: 12%; }
 .proposals-table th.col-date       { width: 9%; }
 .proposals-table th.col-value      { width: 8%; }
-.proposals-table th.col-status-prev{ width: 16%; }
-.proposals-table th.col-status-seg { width: 16%; }
-.proposals-table th.col-actions    { width: 8%; text-align: right; }
+.proposals-table th.col-status-prev{ width: 15%; }
+.proposals-table th.col-status-seg { width: 15%; }
+.proposals-table th.col-actions    { width: 13%; text-align: right; }
 
 /* ── Linhas ──────────────────────────────────────────────────────────────── */
 .proposal-row {
@@ -482,7 +483,7 @@ async function downloadPdf(proposal: Proposal) {
 .proposal-row:hover { background-color: #f8fafc; }
 
 .proposal-row td {
-  padding: 9px 10px;
+  padding: 8px 8px;
   vertical-align: middle;
   /* Sem overflow hidden — o conteúdo não será cortado */
 }
@@ -570,6 +571,13 @@ async function downloadPdf(proposal: Proposal) {
 .status-tag--active:hover,
 .status-tag--pending:hover {
   filter: brightness(0.94);
+}
+
+/* Forçar nowrap nas tags de status para evitar quebra de linha */
+.status-tag {
+  white-space: nowrap !important;
+  word-break: normal !important;
+  max-width: none !important;
 }
 
 /* Paleta de status — todos em tons de azul/slate discretos */
