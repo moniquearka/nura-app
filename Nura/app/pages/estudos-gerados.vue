@@ -28,7 +28,7 @@
             <th class="col-check"></th>
             <th class="col-study">Estudo Gerado</th>
             <th class="col-products">Produtos Selecionados</th>
-            <th class="col-date">Data de Emissão</th>
+            <th class="col-date">Estudo Gerado em</th>
             <th class="col-value">Valor Total do Estudo</th>
             <th class="col-actions"></th>
           </tr>
@@ -67,7 +67,7 @@
               </span>
             </td>
 
-            <!-- Data de Emissão -->
+            <!-- Estudo Gerado em -->
             <td class="col-date">
               <span class="cell-value">{{ study.date }}</span>
             </td>

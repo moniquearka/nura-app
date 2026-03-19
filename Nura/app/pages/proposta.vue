@@ -918,20 +918,25 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .inner-tab { padding: 10px 20px; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s, border-color 0.15s; margin-bottom: -1px; }
 .inner-tab:hover { color: var(--text-primary); }
 .inner-tab--active { color: var(--text-primary); border-bottom-color: var(--btn-primary-bg); font-weight: 600; }
-.section-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; margin-bottom: 16px; }
+.section-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; box-shadow: rgba(0,0,0,0.04) 0px 1px 3px 0px, rgba(0,0,0,0.03) 0px 1px 2px 0px; }
 .section-card__title { display: flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: var(--text-primary); margin: 0 0 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); }
+/* Grid de campos - estilo aliaplan */
 .field-grid { display: grid; gap: 16px 24px; }
 .field-grid--2 { grid-template-columns: 1fr 1fr; }
 .field-grid--3 { grid-template-columns: 1fr 1fr 1fr; }
 .field-item { display: flex; flex-direction: column; gap: 4px; }
-.field-label { font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.6px; }
-.field-value { font-family: var(--font-sans); font-size: 15px; font-weight: 400; color: var(--text-primary); }
+/* Labels de exibição (somente leitura) */
+.field-label { font-family: var(--font-sans); font-size: 11px; font-weight: 500; color: rgb(77, 86, 96); text-transform: uppercase; letter-spacing: 0.6px; }
+.field-value { font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: rgb(15, 23, 42); }
+/* Campos de formulário - idênticos ao aliaplan/portabilidade */
 .form-field { display: flex; flex-direction: column; gap: 6px; }
 .form-field--full { grid-column: 1 / -1; }
-.form-label { font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.6px; }
-.form-input { font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 6px; background-color: white; outline: none; transition: border-color 0.15s; width: 100%; box-sizing: border-box; }
-.form-input:focus { border-color: #94a3b8; }
-.form-select { font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 6px; background-color: white; outline: none; cursor: pointer; width: 100%; box-sizing: border-box; }
+.form-label { font-family: var(--font-sans); font-size: 11px; font-weight: 500; color: rgb(77, 86, 96); text-transform: uppercase; letter-spacing: 0.6px; }
+.form-label--required::after { content: ' *'; color: #ef4444; }
+.form-input { font-family: var(--font-sans); font-size: 13px; color: rgb(15, 23, 42); padding: 4px 8px; border: 1px solid rgb(226, 232, 240); border-radius: 6px; background-color: rgb(248, 250, 252); outline: none; height: 29.5px; box-sizing: border-box; width: 100%; transition: border-color 0.15s; }
+.form-input:focus { border-color: var(--btn-primary-bg); }
+.form-input--error { border-color: #ef4444 !important; }
+.form-select { font-family: var(--font-sans); font-size: 13px; color: rgb(15, 23, 42); padding: 4px 8px; border: 1px solid rgb(226, 232, 240); border-radius: 6px; background-color: rgb(248, 250, 252); outline: none; height: 29.5px; box-sizing: border-box; width: 100%; }
 .beneficiary-card { border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; margin-bottom: 12px; }
 .beneficiary-card__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .beneficiary-card__title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
@@ -943,10 +948,10 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .alert-warning { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background-color: #fefce8; border: 1px solid #fde047; border-radius: 6px; font-size: 13px; color: #854d0e; margin: 8px 0; }
 .radio-group { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
 .radio-item { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-.radio-input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--btn-primary-bg); }
-.radio-label { font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); }
-.radio-group-h { display: flex; flex-direction: row; gap: 16px; }
-.radio-label-h { display: flex; align-items: center; gap: 6px; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); cursor: pointer; }
+.radio-input { width: 14px; height: 14px; cursor: pointer; accent-color: var(--btn-primary-bg); }
+.radio-label { font-family: var(--font-sans); font-size: 13px; color: var(--text-primary); }
+.radio-group-h { display: flex; flex-direction: row; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
+.radio-label-h { display: flex; align-items: center; gap: 6px; font-family: var(--font-sans); font-size: 13px; color: var(--text-primary); cursor: pointer; }
 .info-box-blue { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; font-size: 13px; color: #1e40af; line-height: 1.5; }
 .info-box-blue svg { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; color: #1e40af; }
 .valor-total-row { display: flex; align-items: baseline; gap: 12px; padding-top: 16px; border-top: 1px solid var(--border-color); margin-top: 8px; }
@@ -957,7 +962,7 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .review-subtab-divider { border: none; border-top: 1px solid var(--border-color); margin: 20px 0; }
 .beneficiary-review { padding: 12px; background-color: #fafafa; border-radius: 6px; border: 1px solid var(--border-color); }
 .page-footer { display: flex; justify-content: flex-end; padding-top: 24px; }
-.btn-primary { font-family: var(--font-sans); font-size: 14px; font-weight: 500; padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; background-color: var(--btn-primary-bg); color: var(--btn-primary-color); transition: opacity 0.15s; line-height: 1; }
+.btn-primary { font-family: var(--font-sans); font-size: 13px; font-weight: 500; padding: 8px 20px; border-radius: 6px; border: none; cursor: pointer; background-color: var(--btn-primary-bg); color: var(--btn-primary-color); transition: opacity 0.15s; line-height: 1.4; height: 36px; }
 .btn-primary:hover { opacity: 0.85; }
 .mt-8 { margin-top: 8px; }
 .mt-12 { margin-top: 12px; }
@@ -974,8 +979,8 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .proponente-flags { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
 .proponente-flag-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
 .flag-question { font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--text-primary); min-width: 220px; }
-.flag-radio-group { display: flex; flex-direction: row; gap: 20px; }
-.flag-radio-label { display: flex; align-items: center; gap: 7px; font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); cursor: pointer; }
+.flag-radio-group { display: flex; flex-direction: row; gap: 16px; }
+.flag-radio-label { display: flex; align-items: center; gap: 6px; font-family: var(--font-sans); font-size: 13px; color: var(--text-primary); cursor: pointer; }
 .proponente-residencial { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
 .proponente-complementar { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color); }
 .complementar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 12px; }

@@ -128,11 +128,10 @@
             </div>
           </div>
 
-          <!-- É US Person? + NIF como campos normais em grid (alinhado à 2ª coluna) -->
+          <!-- É US Person? (col 1 = alinhado com CPF/Gênero/E-mail) + NIF (col 2 = alinhado com Nome/Nacionalidade/Renda) -->
           <div class="proponente-flags">
             <div class="field-grid field-grid--3" style="margin-top:0;">
-              <div class="form-field" style="grid-column:1"></div>
-              <div class="form-field" style="grid-column:2">
+              <div class="form-field" style="grid-column:1">
                 <label class="form-label form-label--required">É US Person?</label>
                 <div class="radio-group-h" style="margin-top:4px;">
                   <label class="radio-label-h"><input type="radio" v-model="proponente.usPerson" value="sim" class="radio-input" /><span>Sim</span></label>
@@ -140,7 +139,7 @@
                 </div>
                 <span v-if="showErrors && !proponente.usPerson" class="form-error">Campo obrigatório</span>
               </div>
-              <div class="form-field" style="grid-column:3" v-if="proponente.usPerson === 'sim'">
+              <div class="form-field" style="grid-column:2" v-if="proponente.usPerson === 'sim'">
                 <label class="form-label form-label--required">NIF (Número de Identificação Fiscal)</label>
                 <input v-model="proponente.nif" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.nif }" placeholder="Digite o NIF" />
                 <span v-if="showErrors && !proponente.nif" class="form-error">Campo obrigatório</span>
@@ -341,14 +340,24 @@
                 <span v-if="showErrors && !plano.tipoPlano" class="form-error">Campo obrigatório</span>
               </div>
               <div class="form-field">
-                <label class="form-label">Contribuição Mensal</label>
-                <input v-model="plano.contribuicaoMensal" type="text" placeholder="R$ 0,00" class="form-input" @input="formatMoedaPlano($event, 'contribuicaoMensal')" />
+                <!-- Quando Portabilidade=Não: obrigatório se Aporte Inicial também estiver vazio -->
+                <label class="form-label" :class="{ 'form-label--required': comPortabilidade === 'sim' }">Contribuição Mensal</label>
+                <input v-model="plano.contribuicaoMensal" type="text" placeholder="R$ 0,00" class="form-input"
+                  :class="{ 'form-input--error': showErrors && comPortabilidade === 'sim' && !plano.contribuicaoMensal }"
+                  @input="formatMoedaPlano($event, 'contribuicaoMensal')" />
+                <span v-if="showErrors && comPortabilidade === 'sim' && !plano.contribuicaoMensal" class="form-error">Campo obrigatório</span>
               </div>
               <div class="form-field">
                 <label class="form-label">Valor do Aporte Inicial</label>
                 <input v-model="plano.aporteInicial" type="text" placeholder="R$ 0,00" class="form-input" @input="formatMoedaPlano($event, 'aporteInicial')" />
               </div>
             </div>
+          </div>
+
+          <!-- Erro combinado: Portabilidade=Não e nenhum valor preenchido -->
+          <div v-if="showErrors && comPortabilidade === 'nao' && !plano.contribuicaoMensal && !plano.aporteInicial"
+            style="margin-top: -8px; margin-bottom: 12px; font-size: 12px; color: #ef4444;">
+            Preencha ao menos a Contribuição Mensal ou o Valor do Aporte Inicial.
           </div>
 
           <!-- Seleção de Fundos -->
@@ -369,15 +378,12 @@
                 <div v-if="plano.fundosSelecionados.length > 0" class="fundos-selecionados-list">
                   <label class="form-label" style="margin-bottom: 8px; display: block;">Fundos Selecionados</label>
                   <div v-for="(fs, fi) in plano.fundosSelecionados" :key="fi" class="fund-card-aliaplan">
-                    <!-- Linha 1: Nome | Contribuição Mensal | Botão remover -->
+                    <!-- Linha 1: Nome | Contribuição Mensal (condicional) | Botão remover -->
                     <div class="fund-card-aliaplan__nome-col">
                       <div class="fund-card-aliaplan__nome">{{ fs.nome }}</div>
-                      <div style="display:flex;align-items:center;gap:6px;margin-top:2px;">
-                        <span class="fund-card-aliaplan__cnpj">{{ fs.cnpj }}</span>
-                        <span v-if="fs.qualificado" class="badge-qualificado">QUALIFICADO</span>
-                      </div>
                     </div>
-                    <div class="fund-card-aliaplan__contrib-col">
+                    <!-- Contribuição Mensal: sempre visível quando Portabilidade=Não; quando Sim, só se contribuicaoMensal preenchido -->
+                    <div v-if="comPortabilidade !== 'sim' || plano.contribuicaoMensal" class="fund-card-aliaplan__contrib-col">
                       <span class="fund-card-aliaplan__section-label">Contribuição Mensal:</span>
                       <div class="fund-card-aliaplan__field-pair">
                         <span class="fund-card-aliaplan__field-label">Valor Atribuído</span>
@@ -394,8 +400,15 @@
                     <button class="btn-remove-fund" @click="removerFundoPlano(fi)" style="grid-column:3;grid-row:1;align-self:start;margin-top:2px;">
                       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
-                    <!-- Linha 2: Aporte Inicial (mesma linha que CNPJ, alinhado à direita como Contribuição Mensal) -->
-                    <div class="fund-card-aliaplan__aporte-row">
+                    <!-- Linha 2: CNPJ + badge + Aporte Inicial (condicional) -->
+                    <div class="fund-card-aliaplan__cnpj-row">
+                      <div style="display:flex;align-items:center;gap:6px;">
+                        <span class="fund-card-aliaplan__cnpj">{{ fs.cnpj }}</span>
+                        <span v-if="fs.qualificado" class="badge-qualificado">QUALIFICADO</span>
+                      </div>
+                    </div>
+                    <!-- Aporte Inicial: sempre visível quando Portabilidade=Não; quando Sim, só se aporteInicial preenchido -->
+                    <div v-if="comPortabilidade !== 'sim' || plano.aporteInicial" class="fund-card-aliaplan__aporte-row">
                       <span class="fund-card-aliaplan__section-label">Aporte Inicial:</span>
                       <div class="fund-card-aliaplan__field-pair">
                         <span class="fund-card-aliaplan__field-label">Valor Atribuído</span>
@@ -1054,6 +1067,11 @@
               </button>
             </div>
           </div>
+          <!-- Aviso de limite quando Portabilidade = Sim -->
+          <div v-if="comPortabilidade === 'sim'" style="margin: 0 20px 12px; padding: 8px 12px; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 6px; font-size: 12px; color: #92400e; display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            <span>Portabilidade: apenas <strong>1 fundo</strong> pode ser selecionado por solicitação.</span>
+          </div>
           <!-- Busca -->
           <div class="modal-fundos__search">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
@@ -1287,7 +1305,12 @@ function planoValido(): boolean {
     !!form.tipoTransferencia &&
     (form.tipoTransferencia !== 'Parcial' || !!form.valorPortabilidade)
   )
-  return !!(plano.idadeAposentadoria && plano.contribuicaoMensal && plano.tipoPlano &&
+  // Quando Portabilidade=Não: Contribuição Mensal OU Aporte Inicial é obrigatório
+  // Quando Portabilidade=Sim: Contribuição Mensal é obrigatória (comportamento original)
+  const valorOk = comPortabilidade.value === 'nao'
+    ? !!(plano.contribuicaoMensal || plano.aporteInicial)
+    : !!plano.contribuicaoMensal
+  return !!(plano.idadeAposentadoria && valorOk && plano.tipoPlano &&
     plano.fundosSelecionados.length > 0 && comPortabilidade.value !== '' && portOk)
 }
 
@@ -1556,8 +1579,16 @@ function fecharPopupFundos() {
 
 function toggleFundoPopup(f: FundoSelecionado) {
   const idx = popupFundos.selecionados.indexOf(f.cnpj)
-  if (idx === -1) popupFundos.selecionados.push(f.cnpj)
-  else popupFundos.selecionados.splice(idx, 1)
+  if (idx === -1) {
+    // Quando Portabilidade = Sim, limitar a 1 fundo
+    if (comPortabilidade.value === 'sim') {
+      popupFundos.selecionados = [f.cnpj]
+    } else {
+      popupFundos.selecionados.push(f.cnpj)
+    }
+  } else {
+    popupFundos.selecionados.splice(idx, 1)
+  }
 }
 
 function confirmarFundosPopup() {
@@ -1696,13 +1727,14 @@ function changeTab(i: number) {
 .btn-remove-fund:hover { color: #ef4444; }
 
 /* Fund Card Aliaplan - layout idêntico ao aliaplan */
-/* Grid: col1=nome, col2=contrib-mensal, col3=botão remover */
-/* Linha 1: nome | contrib mensal | botão */
-/* Linha 2: cnpj+qualificado | aporte inicial (alinhado à direita) | - */
+/* Grid: col1=nome/cnpj, col2=contrib-mensal/aporte, col3=botão remover */
+/* Linha 1: nome | contrib mensal (condicional) | botão */
+/* Linha 2: cnpj+qualificado | aporte inicial (condicional, alinhado à direita) | - */
 /* Linha 3: meta info */
-.fund-card-aliaplan { border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 14px; background: #fff; display: grid; grid-template-columns: 1fr auto 28px; grid-template-rows: auto auto auto; column-gap: 12px; row-gap: 6px; align-items: start; margin-bottom: 8px; }
+.fund-card-aliaplan { border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 14px; background: #fff; display: grid; grid-template-columns: 1fr auto 28px; grid-template-rows: auto auto auto; column-gap: 12px; row-gap: 4px; align-items: start; margin-bottom: 8px; }
 .fund-card-aliaplan__nome-col { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .fund-card-aliaplan__nome { font-size: 13px; font-weight: 600; color: #1e293b; word-break: break-word; }
+.fund-card-aliaplan__cnpj-row { grid-column: 1; grid-row: 2; display: flex; align-items: center; gap: 6px; }
 .fund-card-aliaplan__cnpj { font-size: 11px; color: #6b7280; }
 .fund-card-aliaplan__contrib-col { grid-column: 2; grid-row: 1; display: flex; align-items: center; gap: 6px; flex-shrink: 0; justify-content: flex-end; white-space: nowrap; flex-wrap: wrap; }
 .fund-card-aliaplan__aporte-row { grid-column: 2; grid-row: 2; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; white-space: nowrap; }
