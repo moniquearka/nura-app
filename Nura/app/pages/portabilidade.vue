@@ -1292,9 +1292,9 @@ async function onCepInputPag() {
 const profissaoQuery = ref('')
 const showProfissaoDropdown = ref(false)
 const profissaoResults = computed(() => {
-  if (!profissaoQuery.value) return PROFISSOES.slice(0, 8)
+  if (!profissaoQuery.value) return PROFISSOES.slice(0, 50)
   const q = profissaoQuery.value.toLowerCase()
-  return PROFISSOES.filter(p => p.toLowerCase().includes(q)).slice(0, 10)
+  return PROFISSOES.filter(p => p.toLowerCase().includes(q)).slice(0, 100)
 })
 function onProfissaoInput() { showProfissaoDropdown.value = true }
 function hideProfissaoDropdownDelayed() { setTimeout(() => { showProfissaoDropdown.value = false }, 200) }
@@ -1537,7 +1537,7 @@ function changeTab(i: number) {
 
 /* Autocomplete */
 .autocomplete-wrapper { position: relative; }
-.autocomplete-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; max-height: 200px; overflow-y: auto; }
+.autocomplete-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; max-height: 280px; overflow-y: auto; }
 .autocomplete-item { display: block; width: 100%; padding: 8px 12px; background: none; border: none; text-align: left; font-family: var(--font-sans); font-size: 13px; color: var(--text-primary); cursor: pointer; transition: background-color 0.1s; }
 .autocomplete-item:hover { background-color: #f8fafc; }
 
