@@ -463,15 +463,15 @@ async function downloadPdf(proposal: Proposal) {
 }
 
 /* Larguras das colunas — distribuição equilibrada sem scroll horizontal */
-/* Total = 100% | col-products aumentado para evitar quebra no título; col-actions reduzido (só ícone) */
-.proposals-table th.col-proposal   { width: 17%; }
+/* Total = 100% | col-proposal aumentado para evitar quebra no conteúdo; col-actions mínimo (só ícone) */
+.proposals-table th.col-proposal   { width: 22%; }
 .proposals-table th.col-products   { width: 14%; }
 .proposals-table th.col-type       { width: 12%; }
 .proposals-table th.col-date       { width: 9%; }
 .proposals-table th.col-value      { width: 8%; }
 .proposals-table th.col-status-prev{ width: 15%; }
 .proposals-table th.col-status-seg { width: 15%; }
-.proposals-table th.col-actions    { width: 10%; text-align: right; }
+.proposals-table th.col-actions    { width: 5%; text-align: right; }
 
 /* ── Linhas ──────────────────────────────────────────────────────────────── */
 .proposal-row {
@@ -498,8 +498,8 @@ async function downloadPdf(proposal: Proposal) {
   font-size: 10.5px;
   font-weight: 500;
   color: var(--text-primary);
-  white-space: normal;
-  word-break: break-word;
+  white-space: nowrap;
+  word-break: normal;
   line-height: 1.4;
 }
 .proposal-name__icon { color: var(--text-muted); flex-shrink: 0; }
