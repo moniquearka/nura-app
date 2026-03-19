@@ -78,7 +78,8 @@
             <div class="form-field">
               <label class="form-label form-label--required">Profissão</label>
               <div class="autocomplete-wrapper">
-                <input v-model="profissaoQuery" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.profissao }" placeholder="Digite para buscar..." @input="onProfissaoInput" @blur="hideProfissaoDropdownDelayed" @focus="onProfissaoInput" />
+                <input v-model="profissaoQuery" type="text" class="form-input autocomplete-input" :class="{ 'form-input--error': showErrors && !proponente.profissao }" placeholder="Digite para buscar..." @input="onProfissaoInput" @blur="hideProfissaoDropdownDelayed" @focus="onProfissaoInput" />
+                <span class="autocomplete-arrow">▼</span>
                 <div v-if="showProfissaoDropdown && profissaoResults.length > 0" class="autocomplete-dropdown">
                   <button v-for="p in profissaoResults" :key="p" class="autocomplete-item" @mousedown.prevent="selectProfissao(p)">{{ p }}</button>
                 </div>
@@ -127,7 +128,7 @@
             </div>
           </div>
 
-          <!-- É US Person? -->
+          <!-- É US Person? + NIF na mesma linha -->
           <div class="proponente-flags">
             <div class="proponente-flag-row">
               <span class="flag-question form-label--required">É US Person?</span>
@@ -135,16 +136,16 @@
                 <label class="flag-radio-label"><input type="radio" v-model="proponente.usPerson" value="sim" class="radio-input" /><span>Sim</span></label>
                 <label class="flag-radio-label"><input type="radio" v-model="proponente.usPerson" value="nao" class="radio-input" /><span>Não</span></label>
               </div>
+              <!-- NIF na mesma linha quando US Person = Sim -->
+              <template v-if="proponente.usPerson === 'sim'">
+                <div class="nif-inline">
+                  <label class="form-label form-label--required">NIF (Número de Identificação Fiscal)</label>
+                  <input v-model="proponente.nif" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.nif }" placeholder="Digite o NIF" style="width:220px;" />
+                  <span v-if="showErrors && !proponente.nif" class="form-error">Campo obrigatório</span>
+                </div>
+              </template>
               <span v-if="showErrors && !proponente.usPerson" class="form-error">Campo obrigatório</span>
             </div>
-            <!-- NIF (quando US Person = Sim) -->
-            <template v-if="proponente.usPerson === 'sim'">
-              <div class="form-field" style="max-width:320px;margin-top:12px;">
-                <label class="form-label form-label--required">NIF (Número de Identificação Fiscal)</label>
-                <input v-model="proponente.nif" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.nif }" placeholder="Digite o NIF" />
-                <span v-if="showErrors && !proponente.nif" class="form-error">Campo obrigatório</span>
-              </div>
-            </template>
           </div>
 
           <!-- Dados Residenciais -->
@@ -362,38 +363,53 @@
 
                 <div v-if="plano.fundosSelecionados.length > 0" class="fundos-selecionados-list">
                   <label class="form-label" style="margin-bottom: 8px; display: block;">Fundos Selecionados</label>
-                  <div v-for="(fs, fi) in plano.fundosSelecionados" :key="fi" class="fund-card">
-                    <div class="fund-card__header">
-                      <div>
-                        <div class="fund-card__name">{{ fs.nome }}</div>
-                        <div class="fund-card__cnpj">{{ fs.cnpj }}</div>
+                  <div v-for="(fs, fi) in plano.fundosSelecionados" :key="fi" class="fund-card-aliaplan">
+                    <!-- Linha 1: Nome | Contribuição Mensal | Botão remover -->
+                    <div class="fund-card-aliaplan__nome-col">
+                      <div class="fund-card-aliaplan__nome">{{ fs.nome }}</div>
+                      <div style="display:flex;align-items:center;gap:6px;margin-top:2px;">
+                        <span class="fund-card-aliaplan__cnpj">{{ fs.cnpj }}</span>
+                        <span v-if="fs.qualificado" class="badge-qualificado">QUALIFICADO</span>
                       </div>
-                      <button class="btn-remove-fund" @click="removerFundoPlano(fi)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                      </button>
                     </div>
-                    <div class="fund-card__body">
-                      <div class="fund-card__row">
-                        <span class="fund-card__label">CONTRIBUIÇÃO MENSAL:</span>
-                        <span class="fund-card__text">Valor Atribuído</span>
-                        <input v-model="fs.valorContrib" type="text" class="fund-input" placeholder="R$ 0,00" />
-                        <span class="fund-card__text">Percentual Atribuído</span>
-                        <input v-model="fs.percContrib" type="text" class="fund-input fund-input--sm" placeholder="0" />
-                        <span class="fund-card__text">%</span>
+                    <div class="fund-card-aliaplan__contrib-col">
+                      <span class="fund-card-aliaplan__section-label">Contribuição Mensal:</span>
+                      <div class="fund-card-aliaplan__field-pair">
+                        <span class="fund-card-aliaplan__field-label">Valor Atribuído</span>
+                        <input v-model="fs.valorContrib" type="text" class="fund-card-aliaplan__input" placeholder="0,00" />
                       </div>
-                      <div class="fund-card__row">
-                        <span class="fund-card__label">APORTE INICIAL:</span>
-                        <span class="fund-card__text">Valor Atribuído</span>
-                        <input v-model="fs.valorAporte" type="text" class="fund-input" placeholder="R$ 0,00" />
-                        <span class="fund-card__text">Percentual Atribuído</span>
-                        <input v-model="fs.percAporte" type="text" class="fund-input fund-input--sm" placeholder="0" />
-                        <span class="fund-card__text">%</span>
+                      <div class="fund-card-aliaplan__field-pair">
+                        <span class="fund-card-aliaplan__field-label">Percentual Atribuído</span>
+                        <div class="fund-card-aliaplan__pct-wrap">
+                          <input v-model="fs.percContrib" type="text" class="fund-card-aliaplan__pct-input" placeholder="0" />
+                          <span class="fund-card-aliaplan__pct-sign">%</span>
+                        </div>
                       </div>
-                      <div class="fund-card__meta">
-                        <span>Taxa Máx. Adm.: <strong>{{ fs.taxaAdm }}</strong></span>
-                        <span>Rentabilidade: <strong>{{ fs.rentabilidade }}</strong></span>
-                        <span>Estratégia: <strong>{{ fs.estrategia }}</strong></span>
+                    </div>
+                    <button class="btn-remove-fund" @click="removerFundoPlano(fi)" style="grid-column:3;grid-row:1;align-self:start;margin-top:2px;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                    <!-- Linha 2: Aporte Inicial -->
+                    <div class="fund-card-aliaplan__aporte-row">
+                      <span class="fund-card-aliaplan__section-label">Aporte Inicial:</span>
+                      <div class="fund-card-aliaplan__field-pair">
+                        <span class="fund-card-aliaplan__field-label">Valor Atribuído</span>
+                        <input v-model="fs.valorAporte" type="text" class="fund-card-aliaplan__input" placeholder="0,00" />
                       </div>
+                      <div class="fund-card-aliaplan__field-pair">
+                        <span class="fund-card-aliaplan__field-label">Percentual Atribuído</span>
+                        <div class="fund-card-aliaplan__pct-wrap">
+                          <input v-model="fs.percAporte" type="text" class="fund-card-aliaplan__pct-input" placeholder="0" />
+                          <span class="fund-card-aliaplan__pct-sign">%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Linha 3: Meta info -->
+                    <div class="fund-card-aliaplan__meta-row">
+                      <span>Taxa Máx. Adm.: <strong>{{ fs.taxaAdm }}</strong></span>
+                      <span>Rentabilidade: <strong>{{ fs.rentabilidade || '—' }}</strong></span>
+                      <span>Estratégia: <strong>{{ fs.estrategia }}</strong></span>
+                      <span v-if="fs.riscoLabel">Grau de Risco: <strong>{{ fs.riscoLabel }}</strong></span>
                     </div>
                   </div>
                 </div>
@@ -426,7 +442,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </div>
-            <div class="field-grid field-grid--3">
+            <div class="form-grid">
               <div class="form-field">
                 <label class="form-label">Nome Completo</label>
                 <input v-model="ben.nome" type="text" class="form-input" />
@@ -537,7 +553,8 @@
                 <div class="form-field">
                   <label class="form-label">Profissão</label>
                   <div class="autocomplete-wrapper">
-                    <input v-model="rfProfissaoQuery" type="text" class="form-input" placeholder="Digite para buscar..." @input="onRfProfissaoInput" @blur="hideRfProfissaoDropdownDelayed" @focus="onRfProfissaoInput" />
+                    <input v-model="rfProfissaoQuery" type="text" class="form-input autocomplete-input" placeholder="Digite para buscar..." @input="onRfProfissaoInput" @blur="hideRfProfissaoDropdownDelayed" @focus="onRfProfissaoInput" />
+                    <span class="autocomplete-arrow">▼</span>
                     <div v-if="showRfProfissaoDropdown && rfProfissaoResults.length > 0" class="autocomplete-dropdown">
                       <button v-for="p in rfProfissaoResults" :key="p" class="autocomplete-item" @mousedown.prevent="selectRfProfissao(p)">{{ p }}</button>
                     </div>
@@ -579,7 +596,7 @@
                   <label class="form-label">Patrimônio</label>
                   <input v-model="pagamento.rfPatrimonio" type="text" class="form-input" placeholder="R$ 0,00" @input="formatRfMoeda($event, 'rfPatrimonio')" />
                 </div>
-                <!-- É US Person? -->
+                <!-- É US Person? + NIF na mesma linha -->
                 <div class="form-field form-field--full">
                   <div class="proponente-flag-row">
                     <span class="flag-question">É US Person?</span>
@@ -587,13 +604,13 @@
                       <label class="flag-radio-label"><input type="radio" v-model="pagamento.rfUsPerson" value="sim" class="radio-input" /><span>Sim</span></label>
                       <label class="flag-radio-label"><input type="radio" v-model="pagamento.rfUsPerson" value="nao" class="radio-input" /><span>Não</span></label>
                     </div>
+                    <template v-if="pagamento.rfUsPerson === 'sim'">
+                      <div class="nif-inline">
+                        <label class="form-label">NIF (Número de Identificação Fiscal)</label>
+                        <input v-model="pagamento.rfNif" type="text" class="form-input" placeholder="Digite o NIF" style="width:220px;" />
+                      </div>
+                    </template>
                   </div>
-                  <template v-if="pagamento.rfUsPerson === 'sim'">
-                    <div class="form-field" style="max-width:320px;margin-top:12px;">
-                      <label class="form-label">NIF (Número de Identificação Fiscal)</label>
-                      <input v-model="pagamento.rfNif" type="text" class="form-input" placeholder="Digite o NIF" />
-                    </div>
-                  </template>
                 </div>
               </div>
             </div>
@@ -661,7 +678,8 @@
               <div class="form-field">
                 <label class="form-label">Banco</label>
                 <div class="autocomplete-wrapper">
-                  <input v-model="bancoQuery" type="text" class="form-input" placeholder="Digite o nome ou código do banco..." @input="onBancoInput" @blur="hideBancoDropdownDelayed" @focus="onBancoInput" />
+                  <input v-model="bancoQuery" type="text" class="form-input autocomplete-input" placeholder="Digite o nome ou código do banco..." @input="onBancoInput" @blur="hideBancoDropdownDelayed" @focus="onBancoInput" />
+                  <span class="autocomplete-arrow">▼</span>
                   <div v-if="showBancoDropdown && bancoResults.length > 0" class="autocomplete-dropdown">
                     <button v-for="b in bancoResults" :key="b.codigo" class="autocomplete-item" @mousedown.prevent="selectBanco(b)">{{ b.codigo }} - {{ b.nome }}</button>
                   </div>
@@ -711,7 +729,8 @@
                   <div class="form-field">
                     <label class="form-label">Banco</label>
                     <div class="autocomplete-wrapper">
-                      <input v-model="bancoQuery" type="text" class="form-input" placeholder="Digite o nome ou código do banco..." @input="onBancoInput" @blur="hideBancoDropdownDelayed" @focus="onBancoInput" />
+                      <input v-model="bancoQuery" type="text" class="form-input autocomplete-input" placeholder="Digite o nome ou código do banco..." @input="onBancoInput" @blur="hideBancoDropdownDelayed" @focus="onBancoInput" />
+                      <span class="autocomplete-arrow">▼</span>
                       <div v-if="showBancoDropdown && bancoResults.length > 0" class="autocomplete-dropdown">
                         <button v-for="b in bancoResults" :key="b.codigo" class="autocomplete-item" @mousedown.prevent="selectBanco(b)">{{ b.codigo }} - {{ b.nome }}</button>
                       </div>
@@ -993,37 +1012,80 @@
       <!-- Modal de Fundos -->
       <div v-if="popupFundos.aberto" class="modal-overlay" @click.self="fecharPopupFundos">
         <div class="modal-fundos">
+          <!-- Cabeçalho -->
           <div class="modal-fundos__header">
             <div>
               <div class="modal-fundos__title">Buscar Fundos Disponíveis</div>
               <div class="modal-fundos__count">{{ fundosPopupFiltrados.length }} de {{ fundosDisponiveis.length }} fundos encontrados</div>
             </div>
-            <div class="modal-fundos__header-right">
-              <div class="termometro-risco">
-                <span class="termometro-label">Muito baixo</span>
-                <div class="termometro-barra"><div class="termometro-fill" style="background:linear-gradient(to right,#22c55e,#f59e0b,#ef4444);width:100%"></div></div>
-                <span class="termometro-label">Média</span>
-                <div class="termometro-barra"><div class="termometro-fill" style="background:linear-gradient(to right,#f59e0b,#ef4444);width:100%"></div></div>
-                <span class="termometro-label">Muito alto</span>
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <!-- Termômetro de Risco idêntico ao aliaplan -->
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:220px;">
+                <div style="display:flex;align-items:center;gap:5px;flex-shrink:0;">
+                  <span style="font-size:11px;color:#6b7280;white-space:nowrap;">Termômetro de Risco</span>
+                  <div style="width:13px;height:13px;border-radius:50%;border:1px solid #d1d5db;display:flex;align-items:center;justify-content:center;cursor:help;font-size:9px;color:#6b7280;flex-shrink:0;" title="Indica o nível de risco dos fundos selecionados">i</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:2px;width:220px;flex-shrink:0;">
+                  <div style="width:100%;display:flex;height:4px;border-radius:2px;overflow:hidden;">
+                    <div v-for="(seg, si) in [{color:'#4285F4'},{color:'#34A853'},{color:'#FBBC04'},{color:'#EA8600'},{color:'#EA4335'}]" :key="si" :style="{flex:1,background:seg.color,height:'100%'}"></div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;">
+                    <span style="font-size:9px;color:#9ca3af;">Muito baixo</span>
+                    <span style="font-size:9px;color:#9ca3af;">Média</span>
+                    <span style="font-size:9px;color:#9ca3af;">Muito alto</span>
+                  </div>
+                </div>
               </div>
-              <button class="modal-fundos__close" @click="fecharPopupFundos">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+              <!-- Botão fechar -->
+              <button class="modal-fundos__close" @click="fecharPopupFundos" style="margin-top:2px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </div>
           </div>
+          <!-- Busca -->
           <div class="modal-fundos__search">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
             <input v-model="popupFundos.busca" type="text" class="modal-fundos__input" placeholder="Pesquisar por nome ou CNPJ do fundo..." />
           </div>
+          <!-- Tabela -->
           <div class="modal-fundos__table-wrapper">
             <table class="modal-fundos__table">
+              <colgroup>
+                <col style="width:36px" />
+                <col style="min-width:280px" />
+                <col style="width:120px" />
+                <col style="width:130px" />
+                <col style="width:150px" />
+                <col style="min-width:160px" />
+              </colgroup>
               <thead>
                 <tr>
                   <th class="col-check"></th>
                   <th class="col-nome">Nome</th>
-                  <th class="col-rent">Rentabilidade</th>
-                  <th class="col-risco">Grau de Risco</th>
-                  <th class="col-taxa">Taxa Máx. Adm.</th>
+                  <th class="col-rent th-sortable" @click="toggleSortFundos('rentabilidade')">
+                    <span class="th-sort-inner">Rentabilidade
+                      <span class="sort-arrows">
+                        <span class="sort-arrow-up" :class="{active: popupFundos.sortField==='rentabilidade'&&popupFundos.sortDir==='asc'}"></span>
+                        <span class="sort-arrow-down" :class="{active: popupFundos.sortField==='rentabilidade'&&popupFundos.sortDir==='desc'}"></span>
+                      </span>
+                    </span>
+                  </th>
+                  <th class="col-risco th-sortable" @click="toggleSortFundos('risco')">
+                    <span class="th-sort-inner">Grau de Risco
+                      <span class="sort-arrows">
+                        <span class="sort-arrow-up" :class="{active: popupFundos.sortField==='risco'&&popupFundos.sortDir==='asc'}"></span>
+                        <span class="sort-arrow-down" :class="{active: popupFundos.sortField==='risco'&&popupFundos.sortDir==='desc'}"></span>
+                      </span>
+                    </span>
+                  </th>
+                  <th class="col-taxa th-sortable" @click="toggleSortFundos('taxa')">
+                    <span class="th-sort-inner">Taxa Máx. Adm.
+                      <span class="sort-arrows">
+                        <span class="sort-arrow-up" :class="{active: popupFundos.sortField==='taxa'&&popupFundos.sortDir==='asc'}"></span>
+                        <span class="sort-arrow-down" :class="{active: popupFundos.sortField==='taxa'&&popupFundos.sortDir==='desc'}"></span>
+                      </span>
+                    </span>
+                  </th>
                   <th class="col-class">Estratégia</th>
                 </tr>
               </thead>
@@ -1035,21 +1097,24 @@
                   :class="{ 'modal-fundos__row--selected': popupFundos.selecionados.includes(f.cnpj) }"
                   @click="toggleFundoPopup(f)"
                 >
-                  <td>
-                    <div class="modal-checkbox" :class="{ 'modal-checkbox--checked': popupFundos.selecionados.includes(f.cnpj) }">
-                      <svg v-if="popupFundos.selecionados.includes(f.cnpj)" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  <td style="padding:10px;">
+                    <input type="checkbox" :checked="popupFundos.selecionados.includes(f.cnpj)" readonly style="width:13px;height:13px;cursor:pointer;accent-color:#1e3a8a;" />
+                  </td>
+                  <td style="padding:10px 14px;">
+                    <div class="modal-fundo-nome">{{ f.nome }}</div>
+                    <div style="display:flex;align-items:center;gap:6px;margin-top:2px;">
+                      <span class="modal-fundo-cnpj">{{ f.cnpj }}</span>
+                      <span v-if="f.qualificado" class="badge-qualificado">QUALIFICADO</span>
                     </div>
                   </td>
-                  <td>
-                    <div class="modal-fundo-nome">{{ f.nome }}</div>
-                    <div class="modal-fundo-cnpj">{{ f.cnpj }}</div>
+                  <td style="padding:10px 14px;text-align:right;color:#6b7280;white-space:nowrap;border-left:1px solid #f1f5f9;">{{ f.rentabilidade || '—' }}</td>
+                  <td style="padding:10px 14px;text-align:center;border-left:1px solid #f1f5f9;">
+                    <div style="display:flex;align-items:center;justify-content:center;">
+                      <div :style="{ width:'14px', height:'14px', borderRadius:'50%', background: f.riscoCor || '#4285F4' }"></div>
+                    </div>
                   </td>
-                  <td>{{ f.rentabilidade }}</td>
-                  <td>
-                    <div class="risco-dot" :style="{ backgroundColor: riscoColor(f.risco) }"></div>
-                  </td>
-                  <td>{{ f.taxaAdm }}</td>
-                  <td>{{ f.estrategia }}</td>
+                  <td style="padding:10px 14px;text-align:right;color:#6b7280;white-space:nowrap;border-left:1px solid #f1f5f9;">{{ f.taxaAdm }}</td>
+                  <td style="padding:10px 14px;color:#6b7280;white-space:nowrap;border-left:1px solid #f1f5f9;">{{ f.estrategia }}</td>
                 </tr>
               </tbody>
             </table>
@@ -1085,6 +1150,9 @@ interface FundoSelecionado {
   classificacao: string
   estrategia: string
   risco: number
+  riscoCor?: string
+  riscoLabel?: string
+  qualificado?: boolean
   valorContrib: string
   percContrib: string
   valorAporte: string
@@ -1309,9 +1377,9 @@ function selectProfissao(p: string) {
 const rfProfissaoQuery = ref('')
 const showRfProfissaoDropdown = ref(false)
 const rfProfissaoResults = computed(() => {
-  if (!rfProfissaoQuery.value) return PROFISSOES.slice(0, 8)
+  if (!rfProfissaoQuery.value) return PROFISSOES.slice(0, 50)
   const q = rfProfissaoQuery.value.toLowerCase()
-  return PROFISSOES.filter(p => p.toLowerCase().includes(q)).slice(0, 10)
+  return PROFISSOES.filter(p => p.toLowerCase().includes(q)).slice(0, 100)
 })
 function onRfProfissaoInput() { showRfProfissaoDropdown.value = true }
 function hideRfProfissaoDropdownDelayed() { setTimeout(() => { showRfProfissaoDropdown.value = false }, 200) }
@@ -1349,9 +1417,9 @@ function formatRfMoeda(e: Event, field: 'rfRenda' | 'rfPatrimonio') {
 const bancoQuery = ref('')
 const showBancoDropdown = ref(false)
 const bancoResults = computed(() => {
-  if (!bancoQuery.value) return bancos.slice(0, 8)
+  if (!bancoQuery.value) return bancos
   const q = bancoQuery.value.toLowerCase()
-  return bancos.filter(b => b.nome.toLowerCase().includes(q) || b.codigo.includes(q)).slice(0, 10)
+  return bancos.filter(b => b.nome.toLowerCase().includes(q) || b.codigo.includes(q))
 })
 function onBancoInput() { showBancoDropdown.value = true }
 function hideBancoDropdownDelayed() { setTimeout(() => { showBancoDropdown.value = false }, 200) }
@@ -1427,14 +1495,38 @@ const popupFundos = reactive({
   busca: '',
   selecionados: [] as string[],
   blocoAtual: null as PlanoData | null,
+  sortField: '' as '' | 'rentabilidade' | 'risco' | 'taxa',
+  sortDir: 'asc' as 'asc' | 'desc',
 })
 
+function toggleSortFundos(field: 'rentabilidade' | 'risco' | 'taxa') {
+  if (popupFundos.sortField === field) {
+    popupFundos.sortDir = popupFundos.sortDir === 'asc' ? 'desc' : 'asc'
+  } else {
+    popupFundos.sortField = field
+    popupFundos.sortDir = 'asc'
+  }
+}
+
 const fundosPopupFiltrados = computed(() => {
-  if (!popupFundos.busca) return fundosDisponiveis.value
-  const q = popupFundos.busca.toLowerCase()
-  return fundosDisponiveis.value.filter(f =>
-    f.nome.toLowerCase().includes(q) || f.cnpj.includes(q)
-  )
+  let list = fundosDisponiveis.value
+  if (popupFundos.busca) {
+    const q = popupFundos.busca.toLowerCase()
+    list = list.filter(f => f.nome.toLowerCase().includes(q) || f.cnpj.includes(q))
+  }
+  if (popupFundos.sortField) {
+    const dir = popupFundos.sortDir === 'asc' ? 1 : -1
+    list = [...list].sort((a: any, b: any) => {
+      if (popupFundos.sortField === 'risco') return (a.risco - b.risco) * dir
+      if (popupFundos.sortField === 'taxa') {
+        const ta = parseFloat(a.taxaAdm) || 0
+        const tb = parseFloat(b.taxaAdm) || 0
+        return (ta - tb) * dir
+      }
+      return 0
+    })
+  }
+  return list
 })
 
 function abrirPopupFundos(bloco: PlanoData) {
@@ -1537,9 +1629,27 @@ function changeTab(i: number) {
 
 /* Autocomplete */
 .autocomplete-wrapper { position: relative; }
-.autocomplete-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; max-height: 280px; overflow-y: auto; }
+.autocomplete-input { padding-right: 28px !important; }
+.autocomplete-arrow { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); font-size: 9px; color: #9ca3af; pointer-events: none; line-height: 1; }
+.autocomplete-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 200; max-height: 320px; overflow-y: auto; }
 .autocomplete-item { display: block; width: 100%; padding: 8px 12px; background: none; border: none; text-align: left; font-family: var(--font-sans); font-size: 13px; color: var(--text-primary); cursor: pointer; transition: background-color 0.1s; }
 .autocomplete-item:hover { background-color: #f8fafc; }
+
+/* NIF inline */
+.nif-inline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-left: 16px; }
+.nif-inline .form-label { white-space: nowrap; margin-bottom: 0; }
+
+/* Badge Qualificado */
+.badge-qualificado { font-size: 10px; font-weight: 600; color: #4b5563; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 3px; padding: 1px 5px; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+
+/* Colunas sortáveis da tabela de fundos */
+.th-sortable { cursor: pointer; user-select: none; }
+.th-sort-inner { display: inline-flex; align-items: center; gap: 5px; }
+.sort-arrows { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; }
+.sort-arrow-up { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-bottom: 5px solid #d1d5db; }
+.sort-arrow-up.active { border-bottom-color: #1e3a8a; }
+.sort-arrow-down { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid #d1d5db; }
+.sort-arrow-down.active { border-top-color: #1e3a8a; }
 
 /* Fundos */
 .selecao-fundos-box { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
@@ -1560,6 +1670,23 @@ function changeTab(i: number) {
 .fund-input--sm { width: 60px; }
 .btn-remove-fund { background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; border-radius: 4px; display: flex; align-items: center; transition: color 0.12s; }
 .btn-remove-fund:hover { color: #ef4444; }
+
+/* Fund Card Aliaplan - layout idêntico ao aliaplan */
+.fund-card-aliaplan { border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 14px; background: #fff; display: grid; grid-template-columns: 1fr auto 28px; grid-template-rows: auto auto auto; column-gap: 12px; row-gap: 6px; align-items: start; margin-bottom: 8px; }
+.fund-card-aliaplan__nome-col { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.fund-card-aliaplan__nome { font-size: 13px; font-weight: 600; color: #1e293b; word-break: break-word; }
+.fund-card-aliaplan__cnpj { font-size: 11px; color: #6b7280; }
+.fund-card-aliaplan__contrib-col { grid-column: 2; grid-row: 1; display: flex; align-items: center; gap: 6px; flex-shrink: 0; justify-content: flex-end; white-space: nowrap; flex-wrap: wrap; }
+.fund-card-aliaplan__aporte-row { grid-column: 1 / 3; grid-row: 2; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.fund-card-aliaplan__meta-row { grid-column: 1 / 4; grid-row: 3; display: flex; gap: 16px; flex-wrap: wrap; padding-top: 6px; border-top: 1px solid #f1f5f9; }
+.fund-card-aliaplan__meta-row span { font-size: 11px; color: #6b7280; }
+.fund-card-aliaplan__section-label { font-size: 10px; font-weight: 600; color: #4b5563; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.fund-card-aliaplan__field-pair { display: flex; align-items: center; gap: 3px; }
+.fund-card-aliaplan__field-label { font-size: 10px; color: #6b7280; white-space: nowrap; }
+.fund-card-aliaplan__input { border: 1px solid #e5e7eb; border-radius: 4px; padding: 2px 5px; font-size: 11px; width: 76px; font-family: var(--font-sans); text-align: center; outline: none; }
+.fund-card-aliaplan__pct-wrap { display: flex; align-items: center; border: 1px solid #e5e7eb; border-radius: 4px; background: #f9fafb; overflow: hidden; width: 52px; }
+.fund-card-aliaplan__pct-input { border: none; outline: none; padding: 2px 2px 2px 4px; font-size: 11px; width: 34px; text-align: right; background: transparent; color: #1e293b; font-family: var(--font-sans); }
+.fund-card-aliaplan__pct-sign { font-size: 11px; color: #4b5563; padding-right: 4px; user-select: none; pointer-events: none; }
 
 .btn-buscar-fundos { display: flex; align-items: center; gap: 8px; width: 100%; padding: 9px 12px; background: white; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; font-family: var(--font-sans); font-size: 14px; color: #94a3b8; text-align: left; transition: border-color 0.15s; }
 .btn-buscar-fundos:hover { border-color: #94a3b8; }
