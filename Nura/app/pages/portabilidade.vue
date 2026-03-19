@@ -128,10 +128,11 @@
             </div>
           </div>
 
-          <!-- É US Person? + NIF como campos normais em grid -->
+          <!-- É US Person? + NIF como campos normais em grid (alinhado à 2ª coluna) -->
           <div class="proponente-flags">
-            <div class="form-grid" style="margin-top:0;">
-              <div class="form-field">
+            <div class="field-grid field-grid--3" style="margin-top:0;">
+              <div class="form-field" style="grid-column:1"></div>
+              <div class="form-field" style="grid-column:2">
                 <label class="form-label form-label--required">É US Person?</label>
                 <div class="radio-group-h" style="margin-top:4px;">
                   <label class="radio-label-h"><input type="radio" v-model="proponente.usPerson" value="sim" class="radio-input" /><span>Sim</span></label>
@@ -139,7 +140,7 @@
                 </div>
                 <span v-if="showErrors && !proponente.usPerson" class="form-error">Campo obrigatório</span>
               </div>
-              <div class="form-field" v-if="proponente.usPerson === 'sim'">
+              <div class="form-field" style="grid-column:3" v-if="proponente.usPerson === 'sim'">
                 <label class="form-label form-label--required">NIF (Número de Identificação Fiscal)</label>
                 <input v-model="proponente.nif" type="text" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.nif }" placeholder="Digite o NIF" />
                 <span v-if="showErrors && !proponente.nif" class="form-error">Campo obrigatório</span>
@@ -193,7 +194,7 @@
           <h3 class="section-card__title">Defina o Tipo de Solicitação</h3>
 
           <div class="form-field mb-20">
-            <label class="flag-question form-label--required" style="margin-bottom:10px;display:block;">Será com uma Portabilidade atrelada?</label>
+            <label class="flag-question form-label--required" style="margin-bottom:10px;display:block;">Realizar Portabilidade?</label>
             <div class="flag-radio-group">
               <label class="flag-radio-label">
                 <input type="radio" v-model="comPortabilidade" value="sim" class="radio-input" />
@@ -259,7 +260,7 @@
                 <label class="form-label-radio">Tipo do Plano</label>
                 <div class="radio-group-h">
                   <label v-for="tp in ['PGBL','VGBL']" :key="tp" class="radio-label-h">
-                    <input type="radio" v-model="form.tipoPlano" :value="tp" class="radio-input" />
+                    <input type="radio" v-model="form.tipoPlano" :value="tp" class="radio-input" @change="syncTipoPlanoFromPortabilidade(tp)" />
                     <span>{{ tp }}</span>
                   </label>
                 </div>
@@ -333,7 +334,7 @@
                 <label class="form-label-radio form-label--required">Tipo do Plano</label>
                 <div class="radio-group-h" style="margin-top:4px;">
                   <label v-for="tp in ['PGBL','VGBL']" :key="tp" class="radio-label-h">
-                    <input type="radio" v-model="plano.tipoPlano" :value="tp" class="radio-input" />
+                    <input type="radio" v-model="plano.tipoPlano" :value="tp" class="radio-input" @change="syncTipoPlanoFromDadosPlano(tp)" />
                     <span>{{ tp }}</span>
                   </label>
                 </div>
@@ -393,7 +394,7 @@
                     <button class="btn-remove-fund" @click="removerFundoPlano(fi)" style="grid-column:3;grid-row:1;align-self:start;margin-top:2px;">
                       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
-                    <!-- Linha 2: Aporte Inicial -->
+                    <!-- Linha 2: Aporte Inicial (mesma linha que CNPJ, alinhado à direita como Contribuição Mensal) -->
                     <div class="fund-card-aliaplan__aporte-row">
                       <span class="fund-card-aliaplan__section-label">Aporte Inicial:</span>
                       <div class="fund-card-aliaplan__field-pair">
@@ -1013,6 +1014,13 @@
         </div>
       </template>
 
+      <!-- ══ RODAPÉ DA ABA: CONFIRMAÇÃO DOS DADOS ══ -->
+      <template v-if="activeTab === tabIndex('Confirmação dos Dados')">
+        <div class="page-footer">
+          <button class="btn-primary" @click="navigateTo('/propostas-geradas')">Finalizar Solicitação</button>
+        </div>
+      </template>
+
       <!-- Modal de Fundos -->
       <div v-if="popupFundos.aberto" class="modal-overlay" @click.self="fecharPopupFundos">
         <div class="modal-fundos">
@@ -1569,6 +1577,16 @@ function confirmarFundosPopup() {
 
 function removerFundoPlano(i: number) { plano.fundosSelecionados.splice(i, 1) }
 
+// Sincronização bidirecional do Tipo do Plano entre Dados da Portabilidade e Dados do Plano
+function syncTipoPlanoFromPortabilidade(tp: string) {
+  plano.tipoPlano = tp
+}
+function syncTipoPlanoFromDadosPlano(tp: string) {
+  if (comPortabilidade.value === 'sim') {
+    form.tipoPlano = tp
+  }
+}
+
 // Abas
 const allTabs = ['Detalhes da Solicitação', 'Beneficiários', 'Formas de Pagamento', 'Confirmação dos Dados']
 const visibleTabs = computed(() => allTabs)
@@ -1678,12 +1696,16 @@ function changeTab(i: number) {
 .btn-remove-fund:hover { color: #ef4444; }
 
 /* Fund Card Aliaplan - layout idêntico ao aliaplan */
+/* Grid: col1=nome, col2=contrib-mensal, col3=botão remover */
+/* Linha 1: nome | contrib mensal | botão */
+/* Linha 2: cnpj+qualificado | aporte inicial (alinhado à direita) | - */
+/* Linha 3: meta info */
 .fund-card-aliaplan { border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px 14px; background: #fff; display: grid; grid-template-columns: 1fr auto 28px; grid-template-rows: auto auto auto; column-gap: 12px; row-gap: 6px; align-items: start; margin-bottom: 8px; }
 .fund-card-aliaplan__nome-col { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .fund-card-aliaplan__nome { font-size: 13px; font-weight: 600; color: #1e293b; word-break: break-word; }
 .fund-card-aliaplan__cnpj { font-size: 11px; color: #6b7280; }
 .fund-card-aliaplan__contrib-col { grid-column: 2; grid-row: 1; display: flex; align-items: center; gap: 6px; flex-shrink: 0; justify-content: flex-end; white-space: nowrap; flex-wrap: wrap; }
-.fund-card-aliaplan__aporte-row { grid-column: 1 / 3; grid-row: 2; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.fund-card-aliaplan__aporte-row { grid-column: 2; grid-row: 2; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; white-space: nowrap; }
 .fund-card-aliaplan__meta-row { grid-column: 1 / 4; grid-row: 3; display: flex; gap: 16px; flex-wrap: wrap; padding-top: 6px; border-top: 1px solid #f1f5f9; }
 .fund-card-aliaplan__meta-row span { font-size: 11px; color: #6b7280; }
 .fund-card-aliaplan__section-label { font-size: 10px; font-weight: 600; color: #4b5563; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
