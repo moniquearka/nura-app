@@ -894,8 +894,15 @@
             <div class="field-item"><span class="field-label">Profissão</span><span class="field-value">Gerente de Marketing</span></div>
             <div class="field-item"><span class="field-label">Origem da Renda</span><span class="field-value">Salário CLT</span></div>
             <div class="field-item"><span class="field-label">Patrimônio</span><span class="field-value">R$ 350.000,00</span></div>
+          </div>
+          <!-- PPE, US Person e NIF -->
+          <div class="field-grid field-grid--3" style="margin-top:16px; padding-top:16px; border-top:1px solid var(--border-color);">
             <div class="field-item"><span class="field-label">Pessoa Politicamente Exposta?</span><span class="field-value">{{ proponente.pessoaPolitica === 'sim' ? 'Sim' : 'Não' }}</span></div>
             <div class="field-item"><span class="field-label">É US Person?</span><span class="field-value">{{ proponente.usPerson === 'sim' ? 'Sim' : 'Não' }}</span></div>
+            <div class="field-item" v-if="proponente.usPerson === 'sim'"><span class="field-label">NIF</span><span class="field-value">{{ proponente.nif || '—' }}</span></div>
+          </div>
+          <!-- Informações Complementares -->
+          <div class="field-grid field-grid--3" style="margin-top:16px; padding-top:16px; border-top:1px solid var(--border-color);">
             <div class="field-item"><span class="field-label">Câncer nos últimos 5 anos?</span><span class="field-value">{{ proponente.cancer === 'sim' ? 'Sim' : 'Não' }}</span></div>
             <div class="field-item"><span class="field-label">Internação nos últimos 6 meses?</span><span class="field-value">{{ proponente.internacao === 'sim' ? 'Sim' : 'Não' }}</span></div>
           </div>
@@ -920,17 +927,34 @@
             <div class="field-item"><span class="field-label">Contribuição Mensal</span><span class="field-value">R$ 1.650,00</span></div>
             <div class="field-item"><span class="field-label">Valor do Aporte Inicial</span><span class="field-value">R$ 10.000,00</span></div>
           </div>
-          <div class="fund-card mb-16">
-            <div class="fund-card__header">
-              <div>
-                <div class="fund-card__name">Absolute Atenas Icatu Prev FIC FIRF CP</div>
-                <div class="fund-card__cnpj">47.612.701/0001-45</div>
+          <!-- Fund card no layout das referências -->
+          <div class="fund-card-ref mb-16">
+            <div class="fund-card-ref__top">
+              <div class="fund-card-ref__left">
+                <div class="fund-card-ref__name">Absolute Atenas Icatu Prev FIC FIRF CP</div>
+                <div class="fund-card-ref__cnpj">47.612.701/0001-45</div>
+                <div class="fund-card-ref__meta">
+                  <span>Grau de Risco: <span class="badge badge--neutral">Muito Baixo</span></span>
+                  <span>Taxa Máx. Adm.: <span class="badge badge--neutral">0,98% a.a.</span></span>
+                  <span>Estratégia: <span class="badge badge--neutral">Renda Fixa</span></span>
+                </div>
               </div>
-            </div>
-            <div class="fund-card__body">
-              <div class="fund-card__row"><span class="fund-card__label">CONTRIBUIÇÃO MENSAL:</span><span class="fund-card__text">Valor Atribuído <strong>R$ 1.650,00</strong></span><span class="fund-card__text">Percentual Atribuído <strong>100%</strong></span></div>
-              <div class="fund-card__row"><span class="fund-card__label">APORTE INICIAL:</span><span class="fund-card__text">Valor Atribuído <strong>R$ 10.000,00</strong></span><span class="fund-card__text">Percentual Atribuído <strong>100%</strong></span></div>
-              <div class="fund-card__meta"><span>Taxa Máx. Adm.: <strong>0,98% a.a.</strong></span><span>Rentabilidade: <strong>—</strong></span><span>Estratégia: <strong>Renda Fixa</strong></span></div>
+              <div class="fund-card-ref__right">
+                <div class="fund-card-ref__alloc-row">
+                  <span class="fund-card-ref__alloc-label">CONTRIBUIÇÃO MENSAL:</span>
+                  <span class="fund-card-ref__alloc-text">Valor Atribuído</span>
+                  <span class="fund-card-ref__alloc-val">R$ 1.650,00</span>
+                  <span class="fund-card-ref__alloc-text">Percentual Atribuído</span>
+                  <span class="fund-card-ref__alloc-pct">100%</span>
+                </div>
+                <div class="fund-card-ref__alloc-row">
+                  <span class="fund-card-ref__alloc-label">APORTE INICIAL:</span>
+                  <span class="fund-card-ref__alloc-text">Valor Atribuído</span>
+                  <span class="fund-card-ref__alloc-val">R$ 10.000,00</span>
+                  <span class="fund-card-ref__alloc-text">Percentual Atribuído</span>
+                  <span class="fund-card-ref__alloc-pct">100%</span>
+                </div>
+              </div>
             </div>
           </div>
           <div class="review-subtab-divider"></div>
@@ -1409,8 +1433,9 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .fund-card-ref__meta {
   display: flex;
   gap: 12px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
+  overflow: hidden;
 }
 .fund-card-ref__meta span {
   font-family: var(--font-sans);
