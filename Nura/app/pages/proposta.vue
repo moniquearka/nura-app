@@ -90,55 +90,353 @@
         </div>
 
         <div class="section-card">
-          <h3 class="section-card__title">Dados do Plano 1 — Previdência</h3>
-          <div class="field-grid field-grid--3">
-            <div class="field-item"><span class="field-label">Tipo de Investimento</span><span class="field-value">Previdência</span></div>
-            <div class="field-item"><span class="field-label">Idade que Deseja se Aposentar</span><span class="field-value">60 anos</span></div>
-            <div class="field-item"><span class="field-label">Tipo de Plano</span><span class="field-value"><span class="badge badge--neutral">PGBL</span></span></div>
-            <div class="field-item"><span class="field-label">Contribuição Mensal</span><span class="field-value">R$ 1.650,00</span></div>
-            <div class="field-item"><span class="field-label">Valor do Aporte Inicial</span><span class="field-value">R$ 10.000,00</span></div>
+          <h3 class="section-card__title">Dados do Plano 1</h3>
+
+          <!-- Toggle Tipo de Produto -->
+          <div class="field-label" style="margin-bottom:8px;">TIPO DE PRODUTO</div>
+          <div class="product-toggle">
+            <button class="product-toggle__btn product-toggle__btn--active">Previdência</button>
+            <button class="product-toggle__btn">Seguro de Vida</button>
           </div>
-          <div class="fund-card mt-16">
-            <div class="fund-card__header">
-              <div>
-                <div class="fund-card__name">Absolute Atenas Icatu Prev FIC FIRF CP</div>
-                <div class="fund-card__cnpj">47.612.701/0001-45</div>
+
+          <!-- Idade de aposentadoria -->
+          <div class="plan-info-row" style="margin-top:16px;">
+            <span class="field-label">IDADE QUE DESEJA SE APOSENTAR</span>
+            <div class="field-value" style="font-size:15px;margin-top:4px;">60 anos</div>
+          </div>
+
+          <!-- Caixa interna com Contribuição Mensal, Aporte Inicial e Tipo do Plano -->
+          <div class="plano-inner-box" style="margin-top:16px;">
+            <div class="plano-inner-row">
+              <div class="plano-inner-field">
+                <span class="field-label">CONTRIBUIÇÃO MENSAL <span class="required-star">*</span></span>
+                <div class="plano-inner-value">R$ 1.650,00</div>
+              </div>
+              <div class="plano-inner-field">
+                <span class="field-label">VALOR DO APORTE INICIAL <span class="required-star">*</span></span>
+                <div class="plano-inner-value">R$ 10.000,00</div>
               </div>
             </div>
-            <div class="fund-card__body">
-              <div class="fund-card__row"><span class="fund-card__label">CONTRIBUIÇÃO MENSAL:</span><span class="fund-card__text">Valor Atribuído <strong>R$ 1.650,00</strong></span><span class="fund-card__text">Percentual Atribuído <strong>100%</strong></span></div>
-              <div class="fund-card__row"><span class="fund-card__label">APORTE INICIAL:</span><span class="fund-card__text">Valor Atribuído <strong>R$ 10.000,00</strong></span><span class="fund-card__text">Percentual Atribuído <strong>100%</strong></span></div>
-              <div class="fund-card__meta"><span>Taxa Máx. Adm.: <strong>0,98% a.a.</strong></span><span>Rentabilidade: <strong>—</strong></span><span>Estratégia: <strong>Renda Fixa</strong></span></div>
+            <div style="margin-top:12px;">
+              <span class="field-label">TIPO DO PLANO <span class="required-star">*</span></span>
+              <div style="margin-top:6px;"><span class="badge badge--neutral" style="font-size:13px;padding:4px 12px;">PGBL</span></div>
+            </div>
+            <div style="margin-top:16px;">
+              <span class="field-label" style="margin-bottom:8px;display:block;">SELEÇÃO DE FUNDOS</span>
+              <!-- Fund card 1 -->
+              <div class="fund-card-ref">
+                <div class="fund-card-ref__top">
+                  <div class="fund-card-ref__left">
+                    <div class="fund-card-ref__name">Icatu Vanguarda Privilege Plus FIC FIRF Previdenciário</div>
+                    <div class="fund-card-ref__cnpj">51.620.403/0001-74</div>
+                    <div class="fund-card-ref__meta">
+                      <span>Grau de Risco: <span class="badge badge--neutral">Muito Baixo</span></span>
+                      <span>Taxa Máx. Adm.: <span class="badge badge--neutral">0,70% a.a.</span></span>
+                      <span>Estratégia: <span class="badge badge--neutral">Renda Fixa Outros</span></span>
+                    </div>
+                  </div>
+                  <div class="fund-card-ref__right">
+                    <div class="fund-card-ref__alloc-row">
+                      <span class="fund-card-ref__alloc-label">CONTRIBUIÇÃO MENSAL:</span>
+                      <span class="fund-card-ref__alloc-text">Valor Atribuído</span>
+                      <span class="fund-card-ref__alloc-val">R$ 825,00</span>
+                      <span class="fund-card-ref__alloc-text">Percentual Atribuído</span>
+                      <span class="fund-card-ref__alloc-pct">50%</span>
+                    </div>
+                    <div class="fund-card-ref__alloc-row">
+                      <span class="fund-card-ref__alloc-label">APORTE INICIAL:</span>
+                      <span class="fund-card-ref__alloc-text">Valor Atribuído</span>
+                      <span class="fund-card-ref__alloc-val">R$ 5.000,00</span>
+                      <span class="fund-card-ref__alloc-text">Percentual Atribuído</span>
+                      <span class="fund-card-ref__alloc-pct">50%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Fund card 2 -->
+              <div class="fund-card-ref" style="margin-top:8px;">
+                <div class="fund-card-ref__top">
+                  <div class="fund-card-ref__left">
+                    <div class="fund-card-ref__name">Icatu Vanguarda Absoluto Plus Qualificado FIRF CP Prev</div>
+                    <div class="fund-card-ref__cnpj">45.444.101/0001-90 <span class="badge badge--neutral" style="font-size:10px;padding:1px 6px;margin-left:4px;">QUALIFICADO</span></div>
+                    <div class="fund-card-ref__meta">
+                      <span>Grau de Risco: <span class="badge badge--neutral">Muito Baixo</span></span>
+                      <span>Taxa Máx. Adm.: <span class="badge badge--neutral">0,73% a.a.</span></span>
+                      <span>Estratégia: <span class="badge badge--neutral">Renda Fixa Crédito Privado</span></span>
+                    </div>
+                  </div>
+                  <div class="fund-card-ref__right">
+                    <div class="fund-card-ref__alloc-row">
+                      <span class="fund-card-ref__alloc-label">CONTRIBUIÇÃO MENSAL:</span>
+                      <span class="fund-card-ref__alloc-text">Valor Atribuído</span>
+                      <span class="fund-card-ref__alloc-val">R$ 825,00</span>
+                      <span class="fund-card-ref__alloc-text">Percentual Atribuído</span>
+                      <span class="fund-card-ref__alloc-pct">50%</span>
+                    </div>
+                    <div class="fund-card-ref__alloc-row">
+                      <span class="fund-card-ref__alloc-label">APORTE INICIAL:</span>
+                      <span class="fund-card-ref__alloc-text">Valor Atribuído</span>
+                      <span class="fund-card-ref__alloc-val">R$ 5.000,00</span>
+                      <span class="fund-card-ref__alloc-text">Percentual Atribuído</span>
+                      <span class="fund-card-ref__alloc-pct">50%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="section-card">
-          <h3 class="section-card__title">Dados do Plano 2 — Seguro de Vida</h3>
-          <div class="field-grid field-grid--3">
-            <div class="field-item"><span class="field-label">Tipo de Investimento</span><span class="field-value">Seguro de Vida</span></div>
-            <div class="field-item"><span class="field-label">Produto</span><span class="field-value">Horizonte</span></div>
+          <h3 class="section-card__title">Dados do Plano 2</h3>
+
+          <!-- Toggle Tipo de Produto -->
+          <div class="field-label" style="margin-bottom:8px;">TIPO DE PRODUTO</div>
+          <div class="product-toggle">
+            <button class="product-toggle__btn">Previdência</button>
+            <button class="product-toggle__btn product-toggle__btn--active">Seguro de Vida</button>
           </div>
-          <div class="product-card mt-16">
-            <span class="product-card__name">Horizonte</span>
-            <p class="product-card__desc">O Horizonte é o seguro de vida que oferece a combinação perfeita entre proteção e a possibilidade de formação de reserva, de forma temporária ou durante toda a vida.</p>
+
+          <!-- Produto recomendado -->
+          <div style="margin-top:16px;">
+            <div class="field-label" style="margin-bottom:8px;">PRODUTO RECOMENDADO</div>
+            <div class="product-card-ref">
+              <div class="product-card-ref__name">Horizonte</div>
+              <p class="product-card-ref__desc">O Horizonte é o seguro de vida que oferece a combinação perfeita entre proteção e a possibilidade de formação de reserva, de forma temporária ou durante toda a vida.</p>
+            </div>
           </div>
-          <table class="coverage-table mt-12">
-            <thead><tr><th>Cobertura</th><th>Vigência</th><th>Prazo de Pagamento</th><th>Capital Segurado</th><th>Contribuição Mensal</th></tr></thead>
-            <tbody>
-              <tr><td>Morte Natural ou Acidental + Adiantamento por Doença Terminal (obrigatório)</td><td>Vitalícia</td><td>—</td><td>R$ 2.961.000,00</td><td><strong>R$ 1.184,40</strong></td></tr>
-              <tr><td>Indenização Especial de Morte por Acidente (IEA)</td><td>Vitalícia</td><td>—</td><td>R$ 1.484.000,00</td><td><strong>R$ 593,60</strong></td></tr>
-              <tr><td>Invalidez Permanente por Acidente - Total ou Parcial (IPA)</td><td>Vitalícia</td><td>—</td><td>R$ 1.484.000,00</td><td><strong>R$ 593,60</strong></td></tr>
-              <tr><td>Indenização Especial de Invalidez por Doença (IED)</td><td>Vitalícia</td><td>—</td><td>R$ 155.000,00</td><td><strong>R$ 62,00</strong></td></tr>
-              <tr><td>Doenças Graves (DG)</td><td>Vitalícia</td><td>—</td><td>R$ 155.000,00</td><td><strong>R$ 62,00</strong></td></tr>
-              <tr><td>Diária por Incapacidade Temporária (DIT)</td><td>Vitalícia</td><td>—</td><td>R$ 4.000,00</td><td><strong>R$ 1,60</strong></td></tr>
-              <tr><td>Diária por Internação Hospitalar (DIH)</td><td>Vitalícia</td><td>—</td><td>R$ 2.000,00</td><td><strong>R$ 0,80</strong></td></tr>
-              <tr><td>Serviço de Assistência Funeral (SAF)</td><td>Vitalícia</td><td>—</td><td>R$ 5.000,00</td><td><strong>R$ 2,00</strong></td></tr>
-            </tbody>
-            <tfoot>
-              <tr class="coverage-table__total"><td colspan="3"><strong>Total</strong></td><td>—</td><td>R$ 2.500,00/mês</td></tr>
-            </tfoot>
-          </table>
+
+          <!-- Preferência do Proponente -->
+          <div class="coverage-card" style="margin-top:16px;">
+            <div class="coverage-card__header">PREFERÊNCIA DO PROPONENTE</div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field">
+                  <span class="field-label">VIGÊNCIA *</span>
+                  <div class="field-value">Vitalícia</div>
+                </div>
+                <div class="coverage-card__field">
+                  <span class="field-label">TEMPO DE CONTRIBUIÇÃO *</span>
+                  <div class="field-value">10 anos</div>
+                </div>
+                <div class="coverage-card__field">
+                  <span class="field-label">PROPONENTE</span>
+                  <div class="field-value">41 anos · Feminino</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coberturas -->
+          <!-- Morte Natural ou Acidental -->
+          <div class="coverage-card" style="margin-top:12px;">
+            <div class="coverage-card__header">
+              <span class="coverage-card__check">☑</span>
+              Morte Natural ou Acidental + Adiantamento por Doença Terminal
+              <span class="coverage-card__badge-obrig">(Obrigatório)</span>
+            </div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><div class="field-value">Vitalícia</div></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><div class="field-value">10 anos</div></div>
+                <div class="coverage-card__field">
+                  <span class="field-label">CAPITAL SEGURADO *</span>
+                  <div class="field-value field-value--highlight">R$ 1.000.000,00</div>
+                  <div class="field-hint">Min: R$ 50.000 | Máx: R$ 20.000.000</div>
+                </div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><div class="field-value">R$ 170,00</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Morte Natural ou Acidental (Vigência Temporária) -->
+          <div class="coverage-card" style="margin-top:8px;">
+            <div class="coverage-card__header">
+              <span class="coverage-card__check">☑</span>
+              Morte Natural ou Acidental (Vigência Temporária)
+            </div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><div class="field-value">Temporária 20 anos</div></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><div class="field-value">20 anos</div></div>
+                <div class="coverage-card__field">
+                  <span class="field-label">CAPITAL SEGURADO *</span>
+                  <div class="field-value field-value--highlight">R$ 150.000,00</div>
+                  <div class="field-hint">Min: R$ 50.000 | Máx: R$ 20.000.000</div>
+                </div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><div class="field-value">R$ 21,67</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- IEA -->
+          <div class="coverage-card" style="margin-top:8px;">
+            <div class="coverage-card__header">
+              <span class="coverage-card__check">☑</span>
+              Indenização Especial de Morte por Acidente (IEA)
+            </div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><div class="field-value">Vitalícia</div></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><div class="field-value">30 anos</div></div>
+                <div class="coverage-card__field">
+                  <span class="field-label">CAPITAL SEGURADO *</span>
+                  <div class="field-value field-value--highlight">R$ 500.000,00</div>
+                  <div class="field-hint">Min: R$ 50.000 | Máx: R$ 10.000.000</div>
+                </div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><div class="field-value">R$ 14,00</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- IPA -->
+          <div class="coverage-card" style="margin-top:8px;">
+            <div class="coverage-card__header">
+              <span class="coverage-card__check">☑</span>
+              Invalidez Permanente Parcial ou Total por Acidente (IPA)
+            </div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><div class="field-value">Vitalícia</div></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><div class="field-value">25 anos</div></div>
+                <div class="coverage-card__field">
+                  <span class="field-label">CAPITAL SEGURADO *</span>
+                  <div class="field-value field-value--highlight">R$ 500.000,01</div>
+                  <div class="field-hint">Min: R$ 50.000 | Máx: R$ 5.750.000</div>
+                </div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><div class="field-value">R$ 19,00</div></div>
+              </div>
+              <div class="coverage-card__extra">
+                <div class="coverage-card__field"><span class="field-label">RETIRAR VÍNCULO DE CAPITAL?</span><div class="field-value">Não</div></div>
+                <div class="coverage-card__field"><span class="field-label">IPA MAJORADA?</span><div class="field-value">Não</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- IED -->
+          <div class="coverage-card" style="margin-top:8px;">
+            <div class="coverage-card__header">
+              <span class="coverage-card__check">☑</span>
+              Indenização Especial de Invalidez por Doença (IED)
+            </div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><div class="field-value">Vitalícia</div></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><div class="field-value">20 anos</div></div>
+                <div class="coverage-card__field">
+                  <span class="field-label">CAPITAL SEGURADO *</span>
+                  <div class="field-value field-value--highlight">R$ 400.000,00</div>
+                  <div class="field-hint">Min: R$ 50.000 | Máx: R$ 1.000.000</div>
+                </div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><div class="field-value">R$ 59,20</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DG -->
+          <div class="coverage-card" style="margin-top:8px;">
+            <div class="coverage-card__header">
+              <span class="coverage-card__check">☑</span>
+              Diagnóstico de Doenças Graves (DG)
+            </div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><div class="field-value">5 anos</div></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><div class="field-value">5 anos</div></div>
+                <div class="coverage-card__field">
+                  <span class="field-label">CAPITAL SEGURADO *</span>
+                  <div class="field-value field-value--highlight">R$ 50.000,00</div>
+                  <div class="field-hint">Min: R$ 50.000 | Máx: R$ 1.000.000</div>
+                </div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><div class="field-value">R$ 10,75</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DIH -->
+          <div class="coverage-card" style="margin-top:8px;">
+            <div class="coverage-card__header">
+              <span class="coverage-card__check">☑</span>
+              Diária de Internação Hospitalar (DIH)
+            </div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><div class="field-value">5 anos</div></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><div class="field-value">5 anos</div></div>
+                <div class="coverage-card__field">
+                  <span class="field-label">CAPITAL SEGURADO (DIÁRIA) *</span>
+                  <div class="field-value field-value--highlight">R$ 300,00</div>
+                  <div class="field-hint">Min: R$ 100 | Máx: R$ 1.000</div>
+                </div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><div class="field-value">R$ 18,00</div></div>
+              </div>
+              <div class="coverage-card__extra">
+                <div class="coverage-card__field"><span class="field-label">DIH COM ADICIONAL DE UTI?</span><div class="field-value">Sim</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DIT -->
+          <div class="coverage-card" style="margin-top:8px;">
+            <div class="coverage-card__header">
+              <span class="coverage-card__check">☑</span>
+              Diária de Incapacidade Temporária (DIT)
+            </div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><div class="field-value">5 anos</div></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><div class="field-value">5 anos</div></div>
+                <div class="coverage-card__field">
+                  <span class="field-label">CAPITAL SEGURADO (DIÁRIA) *</span>
+                  <div class="field-value field-value--highlight">R$ 12.500,00</div>
+                  <div class="field-hint">Min: R$ 1.000 | Máx: R$ 30.000.000</div>
+                </div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><div class="field-value">R$ 550,00</div></div>
+              </div>
+              <div class="coverage-card__extra">
+                <div class="coverage-card__field"><span class="field-label">FRANQUIA REDUZIDA?</span><div class="field-value">Não</div></div>
+                <div class="coverage-card__field"><span class="field-label">EVENTOS COM LER/DORT/LTC?</span><div class="field-value">Não</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SAF -->
+          <div class="coverage-card" style="margin-top:8px;">
+            <div class="coverage-card__header">
+              <span class="coverage-card__check">☑</span>
+              Serviço de Assistência Funeral (SAF)
+            </div>
+            <div class="coverage-card__body">
+              <div class="coverage-card__grid">
+                <div class="coverage-card__field"><span class="field-label">VIGÊNCIA</span><div class="field-value">Vitalícia</div></div>
+                <div class="coverage-card__field"><span class="field-label">TEMPO DE CONTRIBUIÇÃO</span><div class="field-value">Vitalício</div></div>
+                <div class="coverage-card__field"><span class="field-label">CAPITAL SEGURADO</span><div class="field-value">R$ 12.000,00</div></div>
+                <div class="coverage-card__field"><span class="field-label">CONTRIBUIÇÃO</span><div class="field-value">R$ 1,38</div></div>
+              </div>
+              <div class="coverage-card__extra">
+                <div class="coverage-card__field"><span class="field-label">TIPO DE SAF</span><div class="field-value">Familiar</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resumo de Contribuição -->
+          <div class="coverage-card" style="margin-top:16px;">
+            <div class="coverage-card__header">RESUMO DE CONTRIBUIÇÃO</div>
+            <div class="coverage-card__body">
+              <div class="resumo-contrib">
+                <div class="resumo-contrib__card resumo-contrib__card--active">
+                  <div class="resumo-contrib__radio">● Contribuição mensal</div>
+                  <div class="resumo-contrib__value">R$ 864,00</div>
+                  <div class="resumo-contrib__sub">(12 x = R$ 10.368,00)</div>
+                </div>
+                <div class="resumo-contrib__card">
+                  <div class="resumo-contrib__radio">○ Contribuição anual</div>
+                  <div class="resumo-contrib__value">R$ 9.953,37</div>
+                  <div class="resumo-contrib__sub">(Desconto aplicado de 4%)</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="page-footer">
@@ -721,7 +1019,7 @@
         </div>
 
         <div class="page-footer">
-          <button class="btn-primary">Finalizar Proposta</button>
+          <button class="btn-primary" @click="navigateTo('/propostas-geradas')">Finalizar Proposta</button>
         </div>
       </div>
     </template>
@@ -1012,4 +1310,284 @@ function onSubTabChange(index: number) { activeSubTab.value = index }
 .autocomplete-dropdown { position: absolute; top: calc(100% + 2px); left: 0; right: 0; background: white; border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 100; max-height: 220px; overflow-y: auto; }
 .autocomplete-item { display: block; width: 100%; text-align: left; padding: 9px 12px; background: none; border: none; cursor: pointer; font-family: var(--font-sans); font-size: 13px; color: var(--text-primary); transition: background-color 0.1s; }
 .autocomplete-item:hover { background-color: #f8fafc; }
+
+/* ── Product Toggle (Previdência / Seguro de Vida) ────────────────────────── */
+.product-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.product-toggle__btn {
+  padding: 12px 16px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: background-color 0.15s, color 0.15s;
+  text-align: center;
+}
+.product-toggle__btn + .product-toggle__btn {
+  border-left: 1px solid var(--border-color);
+}
+.product-toggle__btn--active {
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+/* ── Plano Inner Box ─────────────────────────────────────────────────────── */
+.plano-inner-box {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fafbfc;
+}
+.plano-inner-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.plano-inner-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.plano-inner-value {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+.required-star { color: #ef4444; }
+
+/* ── Fund Card Ref (layout das referências) ──────────────────────────────── */
+.fund-card-ref {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.fund-card-ref__top {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 16px;
+}
+.fund-card-ref__left {
+  flex: 1;
+  min-width: 0;
+}
+.fund-card-ref__name {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.fund-card-ref__cnpj {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.fund-card-ref__meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.fund-card-ref__meta span {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.fund-card-ref__right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 320px;
+  flex-shrink: 0;
+}
+.fund-card-ref__alloc-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+.fund-card-ref__alloc-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  min-width: 140px;
+  flex-shrink: 0;
+}
+.fund-card-ref__alloc-text {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.fund-card-ref__alloc-val {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 80px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.fund-card-ref__alloc-pct {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background-color: #f1f5f9;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 2px 8px;
+  min-width: 44px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ── Product Card Ref ────────────────────────────────────────────────────── */
+.product-card-ref {
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+}
+.product-card-ref__name {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.product-card-ref__desc {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Coverage Card ───────────────────────────────────────────────────────── */
+.coverage-card {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.coverage-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background-color: #fafbfc;
+  border-bottom: 1px solid var(--border-color);
+}
+.coverage-card__check {
+  font-size: 16px;
+  color: #1e40af;
+  flex-shrink: 0;
+}
+.coverage-card__badge-obrig {
+  font-size: 12px;
+  font-weight: 500;
+  color: #d97706;
+  margin-left: 2px;
+}
+.coverage-card__body {
+  padding: 14px 16px;
+}
+.coverage-card__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.coverage-card__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.coverage-card__extra {
+  display: flex;
+  gap: 32px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+.field-value--highlight {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.field-hint {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ── Resumo de Contribuição ─────────────────────────────────────────────── */
+.resumo-contrib {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.resumo-contrib__card {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px 20px;
+  background: white;
+}
+.resumo-contrib__card--active {
+  background-color: #0f172a;
+  border-color: #0f172a;
+  color: white;
+}
+.resumo-contrib__radio {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.resumo-contrib__card--active .resumo-contrib__radio {
+  color: #cbd5e1;
+}
+.resumo-contrib__value {
+  font-family: var(--font-sans);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.resumo-contrib__card--active .resumo-contrib__value {
+  color: white;
+}
+.resumo-contrib__sub {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.resumo-contrib__card--active .resumo-contrib__sub {
+  color: #94a3b8;
+}
 </style>
