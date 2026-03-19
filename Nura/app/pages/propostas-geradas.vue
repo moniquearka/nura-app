@@ -463,15 +463,15 @@ async function downloadPdf(proposal: Proposal) {
 }
 
 /* Larguras das colunas — distribuição equilibrada sem scroll horizontal */
-/* Total = 100% | Status cols têm 15% cada para caber textos longos sem quebra */
-.proposals-table th.col-proposal   { width: 18%; }
-.proposals-table th.col-products   { width: 10%; }
+/* Total = 100% | col-products aumentado para evitar quebra no título; col-actions reduzido (só ícone) */
+.proposals-table th.col-proposal   { width: 17%; }
+.proposals-table th.col-products   { width: 14%; }
 .proposals-table th.col-type       { width: 12%; }
 .proposals-table th.col-date       { width: 9%; }
 .proposals-table th.col-value      { width: 8%; }
 .proposals-table th.col-status-prev{ width: 15%; }
 .proposals-table th.col-status-seg { width: 15%; }
-.proposals-table th.col-actions    { width: 13%; text-align: right; }
+.proposals-table th.col-actions    { width: 10%; text-align: right; }
 
 /* ── Linhas ──────────────────────────────────────────────────────────────── */
 .proposal-row {
