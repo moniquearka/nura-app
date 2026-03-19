@@ -27,10 +27,10 @@
           <thead>
             <tr>
               <th class="col-proposal">Solicitações Geradas</th>
-              <th class="col-products">Produtos Selecionados</th>
+              <th class="col-products">Produtos</th>
               <th class="col-type">Tipo de Solicitação</th>
-              <th class="col-date">Data de Emissão</th>
-              <th class="col-value">Valor Total do Estudo</th>
+              <th class="col-date">Proposta Gerada em</th>
+              <th class="col-value">Valor Total</th>
               <th class="col-status-prev">Status — Previdência</th>
               <th class="col-status-seg">Status — Seguro de Vida</th>
               <th class="col-actions"></th>
@@ -45,7 +45,7 @@
               <!-- Solicitação Gerada -->
               <td class="col-proposal">
                 <span class="proposal-name">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" class="proposal-name__icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" class="proposal-name__icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   {{ proposal.name }}
@@ -79,21 +79,14 @@
               <!-- Status — Previdência -->
               <td class="col-status-prev">
                 <template v-if="showStatusPrev(proposal)">
-                  <div class="status-cell" @click.stop>
-                    <select
-                      v-model="proposal.statusPrev"
-                      class="status-select"
-                      :class="statusPrevClass(proposal.statusPrev)"
-                      @change="onStatusPrevChange(proposal)"
-                    >
-                      <option value="">— Selecionar —</option>
-                      <option value="assinatura-andamento">Assinatura em andamento</option>
-                      <option value="assinatura-concluida">Assinatura Concluída</option>
-                      <option value="pendente-pagamento">Pendente de Pagamento</option>
-                      <option value="pagamento-concluido">Pagamento Concluído</option>
-                      <option value="contratacao-implementada">Contratação Implementada</option>
-                    </select>
-                  </div>
+                  <button
+                    class="status-tag"
+                    :class="statusPrevClass(proposal.statusPrev)"
+                    @click.stop="onStatusPrevClick(proposal)"
+                    :title="statusPrevLabel(proposal.statusPrev)"
+                  >
+                    {{ statusPrevLabel(proposal.statusPrev) }}
+                  </button>
                 </template>
                 <template v-else>
                   <span class="cell-empty">—</span>
@@ -103,25 +96,14 @@
               <!-- Status — Seguro de Vida -->
               <td class="col-status-seg">
                 <template v-if="showStatusSeg(proposal)">
-                  <div class="status-cell" @click.stop>
-                    <select
-                      v-model="proposal.statusSeg"
-                      class="status-select"
-                      :class="statusSegClass(proposal.statusSeg)"
-                      @change="onStatusSegChange(proposal)"
-                    >
-                      <option value="">— Selecionar —</option>
-                      <option value="assinatura-andamento">Assinatura em andamento</option>
-                      <option value="assinatura-concluida">Assinatura Concluída</option>
-                      <option value="pendente-pagamento">Pendente de Pagamento</option>
-                      <option value="pagamento-concluido">Pagamento Concluído</option>
-                      <option value="implementacao-simplificada">Implementação Simplificada</option>
-                      <option value="dps-pendente">DPS Pendente</option>
-                      <option value="tele-entrevista-pendente">Tele Entrevista Pendente</option>
-                      <option value="implementacao-andamento">Implementação em andamento</option>
-                      <option value="contratacao-implementada">Contratação Implementada</option>
-                    </select>
-                  </div>
+                  <button
+                    class="status-tag"
+                    :class="statusSegClass(proposal.statusSeg)"
+                    @click.stop="onStatusSegClick(proposal)"
+                    :title="statusSegLabel(proposal.statusSeg)"
+                  >
+                    {{ statusSegLabel(proposal.statusSeg) }}
+                  </button>
                 </template>
                 <template v-else>
                   <span class="cell-empty">—</span>
@@ -132,7 +114,7 @@
               <td class="col-actions" @click.stop>
                 <div class="action-btns">
                   <button class="action-btn" title="Baixar PDF" @click.stop="downloadPdf(proposal)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                     <span class="action-btn__label">Baixar</span>
@@ -203,6 +185,7 @@ interface Proposal {
   statusSeg: string
 }
 
+// Dados de exemplo cobrindo todas as combinações de status visíveis
 const proposals = ref<Proposal[]>([
   {
     id: 1,
@@ -212,61 +195,144 @@ const proposals = ref<Proposal[]>([
     date: '19/03/2026',
     totalValue: 'R$ 4.150,00',
     pdfFile: 'proposta-v1.pdf',
-    statusPrev: '',
-    statusSeg: '',
+    statusPrev: 'assinatura-andamento',
+    statusSeg: 'assinatura-andamento',
   },
   {
     id: 2,
     name: 'Proposta Taís Oliveira Costa — v2',
-    products: 'Previdência',
-    type: 'Proposta sem Estudo',
-    date: '19/03/2026',
-    totalValue: 'R$ 1.650,00',
+    products: 'Previdência + Seguro de Vida',
+    type: 'Estudo + Proposta',
+    date: '18/03/2026',
+    totalValue: 'R$ 4.150,00',
     pdfFile: 'proposta-v2.pdf',
-    statusPrev: '',
-    statusSeg: '',
+    statusPrev: 'assinatura-concluida',
+    statusSeg: 'dps-pendente',
   },
   {
     id: 3,
+    name: 'Proposta Taís Oliveira Costa — v3',
+    products: 'Previdência + Seguro de Vida',
+    type: 'Estudo + Proposta',
+    date: '17/03/2026',
+    totalValue: 'R$ 4.150,00',
+    pdfFile: 'proposta-v3.pdf',
+    statusPrev: 'pendente-pagamento',
+    statusSeg: 'tele-entrevista-pendente',
+  },
+  {
+    id: 4,
+    name: 'Proposta Taís Oliveira Costa — v4',
+    products: 'Previdência + Seguro de Vida',
+    type: 'Estudo + Proposta',
+    date: '16/03/2026',
+    totalValue: 'R$ 4.150,00',
+    pdfFile: 'proposta-v4.pdf',
+    statusPrev: 'pagamento-concluido',
+    statusSeg: 'implementacao-simplificada',
+  },
+  {
+    id: 5,
+    name: 'Proposta Taís Oliveira Costa — v5',
+    products: 'Previdência + Seguro de Vida',
+    type: 'Estudo + Proposta',
+    date: '15/03/2026',
+    totalValue: 'R$ 4.150,00',
+    pdfFile: 'proposta-v5.pdf',
+    statusPrev: 'contratacao-implementada',
+    statusSeg: 'implementacao-andamento',
+  },
+  {
+    id: 6,
+    name: 'Proposta Taís Oliveira Costa — v6',
+    products: 'Previdência + Seguro de Vida',
+    type: 'Estudo + Proposta',
+    date: '14/03/2026',
+    totalValue: 'R$ 4.150,00',
+    pdfFile: 'proposta-v6.pdf',
+    statusPrev: 'contratacao-implementada',
+    statusSeg: 'contratacao-implementada',
+  },
+  {
+    id: 7,
+    name: 'Proposta Taís Oliveira Costa — Prev',
+    products: 'Previdência',
+    type: 'Proposta sem Estudo',
+    date: '13/03/2026',
+    totalValue: 'R$ 1.650,00',
+    pdfFile: 'proposta-prev.pdf',
+    statusPrev: 'assinatura-andamento',
+    statusSeg: '',
+  },
+  {
+    id: 8,
     name: 'Portabilidade Taís Oliveira Costa — v1',
     products: 'Previdência',
     type: 'Portabilidade',
-    date: '19/03/2026',
+    date: '12/03/2026',
     totalValue: 'R$ 1.650,00',
     pdfFile: 'portabilidade-v1.pdf',
-    statusPrev: '',
+    statusPrev: 'pendente-pagamento',
     statusSeg: '',
   },
 ])
 
 const showTeleEntrevistaModal = ref(false)
 
-// ── Regras de visibilidade das colunas de status ──────────────────────────
+// ── Visibilidade das colunas de status ────────────────────────────────────
 
 function showStatusPrev(p: Proposal): boolean {
-  // Status Previdência não aparece quando Produtos = "Seguro de Vida"
   if (p.products === 'Seguro de Vida') return false
   return true
 }
 
 function showStatusSeg(p: Proposal): boolean {
-  // Status Seguro de Vida não aparece quando:
-  // - Tipo = "Proposta sem Estudo" ou "Portabilidade"
-  // - Tipo = "Estudo + Proposta" com Produtos = "Previdência"
   if (p.type === 'Proposta sem Estudo' || p.type === 'Portabilidade') return false
   if (p.type === 'Estudo + Proposta' && p.products === 'Previdência') return false
   return true
 }
 
-// ── Handlers de mudança de status ────────────────────────────────────────
+// ── Labels de status ──────────────────────────────────────────────────────
 
-function onStatusPrevChange(p: Proposal) {
+const STATUS_PREV_LABELS: Record<string, string> = {
+  '': 'Aguardando',
+  'assinatura-andamento': 'Assinatura em andamento',
+  'assinatura-concluida': 'Assinatura Concluída',
+  'pendente-pagamento': 'Pendente de Pagamento',
+  'pagamento-concluido': 'Pagamento Concluído',
+  'contratacao-implementada': 'Contratação Implementada',
+}
+
+const STATUS_SEG_LABELS: Record<string, string> = {
+  '': 'Aguardando',
+  'assinatura-andamento': 'Assinatura em andamento',
+  'assinatura-concluida': 'Assinatura Concluída',
+  'pendente-pagamento': 'Pendente de Pagamento',
+  'pagamento-concluido': 'Pagamento Concluído',
+  'implementacao-simplificada': 'Implementação Simplificada',
+  'dps-pendente': 'DPS Pendente',
+  'tele-entrevista-pendente': 'Tele Entrevista Pendente',
+  'implementacao-andamento': 'Implementação em andamento',
+  'contratacao-implementada': 'Contratação Implementada',
+}
+
+function statusPrevLabel(status: string): string {
+  return STATUS_PREV_LABELS[status] ?? status
+}
+
+function statusSegLabel(status: string): string {
+  return STATUS_SEG_LABELS[status] ?? status
+}
+
+// ── Handlers de clique nas tags de status ─────────────────────────────────
+
+function onStatusPrevClick(p: Proposal) {
   if (p.statusPrev === 'assinatura-andamento' || p.statusPrev === 'assinatura-concluida') {
     window.open(ICATU_SIGN_URL, '_blank', 'noopener,noreferrer')
   }
 }
 
-function onStatusSegChange(p: Proposal) {
+function onStatusSegClick(p: Proposal) {
   if (p.statusSeg === 'assinatura-andamento' || p.statusSeg === 'assinatura-concluida') {
     window.open(ICATU_SIGN_URL, '_blank', 'noopener,noreferrer')
   } else if (p.statusSeg === 'dps-pendente') {
@@ -291,20 +357,21 @@ function typeBadgeClass(type: string) {
 }
 
 function statusPrevClass(status: string) {
-  if (!status) return 'status-select--empty'
-  if (status === 'contratacao-implementada') return 'status-select--success'
-  if (status === 'assinatura-concluida' || status === 'pagamento-concluido') return 'status-select--done'
-  if (status === 'pendente-pagamento') return 'status-select--warning'
-  return 'status-select--info'
+  if (!status) return 'status-tag--waiting'
+  if (status === 'contratacao-implementada') return 'status-tag--done'
+  if (status === 'assinatura-concluida' || status === 'pagamento-concluido') return 'status-tag--progress'
+  if (status === 'pendente-pagamento') return 'status-tag--pending'
+  if (status === 'assinatura-andamento') return 'status-tag--active'
+  return 'status-tag--waiting'
 }
 
 function statusSegClass(status: string) {
-  if (!status) return 'status-select--empty'
-  if (status === 'contratacao-implementada') return 'status-select--success'
-  if (status === 'assinatura-concluida' || status === 'pagamento-concluido' || status === 'implementacao-simplificada') return 'status-select--done'
-  if (status === 'pendente-pagamento' || status === 'dps-pendente' || status === 'tele-entrevista-pendente') return 'status-select--warning'
-  if (status === 'implementacao-andamento') return 'status-select--info'
-  return 'status-select--info'
+  if (!status) return 'status-tag--waiting'
+  if (status === 'contratacao-implementada') return 'status-tag--done'
+  if (status === 'assinatura-concluida' || status === 'pagamento-concluido' || status === 'implementacao-simplificada') return 'status-tag--progress'
+  if (status === 'dps-pendente' || status === 'tele-entrevista-pendente' || status === 'pendente-pagamento') return 'status-tag--pending'
+  if (status === 'assinatura-andamento' || status === 'implementacao-andamento') return 'status-tag--active'
+  return 'status-tag--waiting'
 }
 
 // ── Download PDF ──────────────────────────────────────────────────────────
@@ -412,7 +479,7 @@ async function downloadPdf(proposal: Proposal) {
 }
 
 .proposals-table th {
-  padding: 12px 14px;
+  padding: 11px 14px;
   font-size: 11px;
   font-weight: 600;
   color: var(--text-label);
@@ -425,8 +492,9 @@ async function downloadPdf(proposal: Proposal) {
 
 .proposals-table th.col-actions { width: 70px; text-align: right; }
 .proposals-table th.col-status-prev,
-.proposals-table th.col-status-seg { min-width: 200px; }
-.proposals-table th.col-type { min-width: 160px; }
+.proposals-table th.col-status-seg { min-width: 190px; }
+.proposals-table th.col-type { min-width: 150px; }
+.proposals-table th.col-products { min-width: 130px; }
 
 /* ── Linhas ──────────────────────────────────────────────────────────────── */
 .proposal-row {
@@ -438,8 +506,9 @@ async function downloadPdf(proposal: Proposal) {
 .proposal-row:hover { background-color: #f8fafc; }
 
 .proposal-row td {
-  padding: 12px 14px;
+  padding: 10px 14px;
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 .proposal-row td.col-actions { text-align: right; }
@@ -449,75 +518,115 @@ async function downloadPdf(proposal: Proposal) {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 14px;
+  font-size: 12.5px;
   font-weight: 500;
   color: var(--text-primary);
+  white-space: nowrap;
 }
 .proposal-name__icon { color: var(--text-muted); flex-shrink: 0; }
 
 /* ── Badge de produto ────────────────────────────────────────────────────── */
 .product-badge {
   display: inline-block;
-  padding: 3px 8px;
+  padding: 2px 8px;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 500;
   white-space: nowrap;
 }
-.product-badge--prev  { background-color: #eff6ff; color: #1d4ed8; }
-.product-badge--seguro { background-color: #f0fdf4; color: #15803d; }
-.product-badge--both  { background-color: #faf5ff; color: #7e22ce; }
+/* Tons de azul discretos para todos os badges de produto */
+.product-badge--prev   { background-color: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; }
+.product-badge--seguro { background-color: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
+.product-badge--both   { background-color: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
 
 /* ── Badge de tipo de solicitação ────────────────────────────────────────── */
 .type-badge {
   display: inline-block;
-  padding: 3px 8px;
+  padding: 2px 8px;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 500;
   white-space: nowrap;
 }
-.type-badge--com-estudo  { background-color: #fff7ed; color: #c2410c; }
-.type-badge--sem-estudo  { background-color: #f0f9ff; color: #0369a1; }
-.type-badge--port        { background-color: #f0fdf4; color: #15803d; }
+/* Tons de azul discretos para tipos */
+.type-badge--com-estudo  { background-color: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
+.type-badge--sem-estudo  { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.type-badge--port        { background-color: #eef2ff; color: #3730a3; border: 1px solid #c7d2fe; }
 
 /* ── Valores de célula ───────────────────────────────────────────────────── */
 .cell-value {
-  font-size: 14px;
+  font-size: 12.5px;
   color: var(--text-primary);
+  white-space: nowrap;
 }
 .cell-empty {
-  font-size: 14px;
+  font-size: 12.5px;
   color: var(--text-muted);
 }
 
-/* ── Select de status ────────────────────────────────────────────────────── */
-.status-cell {
-  display: flex;
+/* ── Tags de status (clicáveis, substituem os selects) ───────────────────── */
+.status-tag {
+  display: inline-flex;
   align-items: center;
-}
-
-.status-select {
+  padding: 3px 9px;
+  border-radius: 20px;
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 500;
-  padding: 4px 8px;
-  border-radius: 6px;
-  border: 1px solid var(--border-color);
+  white-space: nowrap;
+  border: 1px solid transparent;
+  cursor: default;
+  transition: filter 0.15s;
+  line-height: 1.4;
+  background: none;
   outline: none;
-  cursor: pointer;
-  width: 100%;
-  min-width: 180px;
-  transition: border-color 0.15s, background-color 0.15s;
-  appearance: auto;
 }
-.status-select:focus { border-color: var(--btn-primary-bg); }
 
-.status-select--empty     { background-color: #f8fafc; color: var(--text-muted); }
-.status-select--info      { background-color: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-.status-select--done      { background-color: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
-.status-select--warning   { background-color: #fffbeb; color: #b45309; border-color: #fde68a; }
-.status-select--success   { background-color: #f0fdf4; color: #166534; border-color: #86efac; font-weight: 600; }
+/* Tags com ação clicável têm cursor pointer */
+.status-tag--active,
+.status-tag--pending {
+  cursor: pointer;
+}
+.status-tag--active:hover,
+.status-tag--pending:hover {
+  filter: brightness(0.94);
+}
+
+/* Paleta de status — todos em tons de azul/slate discretos */
+/* Aguardando: cinza neutro */
+.status-tag--waiting {
+  background-color: #f1f5f9;
+  color: #64748b;
+  border-color: #e2e8f0;
+}
+
+/* Assinatura em andamento / Implementação em andamento: azul médio */
+.status-tag--active {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+/* Assinatura Concluída / Pagamento Concluído / Impl. Simplificada: azul mais escuro */
+.status-tag--progress {
+  background-color: #eff6ff;
+  color: #1e40af;
+  border-color: #bfdbfe;
+}
+
+/* Pendente de Pagamento / DPS Pendente / Tele Entrevista Pendente: azul acinzentado */
+.status-tag--pending {
+  background-color: #e0e7ff;
+  color: #3730a3;
+  border-color: #c7d2fe;
+}
+
+/* Contratação Implementada: azul navy sólido */
+.status-tag--done {
+  background-color: #1e3a8a;
+  color: #ffffff;
+  border-color: #1e3a8a;
+}
 
 /* ── Botões de ação ──────────────────────────────────────────────────────── */
 .action-btns {
@@ -532,7 +641,7 @@ async function downloadPdf(proposal: Proposal) {
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  padding: 6px 10px;
+  padding: 5px 10px;
   background: none;
   border: none;
   cursor: pointer;
