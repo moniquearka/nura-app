@@ -38,20 +38,28 @@
             <div class="field-item"><span class="field-label">Patrimônio</span><span class="field-value">R$ 350.000,00</span></div>
           </div>
 
-          <div class="proponente-flags">
-            <div class="proponente-flag-row">
-              <span class="flag-question">Pessoa Politicamente Exposta?</span>
-              <div class="flag-radio-group">
+          <!-- PPE, US Person e NIF em grid alinhado com as colunas acima -->
+          <div class="field-grid field-grid--3" style="margin-top:16px; padding-top:16px; border-top:1px solid var(--border-color);">
+            <!-- Coluna 1: PPE -->
+            <div class="field-item">
+              <span class="field-label">Pessoa Politicamente Exposta?</span>
+              <div class="flag-radio-group" style="margin-top:6px;">
                 <label class="flag-radio-label"><input type="radio" v-model="proponente.pessoaPolitica" value="sim" class="radio-input" /><span>Sim</span></label>
                 <label class="flag-radio-label"><input type="radio" v-model="proponente.pessoaPolitica" value="nao" class="radio-input" /><span>Não</span></label>
               </div>
             </div>
-            <div class="proponente-flag-row">
-              <span class="flag-question">É US Person?</span>
-              <div class="flag-radio-group">
+            <!-- Coluna 2: US Person -->
+            <div class="field-item">
+              <span class="field-label">É US Person?</span>
+              <div class="flag-radio-group" style="margin-top:6px;">
                 <label class="flag-radio-label"><input type="radio" v-model="proponente.usPerson" value="sim" class="radio-input" /><span>Sim</span></label>
                 <label class="flag-radio-label"><input type="radio" v-model="proponente.usPerson" value="nao" class="radio-input" /><span>Não</span></label>
               </div>
+            </div>
+            <!-- Coluna 3: NIF (condicional) -->
+            <div class="field-item" v-if="proponente.usPerson === 'sim'">
+              <span class="field-label">NIF</span>
+              <input type="text" v-model="proponente.nif" class="form-input" placeholder="Número de Identificação Fiscal" />
             </div>
           </div>
 

@@ -29,7 +29,7 @@
               <th class="col-proposal">Solicitações Geradas</th>
               <th class="col-products">Produtos Selecionados</th>
               <th class="col-type">Tipo de Solicitação</th>
-              <th class="col-date">Proposta Gerada em</th>
+              <th class="col-date">Data de Emissão</th>
               <th class="col-value">Valor Total</th>
               <th class="col-status-prev">Status — Previdência</th>
               <th class="col-status-seg">Status — Seguro de Vida</th>
@@ -430,7 +430,8 @@ async function downloadPdf(proposal: Proposal) {
 }
 
 .table-wrapper {
-  overflow-x: auto;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* ── Tabela ──────────────────────────────────────────────────────────────── */
@@ -438,8 +439,7 @@ async function downloadPdf(proposal: Proposal) {
   width: 100%;
   border-collapse: collapse;
   font-family: var(--font-sans);
-  min-width: 0;
-  table-layout: auto;
+  table-layout: fixed;
 }
 
 .proposals-table thead tr {
@@ -447,24 +447,28 @@ async function downloadPdf(proposal: Proposal) {
 }
 
 .proposals-table th {
-  padding: 11px 14px;
-  font-size: 11px;
+  padding: 9px 10px;
+  font-size: 10px;
   font-weight: 600;
   color: var(--text-label);
   text-transform: uppercase;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.5px;
   text-align: left;
   background-color: #f8fafc;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.proposals-table th.col-actions { width: 60px; text-align: right; }
-.proposals-table th.col-status-prev,
-.proposals-table th.col-status-seg { white-space: nowrap; }
-.proposals-table th.col-type { white-space: nowrap; }
-.proposals-table th.col-products { white-space: nowrap; }
-.proposals-table th.col-date { white-space: nowrap; }
-.proposals-table th.col-value { white-space: nowrap; }
+/* Larguras fixas das colunas para caber tudo sem scroll horizontal */
+.proposals-table th.col-proposal   { width: 14%; }
+.proposals-table th.col-products   { width: 12%; }
+.proposals-table th.col-type       { width: 13%; }
+.proposals-table th.col-date       { width: 9%; }
+.proposals-table th.col-value      { width: 8%; }
+.proposals-table th.col-status-prev{ width: 17%; }
+.proposals-table th.col-status-seg { width: 17%; }
+.proposals-table th.col-actions    { width: 10%; text-align: right; }
 
 /* ── Linhas ──────────────────────────────────────────────────────────────── */
 .proposal-row {
@@ -476,9 +480,11 @@ async function downloadPdf(proposal: Proposal) {
 .proposal-row:hover { background-color: #f8fafc; }
 
 .proposal-row td {
-  padding: 10px 14px;
+  padding: 9px 10px;
   vertical-align: middle;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .proposal-row td.col-actions { text-align: right; }
@@ -487,20 +493,23 @@ async function downloadPdf(proposal: Proposal) {
 .proposal-name {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 12px;
+  gap: 4px;
+  font-size: 10.5px;
   font-weight: 500;
   color: var(--text-primary);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 .proposal-name__icon { color: var(--text-muted); flex-shrink: 0; }
 
 /* ── Badge de produto ────────────────────────────────────────────────── */
 .product-badge {
   display: inline-block;
-  padding: 2px 7px;
+  padding: 1px 5px;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -511,9 +520,9 @@ async function downloadPdf(proposal: Proposal) {
 /* ── Badge de tipo de solicitação ───────────────────────────────────────────────── */
 .type-badge {
   display: inline-block;
-  padding: 2px 7px;
+  padding: 1px 5px;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -524,22 +533,22 @@ async function downloadPdf(proposal: Proposal) {
 
 /* ── Valores de célula ───────────────────────────────────────────────────── */
 .cell-value {
-  font-size: 12px;
+  font-size: 10.5px;
   color: var(--text-primary);
   white-space: nowrap;
 }
 .cell-empty {
-  font-size: 12px;
+  font-size: 10.5px;
   color: var(--text-muted);
 }
 
 /* ── Tags de status (clicáveis, substituem os selects) ───────────────────── */
 .status-tag {
   display: inline-block;
-  padding: 2px 7px;
+  padding: 1px 5px;
   border-radius: 4px;
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
   white-space: nowrap;
   border: 1px solid transparent;
