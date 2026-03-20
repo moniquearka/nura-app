@@ -182,7 +182,7 @@
                 <label class="form-label">Bairro</label>
                 <input v-model="proponente.bairro" type="text" class="form-input" placeholder="Bairro" />
               </div>
-              <div class="form-field" style="grid-column: span 2">
+              <div class="form-field">
                 <label class="form-label">Município</label>
                 <input v-model="proponente.municipio" type="text" class="form-input" placeholder="Cidade" />
               </div>
@@ -691,7 +691,7 @@
                   <label class="form-label">Bairro</label>
                   <input v-model="pagamento.cobBairro" type="text" class="form-input" placeholder="Bairro" />
                 </div>
-                <div class="form-field" style="grid-column: span 2">
+                <div class="form-field">
                   <label class="form-label">Município</label>
                   <input v-model="pagamento.cobMunicipio" type="text" class="form-input" placeholder="Cidade" />
                 </div>
@@ -899,7 +899,7 @@
               <div class="field-item"><span class="field-label">Número</span><span class="field-value">{{ proponente.numero || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Complemento</span><span class="field-value">{{ proponente.complemento || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Bairro</span><span class="field-value">{{ proponente.bairro || '—' }}</span></div>
-              <div class="field-item" style="grid-column:span 2"><span class="field-label">Município</span><span class="field-value">{{ proponente.municipio || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">Município</span><span class="field-value">{{ proponente.municipio || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Estado</span><span class="field-value">{{ proponente.estado || '—' }}</span></div>
               <div class="field-item"><span class="field-label">País de Residência</span><span class="field-value">{{ proponente.paisResidencia || '—' }}</span></div>
             </div>
@@ -1038,7 +1038,7 @@
                 <div class="field-item"><span class="field-label">Número</span><span class="field-value">{{ pagamento.cobNumero || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">Complemento</span><span class="field-value">{{ pagamento.cobComplemento || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">Bairro</span><span class="field-value">{{ pagamento.cobBairro || '—' }}</span></div>
-                <div class="field-item" style="grid-column:span 2"><span class="field-label">Município</span><span class="field-value">{{ pagamento.cobMunicipio || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Município</span><span class="field-value">{{ pagamento.cobMunicipio || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">Estado</span><span class="field-value">{{ pagamento.cobEstado || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">País de Residência</span><span class="field-value">{{ pagamento.cobPaisResidencia || '—' }}</span></div>
               </template>
