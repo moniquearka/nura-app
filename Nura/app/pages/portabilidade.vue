@@ -40,15 +40,24 @@
               <input v-model="proponente.dataNasc" type="date" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.dataNasc }" />
               <span v-if="showErrors && !proponente.dataNasc" class="form-error">Campo obrigatório</span>
             </div>
-            <!-- Gênero -->
+            <!-- Sexo -->
             <div class="form-field">
-              <label class="form-label form-label--required">Gênero</label>
+              <label class="form-label form-label--required">Sexo</label>
               <select v-model="proponente.genero" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.genero }">
                 <option value="">Selecione...</option>
                 <option>Feminino</option>
                 <option>Masculino</option>
               </select>
               <span v-if="showErrors && !proponente.genero" class="form-error">Campo obrigatório</span>
+            </div>
+            <!-- País de Nascimento -->
+            <div class="form-field">
+              <label class="form-label form-label--required">País de Nascimento</label>
+              <select v-model="proponente.paisNascimento" class="form-input" :class="{ 'form-input--error': showErrors && !proponente.paisNascimento }">
+                <option value="">Selecione...</option>
+                <option v-for="pais in paises" :key="pais">{{ pais }}</option>
+              </select>
+              <span v-if="showErrors && !proponente.paisNascimento" class="form-error">Campo obrigatório</span>
             </div>
             <!-- Nacionalidade -->
             <div class="form-field">
@@ -182,6 +191,14 @@
                 <select v-model="proponente.estado" class="form-input">
                   <option value="">Selecione</option>
                   <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
+                </select>
+              </div>
+              <!-- País de Residência -->
+              <div class="form-field">
+                <label class="form-label">País de Residência</label>
+                <select v-model="proponente.paisResidencia" class="form-input">
+                  <option value="">Selecione...</option>
+                  <option v-for="pais in paises" :key="pais">{{ pais }}</option>
                 </select>
               </div>
             </div>
@@ -538,13 +555,21 @@
                   <label class="form-label">Data de Nascimento</label>
                   <input v-model="pagamento.rfDataNasc" type="date" class="form-input" />
                 </div>
-                <!-- Gênero -->
+                <!-- Sexo -->
                 <div class="form-field">
-                  <label class="form-label">Gênero</label>
+                  <label class="form-label">Sexo</label>
                   <select v-model="pagamento.rfGenero" class="form-input">
                     <option value="">Selecione...</option>
                     <option>Feminino</option>
                     <option>Masculino</option>
+                  </select>
+                </div>
+                <!-- País de Nascimento -->
+                <div class="form-field">
+                  <label class="form-label">País de Nascimento</label>
+                  <select v-model="pagamento.rfPaisNascimento" class="form-input">
+                    <option value="">Selecione...</option>
+                    <option v-for="pais in paises" :key="pais">{{ pais }}</option>
                   </select>
                 </div>
                 <!-- Nacionalidade -->
@@ -675,6 +700,14 @@
                   <select v-model="pagamento.cobEstado" class="form-input">
                     <option value="">Selecione</option>
                     <option v-for="uf in ufs" :key="uf">{{ uf }}</option>
+                  </select>
+                </div>
+                <!-- País de Residência -->
+                <div class="form-field">
+                  <label class="form-label">País de Residência</label>
+                  <select v-model="pagamento.cobPaisResidencia" class="form-input">
+                    <option value="">Selecione...</option>
+                    <option v-for="pais in paises" :key="pais">{{ pais }}</option>
                   </select>
                 </div>
               </div>
@@ -838,7 +871,8 @@
             <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ proponente.cpf || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">{{ proponente.nome || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ proponente.dataNasc ? new Date(proponente.dataNasc + 'T12:00:00').toLocaleDateString('pt-BR') : '—' }}</span></div>
-            <div class="field-item"><span class="field-label">Gênero</span><span class="field-value">{{ proponente.genero || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">Sexo</span><span class="field-value">{{ proponente.genero || '—' }}</span></div>
+            <div class="field-item"><span class="field-label">País de Nascimento</span><span class="field-value">{{ proponente.paisNascimento || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Nacionalidade</span><span class="field-value">{{ proponente.nacionalidade || '—' }}</span></div>
             <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">{{ proponente.telefone || '—' }}</span></div>
             <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">{{ proponente.email || '—' }}</span></div>
@@ -867,6 +901,7 @@
               <div class="field-item"><span class="field-label">Bairro</span><span class="field-value">{{ proponente.bairro || '—' }}</span></div>
               <div class="field-item" style="grid-column:span 2"><span class="field-label">Município</span><span class="field-value">{{ proponente.municipio || '—' }}</span></div>
               <div class="field-item"><span class="field-label">Estado</span><span class="field-value">{{ proponente.estado || '—' }}</span></div>
+              <div class="field-item"><span class="field-label">País de Residência</span><span class="field-value">{{ proponente.paisResidencia || '—' }}</span></div>
             </div>
           </div>
         </div>
@@ -968,7 +1003,8 @@
                 <div class="field-item"><span class="field-label">CPF</span><span class="field-value">{{ pagamento.rfCpf || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">{{ pagamento.rfNome || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">{{ pagamento.rfDataNasc ? new Date(pagamento.rfDataNasc + 'T12:00:00').toLocaleDateString('pt-BR') : '—' }}</span></div>
-                <div class="field-item"><span class="field-label">Gênero</span><span class="field-value">{{ pagamento.rfGenero || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">Sexo</span><span class="field-value">{{ pagamento.rfGenero || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">País de Nascimento</span><span class="field-value">{{ pagamento.rfPaisNascimento || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">Nacionalidade</span><span class="field-value">{{ pagamento.rfNacionalidade || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">{{ pagamento.rfTelefone || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">{{ pagamento.rfEmail || '—' }}</span></div>
@@ -1004,6 +1040,7 @@
                 <div class="field-item"><span class="field-label">Bairro</span><span class="field-value">{{ pagamento.cobBairro || '—' }}</span></div>
                 <div class="field-item" style="grid-column:span 2"><span class="field-label">Município</span><span class="field-value">{{ pagamento.cobMunicipio || '—' }}</span></div>
                 <div class="field-item"><span class="field-label">Estado</span><span class="field-value">{{ pagamento.cobEstado || '—' }}</span></div>
+                <div class="field-item"><span class="field-label">País de Residência</span><span class="field-value">{{ pagamento.cobPaisResidencia || '—' }}</span></div>
               </template>
             </div>
           </div>
@@ -1260,15 +1297,42 @@ onMounted(async () => {
 
 const ufs = ['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO']
 
+const paises = [
+  'Afeganistão','África do Sul','Albânia','Alemanha','Andorra','Angola','Antígua e Barbuda','Arábia Saudita',
+  'Argélia','Argentina','Armênia','Austrália','Áustria','Azerbaijão','Bahamas','Bahrein','Bangladesh',
+  'Barbados','Bélgica','Belize','Benin','Bielorrússia','Bolívia','Bósnia e Herzegovina','Botswana',
+  'Brasil','Brunei','Bulgária','Burkina Faso','Burundi','Butão','Cabo Verde','Camarões','Camboja',
+  'Canadá','Catar','Cazaquistão','Chade','Chile','China','Chipre','Colômbia','Comores','Congo',
+  'Coreia do Norte','Coreia do Sul','Costa do Marfim','Costa Rica','Croácia','Cuba','Dinamarca',
+  'Djibuti','Dominica','Egito','El Salvador','Emirados Árabes Unidos','Equador','Eritreia','Eslováquia',
+  'Eslovênia','Espanha','Estados Unidos','Estônia','Etiópia','Fiji','Filipinas','Finlândia','França',
+  'Gabão','Gâmbia','Gana','Geórgia','Granada','Grécia','Guatemala','Guiana','Guiné','Guiné-Bissau',
+  'Guiné Equatorial','Haiti','Honduras','Hungria','Iêmen','Ilhas Marshall','Ilhas Salomão','Índia',
+  'Indonésia','Irã','Iraque','Irlanda','Islândia','Israel','Itália','Jamaica','Japão','Jordânia',
+  'Kiribati','Kosovo','Kuwait','Laos','Lesoto','Letônia','Líbano','Libéria','Líbia','Liechtenstein',
+  'Lituânia','Luxemburgo','Macedônia do Norte','Madagascar','Malásia','Malawi','Maldivas','Mali',
+  'Malta','Marrocos','Maurício','Mauritânia','México','Micronésia','Moçambique','Moldávia','Mônaco',
+  'Mongólia','Montenegro','Myanmar','Namíbia','Nauru','Nepal','Nicarágua','Níger','Nigéria','Noruega',
+  'Nova Zelândia','Omã','Países Baixos','Palau','Palestina','Panamá','Papua Nova Guiné','Paquistão',
+  'Paraguai','Peru','Polônia','Portugal','Quênia','Quirguistão','Reino Unido','República Centro-Africana',
+  'República Checa','República Democrática do Congo','República Dominicana','Romênia','Ruanda','Rússia',
+  'Samoa','San Marino','Santa Lúcia','São Cristóvão e Nevis','São Tomé e Príncipe',
+  'São Vicente e Granadinas','Senegal','Serra Leoa','Sérvia','Seychelles','Singapura','Síria','Somália',
+  'Sri Lanka','Suazilândia','Sudão','Sudão do Sul','Suécia','Suíça','Suriname','Tailândia','Taiwan',
+  'Tajiquistão','Tanzânia','Timor-Leste','Togo','Tonga','Trinidad e Tobago','Tunísia','Turcomenistão',
+  'Turquia','Tuvalu','Ucrânia','Uganda','Uruguai','Uzbequistão','Vanuatu','Vaticano','Venezuela',
+  'Vietnã','Zâmbia','Zimbábue'
+]
+
 const comPortabilidade = ref<'sim' | 'nao' | ''>('')
 const tipoPortabilidade = ref('externa')
 
 const proponente = reactive({
-  cpf: '', nome: '', dataNasc: '', genero: '', nacionalidade: '',
+  cpf: '', nome: '', dataNasc: '', genero: '', paisNascimento: '', nacionalidade: '',
   telefone: '', email: '', renda: '', profissao: '', profissaoEspecificacao: '',
   origemRenda: '', origemRendaEspecificacao: '', patrimonio: '',
   usPerson: 'nao', nif: '',
-  cep: '', rua: '', numero: '', complemento: '', bairro: '', municipio: '', estado: '',
+  cep: '', rua: '', numero: '', complemento: '', bairro: '', municipio: '', estado: '', paisResidencia: '',
 })
 
 const form = reactive({
@@ -1293,7 +1357,7 @@ function proponenteValido(): boolean {
   const nifOk = proponente.usPerson !== 'sim' || !!proponente.nif
   return !!(proponente.cpf && proponente.nome && proponente.dataNasc && proponente.genero &&
     proponente.telefone && proponente.email && proponente.renda && proponente.profissao &&
-    proponente.origemRenda && proponente.patrimonio && proponente.nacionalidade &&
+    proponente.origemRenda && proponente.patrimonio && proponente.paisNascimento && proponente.nacionalidade &&
     proponente.usPerson && proponente.cep && proponente.numero &&
     profOk && rendaOk && nifOk)
 }
@@ -1488,12 +1552,12 @@ const pagamento = reactive({
   forma: 'debito', diaVencimento: '', pixRecorrencia: '',
   banco: '', agencia: '', contaCorrente: '',
   respFinanceiro: 'sim',
-  rfCpf: '', rfNome: '', rfDataNasc: '', rfGenero: '', rfNacionalidade: '',
+  rfCpf: '', rfNome: '', rfDataNasc: '', rfGenero: '', rfPaisNascimento: '', rfNacionalidade: '',
   rfTelefone: '', rfEmail: '', rfRenda: '', rfProfissao: '', rfProfissaoEspecificacao: '',
   rfOrigemRenda: '', rfOrigemRendaEspecificacao: '', rfPatrimonio: '',
   rfUsPerson: 'nao', rfNif: '',
   enderecoCobranca: 'sim',
-  cobCep: '', cobRua: '', cobNumero: '', cobComplemento: '', cobBairro: '', cobMunicipio: '', cobEstado: '',
+  cobCep: '', cobRua: '', cobNumero: '', cobComplemento: '', cobBairro: '', cobMunicipio: '', cobEstado: '', cobPaisResidencia: '',
 })
 
 function formaLabel(forma: string) {

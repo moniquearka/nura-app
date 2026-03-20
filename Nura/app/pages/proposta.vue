@@ -28,7 +28,8 @@
             <div class="field-item"><span class="field-label">CPF</span><span class="field-value">123.456.789-00</span></div>
             <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">Taís Oliveira Costa</span></div>
             <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">15/05/1984</span></div>
-            <div class="field-item"><span class="field-label">Gênero</span><span class="field-value">Feminino</span></div>
+            <div class="field-item"><span class="field-label">Sexo</span><span class="field-value">Feminino</span></div>
+            <div class="field-item"><span class="field-label">País de Nascimento</span><span class="field-value">Brasil</span></div>
             <div class="field-item"><span class="field-label">Nacionalidade</span><span class="field-value">Brasileira</span></div>
             <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">(11) 98765-4321</span></div>
             <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">tais.oliveira@email.com</span></div>
@@ -73,6 +74,7 @@
               <div class="field-item"><span class="field-label">Bairro</span><span class="field-value">Bela Vista</span></div>
               <div class="field-item" style="grid-column: span 2"><span class="field-label">Município</span><span class="field-value">São Paulo</span></div>
               <div class="field-item"><span class="field-label">Estado</span><span class="field-value">SP</span></div>
+              <div class="field-item"><span class="field-label">País de Residência</span><span class="field-value">Brasil</span></div>
             </div>
           </div>
 
@@ -563,7 +565,8 @@
                   <div class="form-field"><label class="form-label">CPF</label><input v-model="pagamentoPrev.rfCpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
                   <div class="form-field"><label class="form-label">Nome Completo</label><input v-model="pagamentoPrev.rfNome" type="text" class="form-input" /></div>
                   <div class="form-field"><label class="form-label">Data de Nascimento</label><input v-model="pagamentoPrev.rfDataNasc" type="date" class="form-input" /></div>
-                  <div class="form-field"><label class="form-label">Gênero</label><select v-model="pagamentoPrev.rfGenero" class="form-input"><option value="">Selecione...</option><option>Feminino</option><option>Masculino</option></select></div>
+                  <div class="form-field"><label class="form-label">Sexo</label><select v-model="pagamentoPrev.rfGenero" class="form-input"><option value="">Selecione...</option><option>Feminino</option><option>Masculino</option></select></div>
+                  <div class="form-field"><label class="form-label">País de Nascimento</label><select v-model="pagamentoPrev.rfPaisNascimento" class="form-input"><option value="">Selecione...</option><option v-for="pais in paises" :key="pais">{{ pais }}</option></select></div>
                   <div class="form-field"><label class="form-label">Nacionalidade</label><input v-model="pagamentoPrev.rfNacionalidade" type="text" class="form-input" placeholder="Ex: Brasileira" /></div>
                   <div class="form-field"><label class="form-label">Telefone</label><input v-model="pagamentoPrev.rfTelefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
                   <div class="form-field"><label class="form-label">E-mail</label><input v-model="pagamentoPrev.rfEmail" type="email" class="form-input" /></div>
@@ -610,6 +613,7 @@
                   <div class="form-field"><label class="form-label">Bairro</label><input v-model="pagamentoPrev.cobBairro" type="text" class="form-input" /></div>
                   <div class="form-field" style="grid-column: span 2"><label class="form-label">Município</label><input v-model="pagamentoPrev.cobMunicipio" type="text" class="form-input" /></div>
                   <div class="form-field"><label class="form-label">Estado</label><select v-model="pagamentoPrev.cobEstado" class="form-input"><option value="">Selecione</option><option v-for="uf in ufs" :key="uf">{{ uf }}</option></select></div>
+                  <div class="form-field"><label class="form-label">País de Residência</label><select v-model="pagamentoPrev.cobPaisResidencia" class="form-input"><option value="">Selecione...</option><option v-for="pais in paises" :key="pais">{{ pais }}</option></select></div>
                 </div>
               </div>
             </template>
@@ -715,7 +719,8 @@
                   <div class="form-field"><label class="form-label">CPF</label><input v-model="pagamentoSeguro.rfCpf" type="text" class="form-input" placeholder="000.000.000-00" /></div>
                   <div class="form-field"><label class="form-label">Nome Completo</label><input v-model="pagamentoSeguro.rfNome" type="text" class="form-input" /></div>
                   <div class="form-field"><label class="form-label">Data de Nascimento</label><input v-model="pagamentoSeguro.rfDataNasc" type="date" class="form-input" /></div>
-                  <div class="form-field"><label class="form-label">Gênero</label><select v-model="pagamentoSeguro.rfGenero" class="form-input"><option value="">Selecione...</option><option>Feminino</option><option>Masculino</option></select></div>
+                  <div class="form-field"><label class="form-label">Sexo</label><select v-model="pagamentoSeguro.rfGenero" class="form-input"><option value="">Selecione...</option><option>Feminino</option><option>Masculino</option></select></div>
+                  <div class="form-field"><label class="form-label">País de Nascimento</label><select v-model="pagamentoSeguro.rfPaisNascimento" class="form-input"><option value="">Selecione...</option><option v-for="pais in paises" :key="pais">{{ pais }}</option></select></div>
                   <div class="form-field"><label class="form-label">Nacionalidade</label><input v-model="pagamentoSeguro.rfNacionalidade" type="text" class="form-input" placeholder="Ex: Brasileira" /></div>
                   <div class="form-field"><label class="form-label">Telefone</label><input v-model="pagamentoSeguro.rfTelefone" type="text" class="form-input" placeholder="(00) 00000-0000" /></div>
                   <div class="form-field"><label class="form-label">E-mail</label><input v-model="pagamentoSeguro.rfEmail" type="email" class="form-input" /></div>
@@ -762,6 +767,7 @@
                   <div class="form-field"><label class="form-label">Bairro</label><input v-model="pagamentoSeguro.cobBairro" type="text" class="form-input" /></div>
                   <div class="form-field" style="grid-column: span 2"><label class="form-label">Município</label><input v-model="pagamentoSeguro.cobMunicipio" type="text" class="form-input" /></div>
                   <div class="form-field"><label class="form-label">Estado</label><select v-model="pagamentoSeguro.cobEstado" class="form-input"><option value="">Selecione</option><option v-for="uf in ufs" :key="uf">{{ uf }}</option></select></div>
+                  <div class="form-field"><label class="form-label">País de Residência</label><select v-model="pagamentoSeguro.cobPaisResidencia" class="form-input"><option value="">Selecione...</option><option v-for="pais in paises" :key="pais">{{ pais }}</option></select></div>
                 </div>
               </div>
             </template>
@@ -886,7 +892,8 @@
             <div class="field-item"><span class="field-label">CPF</span><span class="field-value">123.456.789-00</span></div>
             <div class="field-item"><span class="field-label">Nome Completo</span><span class="field-value">Taís Oliveira Costa</span></div>
             <div class="field-item"><span class="field-label">Data de Nascimento</span><span class="field-value">15/05/1984</span></div>
-            <div class="field-item"><span class="field-label">Gênero</span><span class="field-value">Feminino</span></div>
+            <div class="field-item"><span class="field-label">Sexo</span><span class="field-value">Feminino</span></div>
+            <div class="field-item"><span class="field-label">País de Nascimento</span><span class="field-value">Brasil</span></div>
             <div class="field-item"><span class="field-label">Nacionalidade</span><span class="field-value">Brasileira</span></div>
             <div class="field-item"><span class="field-label">Telefone</span><span class="field-value">(11) 98765-4321</span></div>
             <div class="field-item"><span class="field-label">E-mail</span><span class="field-value">tais.oliveira@email.com</span></div>
@@ -913,6 +920,7 @@
               <div class="field-item" style="grid-column: span 2"><span class="field-label">Rua</span><span class="field-value">Av. Paulista, 1000 — Apto 42</span></div>
               <div class="field-item"><span class="field-label">Bairro</span><span class="field-value">Bela Vista</span></div>
               <div class="field-item" style="grid-column: span 2"><span class="field-label">Município / Estado</span><span class="field-value">São Paulo / SP</span></div>
+              <div class="field-item"><span class="field-label">País de Residência</span><span class="field-value">Brasil</span></div>
             </div>
           </div>
         </div>
@@ -1238,12 +1246,12 @@ interface PagamentoData {
   pixRecorrencia?: string
   respFinanceiro?: string
   rfNome?: string; rfCpf?: string; rfDataNasc?: string; rfTelefone?: string; rfEmail?: string
-  rfGenero?: string; rfNacionalidade?: string; rfRenda?: string; rfProfissao?: string
+  rfGenero?: string; rfPaisNascimento?: string; rfNacionalidade?: string; rfRenda?: string; rfProfissao?: string
   rfProfissaoEspec?: string; rfOrigemRenda?: string; rfOrigemRendaEspec?: string
   rfPatrimonio?: string; rfUsPerson?: string; rfNif?: string
   enderecoCobranca?: string
   cobCep?: string; cobRua?: string; cobNumero?: string; cobComplemento?: string
-  cobBairro?: string; cobMunicipio?: string; cobEstado?: string
+  cobBairro?: string; cobMunicipio?: string; cobEstado?: string; cobPaisResidencia?: string
 }
 
 const proponente = reactive({
@@ -1254,6 +1262,33 @@ const proponente = reactive({
 })
 
 const ufs = ['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO']
+
+const paises = [
+  'Afeganistão','África do Sul','Albânia','Alemanha','Andorra','Angola','Antígua e Barbuda','Arábia Saudita',
+  'Argélia','Argentina','Armênia','Austrália','Áustria','Azerbaijão','Bahamas','Bahrein','Bangladesh',
+  'Barbados','Bélgica','Belize','Benin','Bielorrússia','Bolívia','Bósnia e Herzegovina','Botswana',
+  'Brasil','Brunei','Bulgária','Burkina Faso','Burundi','Butão','Cabo Verde','Camarões','Camboja',
+  'Canadá','Catar','Cazaquistão','Chade','Chile','China','Chipre','Colômbia','Comores','Congo',
+  'Coreia do Norte','Coreia do Sul','Costa do Marfim','Costa Rica','Croácia','Cuba','Dinamarca',
+  'Djibuti','Dominica','Egito','El Salvador','Emirados Árabes Unidos','Equador','Eritreia','Eslováquia',
+  'Eslovênia','Espanha','Estados Unidos','Estônia','Etiópia','Fiji','Filipinas','Finlândia','França',
+  'Gabão','Gâmbia','Gana','Geórgia','Granada','Grécia','Guatemala','Guiana','Guiné','Guiné-Bissau',
+  'Guiné Equatorial','Haiti','Honduras','Hungria','Iêmen','Ilhas Marshall','Ilhas Salomão','Índia',
+  'Indonésia','Irã','Iraque','Irlanda','Islândia','Israel','Itália','Jamaica','Japão','Jordânia',
+  'Kiribati','Kosovo','Kuwait','Laos','Lesoto','Letônia','Líbano','Libéria','Líbia','Liechtenstein',
+  'Lituânia','Luxemburgo','Macedônia do Norte','Madagascar','Malásia','Malawi','Maldivas','Mali',
+  'Malta','Marrocos','Maurício','Mauritânia','México','Micronésia','Moçambique','Moldávia','Mônaco',
+  'Mongólia','Montenegro','Myanmar','Namíbia','Nauru','Nepal','Nicarágua','Níger','Nigéria','Noruega',
+  'Nova Zelândia','Omã','Países Baixos','Palau','Palestina','Panamá','Papua Nova Guiné','Paquistão',
+  'Paraguai','Peru','Polônia','Portugal','Quênia','Quirguistão','Reino Unido','República Centro-Africana',
+  'República Checa','República Democrática do Congo','República Dominicana','Romênia','Ruanda','Rússia',
+  'Samoa','San Marino','Santa Lúcia','São Cristóvão e Nevis','São Tomé e Príncipe',
+  'São Vicente e Granadinas','Senegal','Serra Leoa','Sérvia','Seychelles','Singapura','Síria','Somália',
+  'Sri Lanka','Suazilândia','Sudão','Sudão do Sul','Suécia','Suíça','Suriname','Tailândia','Taiwan',
+  'Tajiquistão','Tanzânia','Timor-Leste','Togo','Tonga','Trinidad e Tobago','Tunísia','Turcomenistão',
+  'Turquia','Tuvalu','Ucrânia','Uganda','Uruguai','Uzbequistão','Vanuatu','Vaticano','Venezuela',
+  'Vietnã','Zâmbia','Zimbábue'
+]
 
 async function onCepInputPrev() {
   const raw = pagamentoPrev.cobCep?.replace(/\D/g, '') || ''
@@ -1312,9 +1347,9 @@ function removeBenSeguro(i: number) { beneficiariosSeguro.value.splice(i, 1) }
 const newPag = (): PagamentoData => ({
   forma: 'debito', banco: '', agencia: '', conta: '', titular: '', cpfTitular: '', diaVencimento: '',
   pixRecorrencia: '', respFinanceiro: 'sim', enderecoCobranca: 'sim',
-  cobCep: '', cobRua: '', cobNumero: '', cobComplemento: '', cobBairro: '', cobMunicipio: '', cobEstado: '',
+  cobCep: '', cobRua: '', cobNumero: '', cobComplemento: '', cobBairro: '', cobMunicipio: '', cobEstado: '', cobPaisResidencia: '',
   rfNome: '', rfCpf: '', rfDataNasc: '', rfTelefone: '', rfEmail: '',
-  rfGenero: '', rfNacionalidade: '', rfRenda: '', rfProfissao: '',
+  rfGenero: '', rfPaisNascimento: '', rfNacionalidade: '', rfRenda: '', rfProfissao: '',
   rfProfissaoEspec: '', rfOrigemRenda: '', rfOrigemRendaEspec: '',
   rfPatrimonio: '', rfUsPerson: 'nao', rfNif: '',
 })
