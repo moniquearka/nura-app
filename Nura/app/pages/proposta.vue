@@ -72,9 +72,9 @@
               <div class="field-item"><span class="field-label">Número</span><span class="field-value">1000</span></div>
               <div class="field-item"><span class="field-label">Complemento</span><span class="field-value">Apto 42</span></div>
               <div class="field-item"><span class="field-label">Bairro</span><span class="field-value">Bela Vista</span></div>
-              <div class="field-item"><span class="field-label">Município</span><span class="field-value">São Paulo</span></div>
-              <div class="field-item"><span class="field-label">Estado</span><span class="field-value">SP</span></div>
-              <div class="field-item"><span class="field-label">País de Residência</span><span class="field-value">Brasil</span></div>
+              <div class="field-item" style="grid-column: 1"><span class="field-label">Município</span><span class="field-value">São Paulo</span></div>
+              <div class="field-item" style="grid-column: 2"><span class="field-label">Estado</span><span class="field-value">SP</span></div>
+              <div class="field-item" style="grid-column: 3"><span class="field-label">País de Residência</span><span class="field-value">Brasil</span></div>
             </div>
           </div>
 
@@ -611,9 +611,9 @@
                   <div class="form-field"><label class="form-label">Número</label><input v-model="pagamentoPrev.cobNumero" type="text" class="form-input" /></div>
                   <div class="form-field"><label class="form-label">Complemento</label><input v-model="pagamentoPrev.cobComplemento" type="text" class="form-input" /></div>
                   <div class="form-field"><label class="form-label">Bairro</label><input v-model="pagamentoPrev.cobBairro" type="text" class="form-input" /></div>
-                  <div class="form-field"><label class="form-label">Município</label><input v-model="pagamentoPrev.cobMunicipio" type="text" class="form-input" /></div>
-                  <div class="form-field"><label class="form-label">Estado</label><select v-model="pagamentoPrev.cobEstado" class="form-input"><option value="">Selecione</option><option v-for="uf in ufs" :key="uf">{{ uf }}</option></select></div>
-                  <div class="form-field"><label class="form-label">País de Residência</label><select v-model="pagamentoPrev.cobPaisResidencia" class="form-input"><option value="">Selecione...</option><option v-for="pais in paises" :key="pais">{{ pais }}</option></select></div>
+                  <div class="form-field" style="grid-column: 1"><label class="form-label">Município</label><input v-model="pagamentoPrev.cobMunicipio" type="text" class="form-input" /></div>
+                  <div class="form-field" style="grid-column: 2"><label class="form-label">Estado</label><select v-model="pagamentoPrev.cobEstado" class="form-input"><option value="">Selecione</option><option v-for="uf in ufs" :key="uf">{{ uf }}</option></select></div>
+                  <div class="form-field" style="grid-column: 3"><label class="form-label">País de Residência</label><select v-model="pagamentoPrev.cobPaisResidencia" class="form-input"><option value="">Selecione...</option><option v-for="pais in paises" :key="pais">{{ pais }}</option></select></div>
                 </div>
               </div>
             </template>
@@ -765,9 +765,9 @@
                   <div class="form-field"><label class="form-label">Número</label><input v-model="pagamentoSeguro.cobNumero" type="text" class="form-input" /></div>
                   <div class="form-field"><label class="form-label">Complemento</label><input v-model="pagamentoSeguro.cobComplemento" type="text" class="form-input" /></div>
                   <div class="form-field"><label class="form-label">Bairro</label><input v-model="pagamentoSeguro.cobBairro" type="text" class="form-input" /></div>
-                  <div class="form-field"><label class="form-label">Município</label><input v-model="pagamentoSeguro.cobMunicipio" type="text" class="form-input" /></div>
-                  <div class="form-field"><label class="form-label">Estado</label><select v-model="pagamentoSeguro.cobEstado" class="form-input"><option value="">Selecione</option><option v-for="uf in ufs" :key="uf">{{ uf }}</option></select></div>
-                  <div class="form-field"><label class="form-label">País de Residência</label><select v-model="pagamentoSeguro.cobPaisResidencia" class="form-input"><option value="">Selecione...</option><option v-for="pais in paises" :key="pais">{{ pais }}</option></select></div>
+                  <div class="form-field" style="grid-column: 1"><label class="form-label">Município</label><input v-model="pagamentoSeguro.cobMunicipio" type="text" class="form-input" /></div>
+                  <div class="form-field" style="grid-column: 2"><label class="form-label">Estado</label><select v-model="pagamentoSeguro.cobEstado" class="form-input"><option value="">Selecione</option><option v-for="uf in ufs" :key="uf">{{ uf }}</option></select></div>
+                  <div class="form-field" style="grid-column: 3"><label class="form-label">País de Residência</label><select v-model="pagamentoSeguro.cobPaisResidencia" class="form-input"><option value="">Selecione...</option><option v-for="pais in paises" :key="pais">{{ pais }}</option></select></div>
                 </div>
               </div>
             </template>
@@ -919,8 +919,8 @@
               <div class="field-item"><span class="field-label">CEP</span><span class="field-value">01310-100</span></div>
               <div class="field-item" style="grid-column: span 2"><span class="field-label">Rua</span><span class="field-value">Av. Paulista, 1000 — Apto 42</span></div>
               <div class="field-item"><span class="field-label">Bairro</span><span class="field-value">Bela Vista</span></div>
-              <div class="field-item"><span class="field-label">Município / Estado</span><span class="field-value">São Paulo / SP</span></div>
-              <div class="field-item"><span class="field-label">País de Residência</span><span class="field-value">Brasil</span></div>
+              <div class="field-item" style="grid-column: 1"><span class="field-label">Município / Estado</span><span class="field-value">São Paulo / SP</span></div>
+              <div class="field-item" style="grid-column: 2"><span class="field-label">País de Residência</span><span class="field-value">Brasil</span></div>
             </div>
           </div>
         </div>

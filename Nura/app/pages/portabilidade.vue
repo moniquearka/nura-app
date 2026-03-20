@@ -182,11 +182,11 @@
                 <label class="form-label">Bairro</label>
                 <input v-model="proponente.bairro" type="text" class="form-input" placeholder="Bairro" />
               </div>
-              <div class="form-field">
+              <div class="form-field" style="grid-column: 1">
                 <label class="form-label">Município</label>
                 <input v-model="proponente.municipio" type="text" class="form-input" placeholder="Cidade" />
               </div>
-              <div class="form-field">
+              <div class="form-field" style="grid-column: 2">
                 <label class="form-label">Estado</label>
                 <select v-model="proponente.estado" class="form-input">
                   <option value="">Selecione</option>
@@ -194,7 +194,7 @@
                 </select>
               </div>
               <!-- País de Residência -->
-              <div class="form-field">
+              <div class="form-field" style="grid-column: 3">
                 <label class="form-label">País de Residência</label>
                 <select v-model="proponente.paisResidencia" class="form-input">
                   <option value="">Selecione...</option>
@@ -691,11 +691,11 @@
                   <label class="form-label">Bairro</label>
                   <input v-model="pagamento.cobBairro" type="text" class="form-input" placeholder="Bairro" />
                 </div>
-                <div class="form-field">
+                <div class="form-field" style="grid-column: 1">
                   <label class="form-label">Município</label>
                   <input v-model="pagamento.cobMunicipio" type="text" class="form-input" placeholder="Cidade" />
                 </div>
-                <div class="form-field">
+                <div class="form-field" style="grid-column: 2">
                   <label class="form-label">Estado</label>
                   <select v-model="pagamento.cobEstado" class="form-input">
                     <option value="">Selecione</option>
@@ -703,7 +703,7 @@
                   </select>
                 </div>
                 <!-- País de Residência -->
-                <div class="form-field">
+                <div class="form-field" style="grid-column: 3">
                   <label class="form-label">País de Residência</label>
                   <select v-model="pagamento.cobPaisResidencia" class="form-input">
                     <option value="">Selecione...</option>
